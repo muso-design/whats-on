@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+sample_events.json
+.venv/
+server.log

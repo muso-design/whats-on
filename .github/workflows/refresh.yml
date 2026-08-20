@@ -1,0 +1,60 @@
+name: Refresh what's on
+
+on:
+  schedule:
+    # 06:00 UTC daily. The hub is a page you open, so fresher is simply better.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: whats-on
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run the checks
+        run: |
+          python test_scraper.py
+          python test_scoring.py
+          python test_robustness.py
+          python test_translate.py
+          python test_calendar.py
+          python test_wikidata.py
+
+      - name: Fetch and rebuild
+        env:
+          DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
+          TRANSLATE_PROVIDER: ${{ vars.TRANSLATE_PROVIDER }}
+          MYMEMORY_EMAIL: ${{ secrets.MYMEMORY_EMAIL }}
+        run: python update.py
+
+      - name: Commit the inventory and the page
+        run: |
+          if git diff --quiet; then
+            echo "nothing changed"
+            exit 0
+          fi
+          git config user.name  "whats-on"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "what's on, $(date -u +%Y-%m-%d)"
+          git push
