@@ -275,6 +275,9 @@ def to_row(record, today=None):
         "hours": record.get("opening_hours") or "",
         "blurb": blurb,
         "first_seen": record.get("first_seen") or "",
+        "lang": record.get("language") or "",
+        "blurb_lang": ("en" if record.get("description_en")
+                       else (record.get("language") or "")),
         "image": record.get("image") or "",
         "why": _why(record),
         "translated": bool(record.get("description_en")
@@ -319,10 +322,13 @@ PAGE = """<!doctype html>
 <style>
 :root{
   --ground:#F3F3F1; --surface:#FFFFFF; --sunk:#EAEAE6; --raise:#FFFFFF;
-  --ink:#1A1D1B; --muted:#6B716C; --line:#DBDCD8;
+  --ink:#1A1D1B; --muted:#606661; --line:#D2D4D0;
   --accent:#2E6A5C; --accent-soft:#E2EDE9;
   --urgent:#A8482A; --urgent-soft:#F6E7E1;
-  --new:#8A6D1F; --new-soft:#F5EEDB;
+  --new:#7E631C; --new-soft:#F5EEDB;
+  /* Text on a filled accent. The accent is dark in light mode and light in
+     dark mode, so the foreground has to flip with it. */
+  --on-fill:#FFFFFF;
   --sans:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
   --tap:44px;
@@ -335,6 +341,7 @@ PAGE = """<!doctype html>
     --accent:#74B9A4; --accent-soft:#1D2B27;
     --urgent:#D5764F; --urgent-soft:#2E211B;
     --new:#D6B45C; --new-soft:#2A2418;
+    --on-fill:#0E1A16;
   }
 }
 :root[data-theme="dark"]{
@@ -343,11 +350,15 @@ PAGE = """<!doctype html>
   --accent:#74B9A4; --accent-soft:#1D2B27;
   --urgent:#D5764F; --urgent-soft:#2E211B;
   --new:#D6B45C; --new-soft:#2A2418;
+  --on-fill:#0E1A16;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
+/* Sizes are in rem so that a larger default text size in the browser or the
+   operating system actually enlarges this page. Nothing here is below
+   0.75rem, which is the point where small print stops being readable. */
 body{margin:0;background:var(--ground);color:var(--ink);
-  font-family:var(--sans);font-size:15px;line-height:1.5;
+  font-family:var(--sans);font-size:1rem;line-height:1.55;
   -webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
 button{font:inherit;color:inherit}
 a{color:var(--accent)}
@@ -358,8 +369,12 @@ a{color:var(--accent)}
 /* ---------- header ---------- */
 .top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
   padding:14px 2px 8px}
-h1{font-size:19px;font-weight:600;letter-spacing:-.02em;margin:0}
-.stamp{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+h1{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;margin:0}
+.stamp{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin:0}
+.summary{font-size:1rem;color:var(--ink);margin:0 0 2px;padding:0 2px 8px;
+  max-width:60ch}
+.summary b{font-weight:600}
+.summary .none{color:var(--muted);font-weight:400}
 
 /* ---------- controls ---------- */
 .controls{position:sticky;top:0;z-index:20;background:var(--ground);
@@ -368,8 +383,31 @@ h1{font-size:19px;font-weight:600;letter-spacing:-.02em;margin:0}
 input[type=search]{flex:1 1 auto;min-width:0;font:inherit;color:var(--ink);
   background:var(--surface);border:1px solid var(--line);border-radius:9px;
   padding:0 12px;height:var(--tap);-webkit-appearance:none}
-input[type=search]:focus-visible,select:focus-visible,button:focus-visible{
-  outline:2px solid var(--accent);outline-offset:1px}
+/* One obvious focus style for everything that can take focus, drawn outside
+   the element so it is never clipped by a rounded corner. */
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;
+  border-radius:4px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:3px solid var(--accent);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;transition-duration:.01ms !important;
+    scroll-behavior:auto !important}
+}
+@media (prefers-contrast:more){
+  :root{--muted:var(--ink);--line:var(--ink)}
+  .card,.chip,.act,input[type=search],select{border-width:2px}
+  .why,.chip .c{opacity:1}
+}
+
+/* Visible only to screen readers, for labels a sighted user gets from layout. */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:8px;top:-60px;z-index:60;background:var(--accent);
+  color:var(--on-fill);padding:10px 16px;border-radius:0 0 8px 8px;text-decoration:none;
+  font-size:.9rem}
+.skip:focus{top:0}
 select{font:inherit;color:var(--ink);background:var(--surface);
   border:1px solid var(--line);border-radius:9px;padding:0 8px;height:var(--tap);
   max-width:44%}
@@ -378,19 +416,19 @@ select{font:inherit;color:var(--ink);background:var(--surface);
 .row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding-bottom:2px;-webkit-overflow-scrolling:touch}
 .row::-webkit-scrollbar{display:none}
-.chip{font-family:var(--mono);font-size:11.5px;background:var(--surface);
+.chip{font-family:var(--mono);font-size:.8rem;background:var(--surface);
   color:var(--muted);border:1px solid var(--line);border-radius:999px;
   padding:0 12px;height:32px;display:inline-flex;align-items:center;gap:5px;
   cursor:pointer;white-space:nowrap;flex:0 0 auto}
-.chip .c{opacity:.6;font-size:10.5px}
+.chip .c{opacity:.75;font-size:.75rem}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);
-  color:#fff}
+  color:var(--on-fill)}
 .chip.urgent[aria-pressed="true"]{background:var(--urgent);border-color:var(--urgent)}
 .chip.new[aria-pressed="true"]{background:var(--new);border-color:var(--new)}
 .chip.reset{border-style:dashed}
 
 /* ---------- results ---------- */
-.count{font-family:var(--mono);font-size:11.5px;color:var(--muted);
+.count{font-family:var(--mono);font-size:.82rem;color:var(--muted);
   padding:9px 2px 7px;display:flex;justify-content:space-between;gap:10px;
   align-items:center}
 .card{background:var(--surface);border:1px solid var(--line);
@@ -400,53 +438,54 @@ select{font:inherit;color:var(--ink);background:var(--surface);
 .card.urgent{border-left-color:var(--urgent)}
 .card.isnew{border-left-color:var(--new)}
 .card.done{opacity:.55}
-.card h2{font-size:16px;font-weight:600;margin:0 0 2px;letter-spacing:-.01em;
+.card h2{font-size:1.06rem;font-weight:600;margin:0 0 2px;letter-spacing:-.01em;
   line-height:1.3}
 .card h2 a{color:inherit;text-decoration:none}
-.who{color:var(--muted);font-size:14px;margin:0 0 7px}
+.who{color:var(--muted);font-size:.94rem;margin:0 0 7px}
 .where{display:flex;flex-wrap:wrap;gap:3px 10px;align-items:baseline;
-  font-size:13.5px;margin-bottom:8px}
+  font-size:.9rem;margin-bottom:8px}
 .venue{font-weight:500}
-.when{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.when{font-family:var(--mono);font-size:.82rem;color:var(--muted)}
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
-.tag{font-family:var(--mono);font-size:10px;letter-spacing:.03em;
+.tag{font-family:var(--mono);font-size:.75rem;letter-spacing:.03em;
   text-transform:uppercase;padding:3px 7px;border-radius:4px;
   background:var(--sunk);color:var(--muted)}
 .tag.live{background:var(--accent-soft);color:var(--accent)}
 .tag.urgent{background:var(--urgent-soft);color:var(--urgent)}
 .tag.med{background:var(--accent-soft);color:var(--accent)}
 .tag.new{background:var(--new-soft);color:var(--new)}
-.blurb{font-size:13.5px;color:var(--muted);margin:0 0 6px}
-.why{font-family:var(--mono);font-size:10.5px;color:var(--muted);opacity:.75;
+.blurb{font-size:.92rem;color:var(--muted);margin:0 0 6px}
+.why{font-family:var(--mono);font-size:.78rem;color:var(--muted);opacity:.75;
   margin:0 0 9px}
 .shot{float:right;width:96px;height:96px;margin:0 0 8px 12px;border-radius:8px;
   overflow:hidden;background:var(--sunk)}
 .shot img{width:100%;height:100%;object-fit:cover;display:block}
 .card::after{content:"";display:block;clear:both}
 @media (max-width:520px){.shot{width:74px;height:74px;margin-left:10px}}
-.hours{font-family:var(--mono);font-size:11px;color:var(--muted);
+.hours{font-family:var(--mono);font-size:.78rem;color:var(--muted);
   margin:0 0 9px;padding-top:7px;border-top:1px dashed var(--line)}
 
 /* actions: big enough for a thumb */
 .acts{display:flex;flex-wrap:wrap;gap:6px}
 .act{background:var(--surface);border:1px solid var(--line);border-radius:8px;
   height:40px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;
-  font-size:12.5px;cursor:pointer;text-decoration:none;color:var(--ink)}
+  font-size:.85rem;cursor:pointer;text-decoration:none;color:var(--ink)}
 @media (pointer:coarse){.act{height:var(--tap)}}
 .act:hover{border-color:var(--muted)}
 .act[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);
-  color:#fff}
-.act.skip[aria-pressed="true"]{background:var(--muted);border-color:var(--muted)}
+  color:var(--on-fill)}
+.act.skip[aria-pressed="true"]{background:var(--muted);border-color:var(--muted);
+  color:var(--ground)}
 .act .i{font-size:13px;line-height:1}
 
-.empty{text-align:center;color:var(--muted);padding:44px 18px;
+.empty{text-align:center;color:var(--muted);padding:2.5rem 1.2rem;font-size:1rem;
   border:1px dashed var(--line);border-radius:10px}
 .empty b{color:var(--ink);font-weight:600}
 
 /* ---------- map ---------- */
 #map{height:calc(100vh - 320px);min-height:320px;border:1px solid var(--line);
   border-radius:10px;margin-bottom:8px;background:var(--sunk)}
-.mapnote{font-family:var(--mono);font-size:11px;color:var(--muted);margin:0 0 12px}
+.mapnote{font-family:var(--mono);font-size:.78rem;color:var(--muted);margin:0 0 12px}
 .pin{border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45)}
 .pin.s-closing{background:#A8482A}
 .pin.s-open{background:#2E6A5C}
@@ -463,11 +502,11 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   padding-bottom:var(--safe-b)}
 .nav button{flex:1;border:0;background:none;height:56px;cursor:pointer;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;color:var(--muted);font-size:11px;font-family:var(--mono)}
+  gap:3px;color:var(--muted);font-size:.75rem;font-family:var(--mono)}
 .nav button[aria-selected="true"]{color:var(--accent)}
-.nav .g{font-size:17px;line-height:1}
+.nav .g{font-size:1.15rem;line-height:1}
 .nav .badge{position:absolute;transform:translate(15px,-13px);
-  background:var(--new);color:#fff;border-radius:999px;font-size:9.5px;
+  background:var(--new);color:var(--on-fill);border-radius:999px;font-size:9.5px;
   min-width:16px;height:16px;display:flex;align-items:center;
   justify-content:center;padding:0 4px}
 
@@ -476,7 +515,7 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   .wrap{padding-bottom:40px}
   .nav{position:static;border:1px solid var(--line);border-radius:10px;
     margin:14px 0 0;padding:0;max-width:420px}
-  .nav button{height:44px;flex-direction:row;gap:7px;font-size:12.5px}
+  .nav button{height:44px;flex-direction:row;gap:7px;font-size:.85rem}
   #map{height:min(64vh,540px)}
   .filters{flex-direction:row;flex-wrap:wrap;gap:6px}
   .row{overflow:visible;flex-wrap:wrap}
@@ -484,24 +523,31 @@ select{font:inherit;color:var(--ink);background:var(--surface);
 </style>
 </head>
 <body>
+<a class="skip" href="#results">Skip to the exhibitions</a>
 <div class="wrap">
 
   <header class="top">
     <h1>What&rsquo;s on</h1>
-    <span class="stamp" id="stamp"></span>
+    <p class="stamp" id="stamp"></p>
   </header>
 
-  <nav class="nav" id="nav" role="tablist">
-    <button role="tab" aria-selected="true" data-tab="browse">
-      <span class="g">◍</span><span>Browse</span></button>
-    <button role="tab" aria-selected="false" data-tab="saved">
-      <span class="g">★</span><span>Saved</span>
+  <p class="summary" id="summary"></p>
+
+  <nav class="nav" id="nav" role="tablist" aria-label="Views">
+    <button role="tab" id="tab-browse" aria-controls="results"
+            aria-selected="true" tabindex="0" data-tab="browse">
+      <span class="g" aria-hidden="true">◍</span><span>Browse</span></button>
+    <button role="tab" id="tab-saved" aria-controls="results"
+            aria-selected="false" tabindex="-1" data-tab="saved">
+      <span class="g" aria-hidden="true">★</span><span>Saved</span>
       <span class="badge" id="savedcount" hidden></span></button>
-    <button role="tab" aria-selected="false" data-tab="map">
-      <span class="g">⌖</span><span>Map</span></button>
+    <button role="tab" id="tab-map" aria-controls="map"
+            aria-selected="false" tabindex="-1" data-tab="map">
+      <span class="g" aria-hidden="true">⌖</span><span>Map</span></button>
   </nav>
 
-  <div class="controls">
+  <div class="controls" id="controls">
+    <h2 class="sr-only">Search and filter</h2>
     <div class="searchrow">
       <input type="search" id="q" placeholder="Artist, title or venue…"
              aria-label="Search" autocomplete="off">
@@ -512,9 +558,9 @@ select{font:inherit;color:var(--ink);background:var(--surface);
       </select>
     </div>
     <div class="filters">
-      <div class="row" id="f-status"></div>
-      <div class="row" id="f-city"></div>
-      <div class="row" id="f-medium"></div>
+      <div class="row" id="f-status" role="group" aria-label="When"></div>
+      <div class="row" id="f-city" role="group" aria-label="Where"></div>
+      <div class="row" id="f-medium" role="group" aria-label="Medium"></div>
     </div>
   </div>
 
@@ -523,9 +569,17 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     <button class="chip reset" id="reset" hidden>Clear filters</button>
   </div>
 
-  <div id="map" hidden></div>
-  <p class="mapnote" id="mapnote" hidden></p>
-  <div id="results"></div>
+  <!-- Filtering changes the page silently for anyone not watching it, so the
+       result count and every mark are announced here. -->
+  <p class="sr-only" role="status" aria-live="polite" id="announce"></p>
+
+  <main id="content">
+    <div id="map" role="tabpanel" aria-labelledby="tab-map"
+         tabindex="-1" hidden></div>
+    <p class="mapnote" id="mapnote" hidden></p>
+    <div id="results" role="tabpanel" aria-labelledby="tab-browse"
+         tabindex="-1"></div>
+  </main>
 
 </div>
 
@@ -585,6 +639,18 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     city: new Set(),
     medium: new Set()
   };
+
+  // An action's own message beats the running result count: pressing Save
+  // should say "Saved", not read the list length back at you.
+  var pendingMessage = null;
+  var lastAnnouncedCount = null;
+
+  function announce(message) {
+    // Re-setting the same text does not re-announce, so clear it first.
+    var region = document.getElementById("announce");
+    region.textContent = "";
+    setTimeout(function () { region.textContent = message; }, 60);
+  }
 
   function esc(s) {
     return String(s == null ? "" : s)
@@ -694,9 +760,19 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   }
 
   // ---- marking --------------------------------------------------------
+  var MARK_WORDS = {want: "Saved", seen: "Marked as seen", skip: "Hidden"};
+
   function setMark(id, value) {
-    if (marks[id] === value) { delete marks[id]; }
-    else { marks[id] = value; }
+    var show = rows.filter(function (r) { return r.id === id; })[0];
+    var name = show ? show.title : "This exhibition";
+    if (marks[id] === value) {
+      delete marks[id];
+      pendingMessage = name + ": no longer " +
+        (MARK_WORDS[value] || value).toLowerCase();
+    } else {
+      marks[id] = value;
+      pendingMessage = name + ": " + (MARK_WORDS[value] || value).toLowerCase();
+    }
     saveMarks();
     render();
     updateSavedCount();
@@ -778,7 +854,8 @@ select{font:inherit;color:var(--ink);background:var(--surface);
         '" alt="" loading="lazy" decoding="async" ' +
         'onerror="this.parentNode.remove()"></div>');
     }
-    out.push("<h2>" + (r.url
+    var de = r.lang === "de" ? ' lang="de"' : "";
+    out.push("<h2" + de + ">" + (r.url
       ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' +
         esc(r.title) + "</a>" : esc(r.title)) + "</h2>");
     if (r.artists && r.artists !== r.title) {
@@ -804,12 +881,18 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     if (mark === "going") { tags.push('<span class="tag med">going</span>'); }
     out.push('<div class="tags">' + tags.join("") + "</div>");
 
-    if (r.blurb) { out.push('<p class="blurb">' + esc(r.blurb) + "</p>"); }
-    if (r.why) {
-      out.push('<p class="why" title="How the medium was decided">' +
-        esc(r.why) + "</p>");
+    if (r.blurb) {
+      out.push('<p class="blurb"' + (r.blurb_lang === "de" ? ' lang="de"' : "") +
+        ">" + esc(r.blurb) + "</p>");
     }
-    if (r.hours) { out.push('<div class="hours">' + esc(r.hours) + "</div>"); }
+    if (r.why) {
+      out.push('<p class="why"><span class="sr-only">Classified from: ' +
+        "</span>" + esc(r.why) + "</p>");
+    }
+    if (r.hours) {
+      out.push('<div class="hours" lang="de"><span class="sr-only">' +
+        "Opening hours: </span>" + esc(r.hours) + "</div>");
+    }
     out.push(actions(r));
     out.push("</article>");
     return out.join("");
@@ -908,13 +991,24 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     return msg + '<br><br><button class="chip" id="clear2">Clear filters</button>';
   }
 
+  var first = true;
+
   function render() {
     var list = sorted(rows.filter(matches));
     var isMap = state.tab === "map";
 
-    document.getElementById("count").textContent =
-      list.length + (list.length === 1 ? " exhibition" : " exhibitions") +
+    var shown = list.length + (list.length === 1 ? " exhibition" : " exhibitions") +
       (state.tab === "saved" ? " saved" : " of " + rows.length);
+    document.getElementById("count").textContent = shown;
+    if (pendingMessage) {
+      announce(pendingMessage +
+        (list.length !== lastAnnouncedCount ? ". " + shown + " shown" : ""));
+      pendingMessage = null;
+    } else if (!first && list.length !== lastAnnouncedCount) {
+      announce(shown + " shown");
+    }
+    lastAnnouncedCount = list.length;
+    first = false;
     document.getElementById("reset").hidden = !filtersActive() || state.tab === "saved";
     document.getElementById("map").hidden = !isMap;
     document.getElementById("mapnote").hidden = !isMap;
@@ -933,17 +1027,40 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   }
 
   // ---- wiring ---------------------------------------------------------
-  document.getElementById("nav").addEventListener("click", function (e) {
-    var b = e.target.closest("[data-tab]");
-    if (!b) { return; }
-    state.tab = b.dataset.tab;
-    document.querySelectorAll("#nav [data-tab]").forEach(function (x) {
-      x.setAttribute("aria-selected", String(x.dataset.tab === state.tab));
+  var tabs = [].slice.call(document.querySelectorAll("#nav [data-tab]"));
+
+  function selectTab(name, moveFocus) {
+    state.tab = name;
+    tabs.forEach(function (t) {
+      var on = t.dataset.tab === name;
+      t.setAttribute("aria-selected", String(on));
+      t.tabIndex = on ? 0 : -1;          // one stop for the whole tab strip
+      if (on && moveFocus) { t.focus(); }
     });
-    document.querySelector(".controls").style.display =
-      state.tab === "saved" ? "none" : "";
+    document.getElementById("controls").hidden = name === "saved";
+    var panel = document.getElementById(name === "map" ? "map" : "results");
+    panel.setAttribute("aria-labelledby", "tab-" + name);
     window.scrollTo(0, 0);
     render();
+  }
+
+  document.getElementById("nav").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-tab]");
+    if (b) { selectTab(b.dataset.tab, false); }
+  });
+
+  // Arrow keys move between tabs, which is how a tab strip is expected to work.
+  document.getElementById("nav").addEventListener("keydown", function (e) {
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) { return; }
+    var next = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") { next = (i + 1) % tabs.length; }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { next = (i - 1 + tabs.length) % tabs.length; }
+    else if (e.key === "Home") { next = 0; }
+    else if (e.key === "End") { next = tabs.length - 1; }
+    if (next === null) { return; }
+    e.preventDefault();
+    selectTab(tabs[next].dataset.tab, true);
   });
 
   var q = document.getElementById("q");
@@ -963,10 +1080,37 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     }
   });
 
-  var newCount = rows.filter(function (r) { return r._new; }).length;
-  document.getElementById("stamp").textContent =
-    "updated " + BUILT + (newCount ? " \\u00b7 " + newCount + " new" : "");
+  function summarise() {
+    // What is worth doing, in a sentence. The counts are still below for
+    // anyone who wants them, but they are a poor thing to read first.
+    var newCount = rows.filter(function (r) { return r._new; }).length;
+    var sculpture = rows.filter(function (r) {
+      return r.tier === 3 && (r.status === "opening_soon" ||
+        r.status === "running" || r.status === "closing_soon");
+    }).length;
+    var closing = rows.filter(function (r) {
+      return r.status === "closing_soon" && marks[r.id] !== "seen";
+    }).length;
 
+    var parts = [];
+    if (sculpture) {
+      parts.push("<b>" + sculpture + "</b> sculpture show" +
+        (sculpture === 1 ? "" : "s") + " you can still catch");
+    }
+    if (closing) {
+      parts.push("<b>" + closing + "</b> closing within a fortnight");
+    }
+    if (newCount) {
+      parts.push("<b>" + newCount + "</b> new since you last looked");
+    }
+    document.getElementById("summary").innerHTML = parts.length
+      ? parts.join(" &middot; ")
+      : '<span class="none">Nothing new. ' + rows.length +
+        " exhibitions are being tracked.</span>";
+    document.getElementById("stamp").textContent = "Updated " + BUILT;
+  }
+
+  summarise();
   buildFilters();
   updateSavedCount();
   render();
@@ -1072,6 +1216,21 @@ def _png(size, background, mark):
             + chunk(b"IEND", b""))
 
 
+def _ico(png_bytes, size):
+    """Wrap a PNG in an ICO container, which Windows shortcuts need.
+
+    Since Vista an .ico may hold PNG data directly, so this is a header and a
+    directory entry rather than a re-encode.
+    """
+    import struct
+    header = struct.pack("<HHH", 0, 1, 1)              # reserved, type=icon, count
+    entry = struct.pack("<BBBBHHII",
+                        size if size < 256 else 0,
+                        size if size < 256 else 0,
+                        0, 0, 1, 32, len(png_bytes), 6 + 16)
+    return header + entry + png_bytes
+
+
 def write_pwa(directory=None):
     """Write the manifest, service worker and icons beside the page."""
     directory = directory or HERE
@@ -1081,10 +1240,15 @@ def write_pwa(directory=None):
         fh.write("\n")
     with open(os.path.join(directory, "sw.js"), "w", encoding="utf-8") as fh:
         fh.write(SERVICE_WORKER.lstrip())
+    icons = {}
     for size in (192, 512):
+        icons[size] = _png(size, (46, 106, 92), (243, 243, 241))
         with open(os.path.join(directory, "icon-%d.png" % size), "wb") as fh:
-            fh.write(_png(size, (46, 106, 92), (243, 243, 241)))
-    return 4
+            fh.write(icons[size])
+    # A desktop shortcut needs an .ico; browsers and phones do not.
+    with open(os.path.join(directory, "icon.ico"), "wb") as fh:
+        fh.write(_ico(icons[192], 192))
+    return 5
 
 
 def render(state, today=None):
