@@ -715,6 +715,15 @@
   ],
   "qid": "Q132060478"
  },
+ "Carolyn Lazard": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "sculptor",
+   "visual artist"
+  ],
+  "qid": "Q61927043"
+ },
  "Carrie Mae Weems": {
   "medium": "sculpture",
   "occupations": [
@@ -2094,6 +2103,7 @@
  "Jana Sophia Nolle": null,
  "Jane Garbert": null,
  "Janine Weger": null,
+ "Janne Kummer": null,
  "Jarosław Kozłowski": {
   "medium": "sculpture",
   "occupations": [
@@ -2284,6 +2294,13 @@
    "sculptor"
   ],
   "qid": "Q170071"
+ },
+ "Josef Kaiser": {
+  "medium": "other art",
+  "occupations": [
+   "architect"
+  ],
+  "qid": "Q1704937"
  },
  "Joseph Beuys": {
   "medium": "sculpture",
@@ -2667,6 +2684,13 @@
   ],
   "qid": "Q3218831"
  },
+ "Lauryn Youden": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q124633231"
+ },
  "Lee Bae": {
   "medium": "sculpture",
   "occupations": [
@@ -2803,6 +2827,7 @@
   "qid": "Q51563701"
  },
  "Lucius Andres Anhello": null,
+ "Luis Lázaro Matos": null,
  "Luisa Rabbia": {
   "medium": "other art",
   "occupations": [
@@ -3369,6 +3394,13 @@
  },
  "Monika Blaszczak": null,
  "Monika Grabuschnigg": null,
+ "Monilola Olayemi Ilupeju": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q134711265"
+ },
  "Mooni Perry": null,
  "Moritz Götze": {
   "medium": "painting",
@@ -3695,6 +3727,14 @@
   "qid": "Q19004922"
  },
  "Paul Hutchinson": null,
+ "Pauline Boudry": {
+  "medium": "other art",
+  "occupations": [
+   "artist",
+   "film director"
+  ],
+  "qid": "Q61919476"
+ },
  "Pavel Brăila": {
   "medium": "sculpture",
   "occupations": [
@@ -3888,6 +3928,15 @@
    "painter"
   ],
   "qid": "Q109747512"
+ },
+ "Renate Lorenz": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "installation artist",
+   "video artist"
+  ],
+  "qid": "Q61919478"
  },
  "René Graetz": {
   "medium": "sculpture",
