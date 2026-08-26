@@ -1,4 +1,8 @@
 {
+ "20blue arts|leipzig": [
+  51.3379347,
+  12.3670145
+ ],
  "47m contemporary|leipzig": [
   51.3301019,
   12.3731845
@@ -6,6 +10,10 @@
  "alte feuerwache|berlin": [
   52.5162846,
   13.4422906
+ ],
+ "alte handelsschule|leipzig": [
+  51.3178903,
+  12.3260135
  ],
  "artae showroom|leipzig": [
   51.3577306,
@@ -16,9 +24,25 @@
   13.327792
  ],
  "bba gallery|berlin": null,
+ "bbkl e v im kulturhof gohlis|leipzig": [
+  51.3624296,
+  12.3589583
+ ],
+ "bibliotheca albertina|leipzig": [
+  51.3324928,
+  12.3682587
+ ],
+ "burg giebichenstein kunsthochschule halle|halle": [
+  51.4973624,
+  11.9571212
+ ],
  "charter projektgalerie|leipzig": [
   51.3322117,
   12.332578
+ ],
+ "d21 kunstraum leipzig|leipzig": [
+  51.3376288,
+  12.3322475
  ],
  "das minsk|berlin": null,
  "deutsches buch und schriftmuseum der deutschen nationalbibliothek|leipzig": [
@@ -38,11 +62,17 @@
   51.3341475,
   12.3661363
  ],
+ "galerie im neuen augusteum|leipzig": [
+  51.3390493,
+  12.3792024
+ ],
+ "galerie intershop|leipzig": null,
  "galerie kk5|leipzig": [
   51.3414133,
   12.3682983
  ],
  "galerie koenitz|leipzig": null,
+ "galerie k|leipzig": null,
  "galerie martin mertens|berlin": null,
  "galerie mutare|berlin": [
   52.5013615,
@@ -56,11 +86,17 @@
   51.3371371,
   12.3880849
  ],
+ "halle 14|leipzig": null,
  "hochdruckpartner galerie werkstatt|leipzig": [
   51.334035,
   12.3260954
  ],
+ "hochschule fur grafik und buchkunst leipzig|leipzig": [
+  51.3331906,
+  12.3679579
+ ],
  "hosek contemporary|berlin": null,
+ "hvb kunstraum leipzig|leipzig": null,
  "karl schmidt rottluff haus kunstsammlungen chemnitz|chemnitz": [
   50.8350609,
   12.8483205
@@ -73,6 +109,10 @@
   51.338461,
   12.3700709
  ],
+ "kunsthalle talstrasse|halle": [
+  51.5068912,
+  11.9545014
+ ],
  "kunstkraftwerk leipzig|leipzig": [
   51.330661,
   12.3215475
@@ -84,6 +124,14 @@
  "kunstpunkt berlin|berlin": [
   52.529708,
   13.3860338
+ ],
+ "kunstraum techne sphere|leipzig": [
+  51.3254548,
+  12.3116926
+ ],
+ "muhlengalerie dolitzer wassermuhle|leipzig": [
+  51.2888796,
+  12.387941
  ],
  "museum der bildenden kunste leipzig|leipzig": [
   51.3423389,
@@ -119,6 +167,14 @@
   51.3338486,
   12.3258532
  ],
+ "tapetenwerk|leipzig": [
+  51.3338486,
+  12.3258532
+ ],
  "universitatsklinikum leipzig|leipzig": null,
+ "untergeschoss 14|leipzig": [
+  51.3262188,
+  12.3179526
+ ],
  "verena kerfin gallery|berlin": null
 }
