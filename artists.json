@@ -497,6 +497,7 @@
   ],
   "qid": "Q792433"
  },
+ "Aya Schamoni": null,
  "Ayan Farah": {
   "medium": "other art",
   "occupations": [
@@ -825,6 +826,7 @@
   "qid": "Q29422034"
  },
  "Charlotte Elfriede Pauly": null,
+ "Charlotte Hiltmann": null,
  "Charlotte Posenenske": {
   "medium": "sculpture",
   "occupations": [
@@ -1095,6 +1097,7 @@
   "qid": "Q15432791"
  },
  "Dior Thiam": null,
+ "Dome Wood": null,
  "Dominik Eggermann": null,
  "Dorian Sari": {
   "medium": "other art",
@@ -1206,6 +1209,7 @@
   "qid": "Q1298986"
  },
  "Eintritt frei": null,
+ "Elisa Pastora": null,
  "Elisabeth Gerdemann": null,
  "Elisabeth Sonneck": {
   "medium": "painting",
@@ -1380,6 +1384,21 @@
  "Frank Jimin Hopp": null,
  "Frank Mühlfriedel": null,
  "Franz West": null,
+ "Franziska Holstein": {
+  "medium": "painting",
+  "occupations": [
+   "graphic artist",
+   "painter"
+  ],
+  "qid": "Q65963412"
+ },
+ "Franziska Hufnagel": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q95192507"
+ },
  "François Briand": null,
  "François Morellet": {
   "medium": "sculpture",
@@ -1476,6 +1495,7 @@
   ],
   "qid": "Q1242404"
  },
+ "Gabriel Vormstein": null,
  "Gabriela Kobus": null,
  "Gabriele Seitz": {
   "medium": "other art",
@@ -2216,6 +2236,7 @@
   ],
   "qid": "Q27924093"
  },
+ "Jana Grewe": null,
  "Jana Groß": null,
  "Jana Schulz": null,
  "Jana Sophia Nolle": null,
@@ -2357,6 +2378,7 @@
   ],
   "qid": "Q107389637"
  },
+ "Joe Neave": null,
  "Johanna Petersen": null,
  "Johannes Bosisio": null,
  "Johannes Eggers": null,
@@ -2370,6 +2392,14 @@
    "visual artist"
   ],
   "qid": "Q3181269"
+ },
+ "John Davies": {
+  "medium": "sculpture",
+  "occupations": [
+   "painter",
+   "sculptor"
+  ],
+  "qid": "Q1471538"
  },
  "John M Armleder": null,
  "John McCracken": {
@@ -2715,6 +2745,7 @@
   ],
   "qid": "Q21290817"
  },
+ "Kerstin Podbiel": null,
  "Kerstin Skringer": {
   "medium": "other art",
   "occupations": [
@@ -2787,6 +2818,7 @@
  "Ksti Hu": null,
  "Kui Soon Park": null,
  "Kuratiert von Almut Koch": null,
+ "Kurt von Bley": null,
  "Kweli e.V": null,
  "Kyler Garrison": null,
  "Käte Müller": {
@@ -3066,6 +3098,7 @@
  },
  "Malin Kuht": null,
  "Malin Sauermann": null,
+ "Mamma Andersson": null,
  "Manauara Clandestina": null,
  "Mandy Gehrt": null,
  "Manfred Butzmann": {
@@ -3234,6 +3267,7 @@
  },
  "Marino Formenti": null,
  "Mario de Vega": null,
+ "Mariola Groener": null,
  "Marjetica Potrč": {
   "medium": "painting",
   "occupations": [
@@ -3345,6 +3379,8 @@
   "qid": "Q1908532"
  },
  "Matt Browning": null,
+ "Matthias Dornfeld": null,
+ "Matthias Hesselbacher": null,
  "Maurizio Cattelan": {
   "medium": "sculpture",
   "occupations": [
@@ -3587,6 +3623,7 @@
   ],
   "qid": "Q29754679"
  },
+ "Nadine Deja": null,
  "Nadine Fecht": {
   "medium": "other art",
   "occupations": [
@@ -3745,6 +3782,7 @@
   ],
   "qid": "Q464658"
  },
+ "Nouchka Wolf": null,
  "Noémi Barbaglia": null,
  "Noémie Goudal": {
   "medium": "other art",
@@ -4364,6 +4402,7 @@
  },
  "School of Fontainebleau": null,
  "Scout Hamper": null,
+ "Sebastian Hammwöhner": null,
  "Sebastian Harbort": null,
  "Sebastian Warne": null,
  "Selin Acarbaş": null,
@@ -4511,6 +4550,13 @@
    "artist"
   ],
   "qid": "Q55236430"
+ },
+ "Stefan Kaminski": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q130790858"
  },
  "Stefan Roloff": {
   "medium": "painting",
@@ -4662,6 +4708,7 @@
   ],
   "qid": "Q718297"
  },
+ "Tania Elstermeyer": null,
  "Tanja Ostojić": {
   "medium": "painting",
   "occupations": [
