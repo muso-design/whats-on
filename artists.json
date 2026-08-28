@@ -128,6 +128,14 @@
   ],
   "qid": "Q137753517"
  },
+ "Alex Tennigkeit": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q95207075"
+ },
+ "Alex Weiss": null,
  "Alexander Iskin": null,
  "Alexander Norton (Annita Sleep)": null,
  "Alexandra Daisy Ginsberg": {
@@ -405,6 +413,7 @@
   ],
   "qid": "Q349842"
  },
+ "Anton Kolomieitsev": null,
  "Anton Steenbock": null,
  "Aram Bartholl": {
   "medium": "sculpture",
@@ -426,6 +435,7 @@
   ],
   "qid": "Q4790091"
  },
+ "Arinjoy Sen": null,
  "Arno Rink": {
   "medium": "painting",
   "occupations": [
@@ -569,6 +579,15 @@
  },
  "Beatrice Marchi": null,
  "Belle Santos": null,
+ "Ben Cottrell": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "sculptor",
+   "visual artist"
+  ],
+  "qid": "Q112564585"
+ },
  "Ben Glas": {
   "medium": "painting",
   "occupations": [
@@ -799,6 +818,7 @@
   "qid": "Q4945670"
  },
  "Cecilia Moo": null,
+ "Centre for Documentary Architecture": null,
  "Cevdet Erek": {
   "medium": "sculpture",
   "occupations": [
@@ -987,6 +1007,13 @@
   "qid": "Q61409421"
  },
  "Daria Syvakos": null,
+ "Darko Lesjak": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q124608251"
+ },
  "Dash Snow": {
   "medium": "sculpture",
   "occupations": [
@@ -1337,8 +1364,17 @@
   ],
   "qid": "Q5415532"
  },
+ "Eyal Weizman": {
+  "medium": "other art",
+  "occupations": [
+   "architect"
+  ],
+  "qid": "Q509718"
+ },
+ "Feda Wardak": null,
  "Federico Protto": null,
  "Federico Tosi": null,
+ "Fee Klein": null,
  "Fee Kleis": null,
  "Fee-Gloria Grönemeyer": null,
  "Felix Becker": null,
@@ -1744,6 +1780,7 @@
   ],
   "qid": "Q1570094"
  },
+ "Hala Eid Alnaji": null,
  "Haleh Redjaian": {
   "medium": "other art",
   "occupations": [
@@ -2091,6 +2128,21 @@
   "qid": "Q83742731"
  },
  "Immanuel Birkert": null,
+ "Immanuel Schuhmacher": null,
+ "Ina Wudtke": {
+  "medium": "other art",
+  "occupations": [
+   "video artist"
+  ],
+  "qid": "Q95647425"
+ },
+ "Ines Weizman": {
+  "medium": "other art",
+  "occupations": [
+   "architect"
+  ],
+  "qid": "Q130323359"
+ },
  "Inga Somdyala": null,
  "Inge Mahn": {
   "medium": "sculpture",
@@ -2381,6 +2433,7 @@
  "Joe Neave": null,
  "Johanna Petersen": null,
  "Johannes Bosisio": null,
+ "Johannes Bünemann": null,
  "Johannes Eggers": null,
  "Johannes Seluga": null,
  "John Coplans": {
@@ -2577,6 +2630,16 @@
   "qid": "Q447568"
  },
  "Julien Heintz": null,
+ "Julita Wójcik": {
+  "medium": "sculpture",
+  "occupations": [
+   "installation artist",
+   "painter",
+   "performance artist",
+   "video artist"
+  ],
+  "qid": "Q11729218"
+ },
  "Julius Pristauz": null,
  "Julius Tutsch": null,
  "Julius von Bismarck": {
@@ -2718,6 +2781,13 @@
  "Katja Enders-Plate": null,
  "Kaya Pilsner": null,
  "Kayleigh Ho": null,
+ "Kees Christiaanse": {
+  "medium": "other art",
+  "occupations": [
+   "architect"
+  ],
+  "qid": "Q680377"
+ },
  "Kemil Bekteši": null,
  "Kent Chan": {
   "medium": "other art",
@@ -2772,6 +2842,7 @@
   "qid": "Q447300"
  },
  "Kim Chong Hak": null,
+ "Kioomars Musayyebi": null,
  "Kira Freije": null,
  "Kirsten Angermann": {
   "medium": "other art",
@@ -2818,6 +2889,13 @@
  "Ksti Hu": null,
  "Kui Soon Park": null,
  "Kuratiert von Almut Koch": null,
+ "Kurt Woldmann": {
+  "medium": "other art",
+  "occupations": [
+   "visual artist"
+  ],
+  "qid": "Q99391300"
+ },
  "Kurt von Bley": null,
  "Kweli e.V": null,
  "Kyler Garrison": null,
@@ -2871,6 +2949,18 @@
    "artist"
   ],
   "qid": "Q124633231"
+ },
+ "Lebbeus Woods": {
+  "medium": "sculpture",
+  "occupations": [
+   "architect",
+   "artist",
+   "draftsperson",
+   "graphic artist",
+   "painter",
+   "sculptor"
+  ],
+  "qid": "Q1386188"
  },
  "Lee Bae": {
   "medium": "sculpture",
@@ -3084,6 +3174,16 @@
   ],
   "qid": "Q451600"
  },
+ "Maja Bajević": {
+  "medium": "other art",
+  "occupations": [
+   "artist",
+   "performance artist",
+   "photographer",
+   "visual artist"
+  ],
+  "qid": "Q1491703"
+ },
  "Maja Behrmann": null,
  "Makabe Rikuji": null,
  "Maksym Khodak": null,
@@ -3258,6 +3358,15 @@
   ],
   "qid": "Q47496"
  },
+ "Marina Naprushkina": {
+  "medium": "other art",
+  "occupations": [
+   "artist",
+   "video artist"
+  ],
+  "qid": "Q21032194"
+ },
+ "Marina Tabassum Architects": null,
  "Marina Xenofontos": {
   "medium": "other art",
   "occupations": [
@@ -3754,6 +3863,16 @@
   "qid": "Q1992805"
  },
  "Nina Paszkowski": null,
+ "Nir Evron": {
+  "medium": "other art",
+  "occupations": [
+   "film director",
+   "filmmaker",
+   "photographer",
+   "video artist"
+  ],
+  "qid": "Q99517077"
+ },
  "Noa Yekutieli": null,
  "Noi Fuhrer": null,
  "Nomin Zezegmaa": null,
@@ -3805,7 +3924,15 @@
   ],
   "qid": "Q2005322"
  },
+ "Nurit Stark": null,
  "Oana Stanciu": null,
+ "Ola Hassanain": {
+  "medium": "other art",
+  "occupations": [
+   "architect"
+  ],
+  "qid": "Q112564269"
+ },
  "Olaf Metzel": {
   "medium": "sculpture",
   "occupations": [
@@ -3835,6 +3962,14 @@
   "qid": "Q3881996"
  },
  "Omari Douglin": null,
+ "Omer Krieger": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q42972400"
+ },
+ "Open Group": null,
  "Ornella Fieres": null,
  "Oska Gutheil": null,
  "Oskar Schlemmer": {
@@ -3941,6 +4076,13 @@
   "qid": "Q19004922"
  },
  "Paul Hutchinson": null,
+ "Paul Hübner": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q1392044"
+ },
  "Paula Strunden": null,
  "Pauline Boudry": {
   "medium": "other art",
@@ -4300,6 +4442,7 @@
   ],
   "qid": "Q2163666"
  },
+ "Romain Löser": null,
  "Romane Holderried Kaesdorf": {
   "medium": "painting",
   "occupations": [
@@ -4375,6 +4518,13 @@
  "Sabrina Quintero": null,
  "Sacha Ghilardi": null,
  "Salim Green": null,
+ "Salma Samar Damluji": {
+  "medium": "other art",
+  "occupations": [
+   "architect"
+  ],
+  "qid": "Q100146632"
+ },
  "Salomé Chatriot": {
   "medium": "other art",
   "occupations": [
@@ -4392,6 +4542,7 @@
  },
  "Sarah Al-Darwich": null,
  "Sarah Lehnerer": null,
+ "Sasha Marianna Salzmann": null,
  "Saâdane Afif": {
   "medium": "sculpture",
   "occupations": [
@@ -4576,6 +4727,14 @@
   "qid": "Q125102599"
  },
  "Stella Winter": null,
+ "Stephane Leonard": {
+  "medium": "painting",
+  "occupations": [
+   "artist",
+   "painter"
+  ],
+  "qid": "Q1744138"
+ },
  "Stephanie Comilang": {
   "medium": "other art",
   "occupations": [
@@ -4835,6 +4994,13 @@
   ],
   "qid": "Q3526414"
  },
+ "Tiffany Chung": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q20022460"
+ },
  "Till Krause": {
   "medium": "other art",
   "occupations": [
@@ -4936,6 +5102,14 @@
   "qid": "Q2501756"
  },
  "Uta Schlenzig": null,
+ "Ute Richter": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q93581032"
+ },
+ "V. Mitch McEwen": null,
  "Valentina Kozinets": null,
  "Valerio Nicolai": null,
  "Vanessa Amoah Opoku": null,
