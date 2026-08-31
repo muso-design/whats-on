@@ -92,6 +92,10 @@
   51.3346543,
   12.3923902
  ],
+ "gorki|berlin": [
+  52.5190141,
+  13.3950767
+ ],
  "grassi museum fur angewandte kunst|leipzig": [
   51.3371371,
   12.3880849
@@ -156,6 +160,10 @@
   51.3142498,
   12.3867879
  ],
+ "prater galerie|berlin": [
+  52.5402446,
+  13.4095113
+ ],
  "raw lemon gallery|leipzig": [
   51.3431107,
   12.3102734
@@ -186,5 +194,9 @@
   51.3262188,
   12.3179526
  ],
- "verena kerfin gallery|berlin": null
+ "verena kerfin gallery|berlin": null,
+ "wilhelm hallen|berlin": [
+  52.5776575,
+  13.3613903
+ ]
 }
