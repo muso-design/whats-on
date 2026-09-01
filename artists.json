@@ -256,6 +256,14 @@
   ],
   "qid": "Q130824227"
  },
+ "Andreas Albrecht": {
+  "medium": "painting",
+  "occupations": [
+   "architect",
+   "draftsperson"
+  ],
+  "qid": "Q24718493"
+ },
  "Andreas Eriksson": {
   "medium": "sculpture",
   "occupations": [
@@ -295,6 +303,22 @@
    "photographer"
   ],
   "qid": "Q77287944"
+ },
+ "André Derain": {
+  "medium": "sculpture",
+  "occupations": [
+   "designer",
+   "draftsperson",
+   "engraver",
+   "graphic artist",
+   "illustrator",
+   "lithographer",
+   "painter",
+   "photographer",
+   "sculptor",
+   "watercolorist"
+  ],
+  "qid": "Q156272"
  },
  "Andy Warhol": {
   "medium": "sculpture",
@@ -755,6 +779,13 @@
   ],
   "qid": "Q129406998"
  },
+ "Caroline Kober": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q109750350"
+ },
  "Caroline Kryzecki": {
   "medium": "painting",
   "occupations": [
@@ -788,6 +819,7 @@
   ],
   "qid": "Q136724184"
  },
+ "Carsten Goering": null,
  "Caterina Gobbi": null,
  "Caterina Renaux Hering": null,
  "Catherine Lorent": {
@@ -934,6 +966,13 @@
  },
  "Claire de Santa Coloma": null,
  "Clara Brörmann": null,
+ "Claudia Hauptmann": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q136824910"
+ },
  "Claus Weidensdorfer": {
   "medium": "painting",
   "occupations": [
@@ -1705,6 +1744,13 @@
   "qid": "Q317838"
  },
  "Grit Richter": null,
+ "Gudrun Brüne": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q1553080"
+ },
  "Gudrun Petersdorff": {
   "medium": "painting",
   "occupations": [
@@ -2252,6 +2298,16 @@
   ],
   "qid": "Q3737030"
  },
+ "Jac Leirner": {
+  "medium": "sculpture",
+  "occupations": [
+   "installation artist",
+   "sculptor",
+   "textile artist",
+   "visual artist"
+  ],
+  "qid": "Q1676900"
+ },
  "Jan Brueghel der Jüngere": {
   "medium": "painting",
   "occupations": [
@@ -2430,6 +2486,13 @@
    "architect"
   ],
   "qid": "Q107389637"
+ },
+ "Jochen Mühlenbrink": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q1683493"
  },
  "Joe Neave": null,
  "Johanna Petersen": null,
@@ -2778,6 +2841,13 @@
    "photographer"
   ],
   "qid": "Q95836"
+ },
+ "Kathrin Rank": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q23565347"
  },
  "Katja Enders-Plate": null,
  "Kaya Pilsner": null,
@@ -4213,6 +4283,7 @@
  },
  "Rachel Monosov": null,
  "Rachel Seidu": null,
+ "Rafa Silvares": null,
  "Rafik Greiss": null,
  "Raha Raissnia": null,
  "Rahel grote Lambers": null,
@@ -4757,6 +4828,7 @@
   "qid": "Q1682539"
  },
  "Stevie Dix": null,
+ "Studio WENWAN": null,
  "Su Yu Hsin": null,
  "Suah Im": null,
  "Sung Tieu": {
@@ -5192,6 +5264,7 @@
   ],
   "qid": "Q102810"
  },
+ "Wanda Stolle": null,
  "Wang Lu": null,
  "Wang Shugang": {
   "medium": "sculpture",
