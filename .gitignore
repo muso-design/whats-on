@@ -3,3 +3,5 @@ __pycache__/
 sample_events.json
 .venv/
 server.log
+pull.log
+pull2.log

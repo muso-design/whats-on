@@ -39,13 +39,17 @@ jobs:
           python test_translate.py
           python test_calendar.py
           python test_wikidata.py
+          python test_direct.py
 
       - name: Fetch and rebuild
         env:
           DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
           TRANSLATE_PROVIDER: ${{ vars.TRANSLATE_PROVIDER }}
           MYMEMORY_EMAIL: ${{ secrets.MYMEMORY_EMAIL }}
-        run: python update.py
+        # No Ollama on the runner, so reading gallery sites is skipped here and
+        # happens on the local machine instead. Shows already found that way
+        # stay in the inventory; they simply are not refreshed by this job.
+        run: python update.py --no-direct
 
       - name: Commit the inventory and the page
         run: |

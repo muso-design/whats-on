@@ -22,6 +22,10 @@ GEOCODE_BUDGET = 25
 # for good, so after the first backfill only new names cost anything.
 ARTIST_BUDGET = 120
 
+# Gallery sites read directly per run. Curated venues always go first, and an
+# unchanged page costs nothing, so this caps only genuinely new reading.
+DIRECT_BUDGET = 12
+
 
 def refresh(raw_events, st, translate=True, geocode=True, artists=True,
             network=True, verbose=True):
@@ -67,6 +71,8 @@ def main(argv=None):
     parser.add_argument("--no-geocode", action="store_true")
     parser.add_argument("--no-artists", action="store_true",
                         help="skip resolving artists against Wikidata")
+    parser.add_argument("--no-direct", action="store_true",
+                        help="skip reading gallery sites with the local model")
     parser.add_argument("--no-build", action="store_true",
                         help="update the inventory but do not rebuild the page")
     parser.add_argument("--state", default=state_mod.STATE_PATH)
@@ -81,6 +87,9 @@ def main(argv=None):
         print("fetching...")
         raw_events = scraper.scrape_all()
         print("  %d listings" % len(raw_events))
+        if not args.no_direct:
+            import direct
+            raw_events.extend(direct.scrape_direct(budget=DIRECT_BUDGET))
 
     st = state_mod.load(args.state)
     fresh = refresh(raw_events, st,

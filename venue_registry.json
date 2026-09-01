@@ -1,0 +1,2784 @@
+{
+ "01 halle tapetenwerk|leipzig": {
+  "city": "Leipzig",
+  "email": "info@tapetenwerk.de",
+  "key": "01 halle tapetenwerk|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/tapetenwerk-leipzig-halle-c-01/",
+  "name": "Tapetenwerk Leipzig, Halle C 01",
+  "opening_hours": "Di. bis So.: 15 - 19 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "tapetenwerk-leipzig-halle-c-01",
+  "website": "https://www.tapetenwerk.de"
+ },
+ "14 halle|leipzig": {
+  "city": "Leipzig",
+  "email": "office@halle14.org",
+  "key": "14 halle|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/halle-14/",
+  "name": "HALLE 14",
+  "opening_hours": "Di. bis Sa.: 11 - 18 Uhr Barrierefreier Zugang",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "halle-14",
+  "website": "https://www.halle14.org"
+ },
+ "14 untergeschoss|leipzig": {
+  "city": "Leipzig",
+  "key": "14 untergeschoss|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/untergeschoss-14/",
+  "name": "UNTERGESCHOSS 14",
+  "opening_hours": "Do. - So.: 11 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "untergeschoss-14",
+  "website": "https://www.spinnerei.de/untergeschoss-14.html"
+ },
+ "16 raum|leipzig": {
+  "city": "Leipzig",
+  "key": "16 raum|leipzig",
+  "lat": 51.3097978,
+  "lng": 12.3702233,
+  "name": "Galerie Raum 16",
+  "osm_id": "node/4883533414",
+  "sources": [
+   "osm"
+  ]
+ },
+ "20blue arts|leipzig": {
+  "city": "Leipzig",
+  "email": "arts@20blue.de",
+  "key": "20blue arts|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/20blue-arts/",
+  "name": "20blue.arts",
+  "opening_hours": "Do. - Fr: 14 - 19 Uhr, Sa. - So.: 13 - 18 Uhr, First Friday: bis 22 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "20blue-arts",
+  "website": "https://www.twentybluearts.de"
+ },
+ "2445|leipzig": {
+  "city": "Leipzig",
+  "email": "mail@spinnerei.de",
+  "key": "2445|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/2445/",
+  "name": "Werkschau",
+  "opening_hours": "Di. bis Sa.: 11-18 Uhr So.: 13-18 Uhr Eintritt frei",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "2445",
+  "website": "https://www.spinnerei.de"
+ },
+ "47m|leipzig": {
+  "city": "Leipzig",
+  "email": "info@47m.info",
+  "key": "47m|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/47m-contemporary/",
+  "name": "47m Contemporary",
+  "opening_hours": "Mi. & Fr.: 15 - 20 Uhr, Sa.: 13 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "47m-contemporary",
+  "website": "https://47m.info/de"
+ },
+ "49 atelier|leipzig": {
+  "city": "Leipzig",
+  "key": "49 atelier|leipzig",
+  "lat": 51.2831646,
+  "lng": 12.3145383,
+  "name": "Atelier 49",
+  "osm_id": "way/191128090",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://urfunken.de"
+ },
+ "4te fur kultur obsessive wand|leipzig": {
+  "city": "Leipzig",
+  "key": "4te fur kultur obsessive wand|leipzig",
+  "lat": 51.3062358,
+  "lng": 12.3825587,
+  "name": "4te Wand Projektraum für obsessive Kultur",
+  "osm_id": "node/10686295962",
+  "sources": [
+   "osm"
+  ]
+ },
+ "abendakademie neue|leipzig": {
+  "city": "Leipzig",
+  "key": "abendakademie neue|leipzig",
+  "lat": 51.317401,
+  "lng": 12.3814338,
+  "name": "Neue Abendakademie Leipzig",
+  "osm_id": "way/39959647",
+  "sources": [
+   "osm"
+  ]
+ },
+ "ag der ehemaligen maschinenfabrik vulkan|chemnitz": {
+  "city": "Chemnitz",
+  "key": "ag der ehemaligen maschinenfabrik vulkan|chemnitz",
+  "listing_url": "https://www.rundgang-kunst.de/locations/ehemaligen-maschinenfabrik-der-vulkan-ag/",
+  "name": "Werkschau - Made in Sachsen",
+  "opening_hours": null,
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "ehemaligen-maschinenfabrik-der-vulkan-ag"
+ },
+ "akanthus im westwerk|leipzig": {
+  "city": "Leipzig",
+  "email": "post@akanthus-galerie.de",
+  "key": "akanthus im westwerk|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/akanthus-galerie-im-westwerk/",
+  "name": "akanthus galerie / im westwerk",
+  "opening_hours": "Di. bis Fr.: 14 - 19 Uhr, Sa 11 - 16 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "akanthus-galerie-im-westwerk",
+  "website": "https://www.akanthus-galerie.de"
+ },
+ "albertina bibliotheca|leipzig": {
+  "city": "Leipzig",
+  "email": "oeffentlichkeitsarbeit@ub.uni-leipzig.de",
+  "key": "albertina bibliotheca|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/bibliotheca-albertina/",
+  "name": "Bibliotheca Albertina",
+  "opening_hours": "Mo. - Mi.: 10 - 18 Uhr, Do. - So.: 10 - 21 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "bibliotheca-albertina"
+ },
+ "alina art|chemnitz": {
+  "city": "Chemnitz",
+  "key": "alina art|chemnitz",
+  "lat": 50.8499435,
+  "lng": 12.9234532,
+  "name": "Alina Art Galerie",
+  "osm_id": "node/4248381866",
+  "sources": [
+   "osm"
+  ]
+ },
+ "alken et sledz studio|leipzig": {
+  "city": "Leipzig",
+  "key": "alken et sledz studio|leipzig",
+  "lat": 51.3376204,
+  "lng": 12.3318559,
+  "name": "Studio ALKEN et SLEDZ",
+  "osm_id": "node/2467457878",
+  "sources": [
+   "osm"
+  ]
+ },
+ "alte handelsschule|leipzig": {
+  "city": "Leipzig",
+  "email": "info@alte-handelsschule.de",
+  "key": "alte handelsschule|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/alte-handelsschule/",
+  "name": "Alte Handelsschule",
+  "opening_hours": "Mo. bis Do.: 9 - 11:30 Uhr Fr. bis Sa.: 15 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "alte-handelsschule",
+  "website": "https://www.alte-handelsschule.de"
+ },
+ "am arthur garagen kulturhaus|chemnitz": {
+  "city": "Chemnitz",
+  "key": "am arthur garagen kulturhaus|chemnitz",
+  "lat": 50.8348178,
+  "lng": 12.9119195,
+  "name": "Garagen am Kulturhaus Arthur",
+  "osm_id": "node/12877071825",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://chemnitz2025.de/3000garagen-festival/"
+ },
+ "am buddehaus skulpturengarten|leipzig": {
+  "city": "Leipzig",
+  "key": "am buddehaus skulpturengarten|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/skulpturengarten-am-buddehaus/",
+  "name": "Skulpturengarten des KuK Gohlis",
+  "opening_hours": "Mo. bis So.: 9 - 19 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "skulpturengarten-am-buddehaus",
+  "website": "https://www.kreativitaetswerkstatt-leipzig.de"
+ },
+ "am kunstsammlungen theaterplatz|chemnitz": {
+  "city": "Chemnitz",
+  "email": "kunstsammlungen@stadt-chemnitz.de",
+  "key": "am kunstsammlungen theaterplatz|chemnitz",
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunstsammlungen-am-theaterplatz/",
+  "name": "Kunstsammlungen am Theaterplatz",
+  "opening_hours": "Di., Do. - So., Feiertag: 11 - 18 Uhr, Mi.: 14 - 21 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "kunstsammlungen-am-theaterplatz"
+ },
+ "an banksy exhibition house of unauthorized|leipzig": {
+  "city": "Leipzig",
+  "email": "info@house-of-banksy.com",
+  "key": "an banksy exhibition house of unauthorized|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/house-of-banksy-an-unauthorized-exhibition/",
+  "name": "House of Banksy - An Unauthorized Exhibition",
+  "opening_hours": "Mo. - Mi.: 10 - 18 Uhr, Do. - Sa.: 10 - 20 Uhr, So. & Fei.: 10 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "house-of-banksy-an-unauthorized-exhibition",
+  "website": "https://www.house-of-banksy.com"
+ },
+ "anders atelier faber|leipzig": {
+  "city": "Leipzig",
+  "key": "anders atelier faber|leipzig",
+  "lat": 51.3444664,
+  "lng": 12.3651286,
+  "name": "Atelier/Galerie Anders Faber",
+  "osm_id": "way/1276454019",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://atelierfaber.com"
+ },
+ "andreas hanske|leipzig": {
+  "city": "Leipzig",
+  "key": "andreas hanske|leipzig",
+  "lat": 51.3235159,
+  "lng": 12.4145583,
+  "name": "Andreas Hanske",
+  "osm_id": "node/11868714919",
+  "sources": [
+   "osm"
+  ]
+ },
+ "angewandte fur grassi kunst museum|leipzig": {
+  "city": "Leipzig",
+  "key": "angewandte fur grassi kunst museum|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/grassi-museum-fur-angewandte-kunst/",
+  "name": "GRASSI Museum für Angewandte Kunst",
+  "opening_hours": "Di. bis So.: 10 - 18 Uhr Mi.: 10 - 20 Uhr Feiertage: 10 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "grassi-museum-fur-angewandte-kunst",
+  "website": "https://www.grassimak.de"
+ },
+ "anhalt bbk sachsen|halle": {
+  "city": "Halle",
+  "key": "anhalt bbk sachsen|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/bbk-sachsen-anhalt-e-v/",
+  "name": "BBK Sachsen-Anhalt e.V.",
+  "opening_hours": "Sa.: 11-19 Uhr, So.: 11-18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "bbk-sachsen-anhalt-e-v"
+ },
+ "anhalt des kunstmuseum landes moritzburg sachsen stiftung|halle": {
+  "city": "Halle",
+  "email": "info@kunstmuseum-moritzburg.de",
+  "key": "anhalt des kunstmuseum landes moritzburg sachsen stiftung|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/stiftung-moritzburg-kunstmuseum-des-landes-sachsen-anhalt/",
+  "name": "Kunstmuseum Moritzburg Halle",
+  "opening_hours": "Do. - Di. & Feiertage: 10 - 18 Uhr, Mi.: geschlossen 24.12. & 31.12. geschlossen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "stiftung-moritzburg-kunstmuseum-des-landes-sachsen-anhalt",
+  "website": "https://www.kunstmuseum-moritzburg.de"
+ },
+ "anhalt des kunststiftung landes sachsen|halle": {
+  "city": "Halle",
+  "email": "info@kunststiftung-sachsen-anhalt.de",
+  "key": "anhalt des kunststiftung landes sachsen|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunststiftung-des-landes-sachsen-anhalt/",
+  "name": "Kunststiftung des Landes Sachsen-Anhalt",
+  "opening_hours": "Mi. bis Sa.: 14 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "kunststiftung-des-landes-sachsen-anhalt",
+  "website": "https://www.kunststiftung-sachsen-anhalt.de"
+ },
+ "annekaden|leipzig": {
+  "city": "Leipzig",
+  "key": "annekaden|leipzig",
+  "lat": 51.364814,
+  "lng": 12.3559911,
+  "name": "annekaden",
+  "osm_id": "node/9727117989",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://annekaden.com/"
+ },
+ "antiquariat konitz|leipzig": {
+  "city": "Leipzig",
+  "key": "antiquariat konitz|leipzig",
+  "lat": 51.339365,
+  "lng": 12.3751002,
+  "name": "Antiquariat Könitz",
+  "osm_id": "node/2482697268",
+  "sources": [
+   "osm"
+  ]
+ },
+ "ao kunsthalle|leipzig": {
+  "city": "Leipzig",
+  "email": "info@aokunsthalle.com",
+  "key": "ao kunsthalle|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/ao-kunsthalle/",
+  "name": "a&o Kunsthalle",
+  "opening_hours": "Do. bis Sa.: 12 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "ao-kunsthalle",
+  "website": "https://www.aokunsthalle.com"
+ },
+ "art artis auctions fine gmbh online|chemnitz": {
+  "city": "Chemnitz",
+  "key": "art artis auctions fine gmbh online|chemnitz",
+  "lat": 50.834269,
+  "lng": 12.9158633,
+  "name": "e.artis GmbH - fine art auctions online",
+  "osm_id": "node/1101657342",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.e-artis.de/"
+ },
+ "art club gletscherstein|leipzig": {
+  "city": "Leipzig",
+  "email": "info@gletscherstein-art-club.de",
+  "key": "art club gletscherstein|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/gletscherstein-art-club/",
+  "name": "Gletscherstein - art club -",
+  "opening_hours": "Di. & Do.: 16 bis 19 Uhr und jederzeit nach telefonischer Vereinbarung.",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "gletscherstein-art-club",
+  "website": "https://gletscherstein-art-club.info"
+ },
+ "art edu|leipzig": {
+  "city": "Leipzig",
+  "key": "art edu|leipzig",
+  "lat": 51.3437923,
+  "lng": 12.3764279,
+  "name": "Edu art",
+  "osm_id": "node/13787188876",
+  "sources": [
+   "osm"
+  ]
+ },
+ "art eigen|leipzig": {
+  "city": "Leipzig",
+  "email": "leipzig@eigen-art.com",
+  "key": "art eigen|leipzig",
+  "lat": 51.3264155,
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-eigen-art-2/",
+  "lng": 12.3169434,
+  "name": "Galerie EIGEN + ART",
+  "opening_hours": "Di. bis Sa.: 11 - 18 Uhr So. und Mo.: geschlossen",
+  "osm_id": "node/7707545347",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "galerie-eigen-art-2",
+  "website": "https://www.eigen-art.com/"
+ },
+ "art female tatoo|leipzig": {
+  "city": "Leipzig",
+  "key": "art female tatoo|leipzig",
+  "lat": 51.3385657,
+  "lng": 12.3349957,
+  "name": "F.A.T female art tatoo",
+  "osm_id": "node/11910550136",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.f-a-t.info"
+ },
+ "art for platform|leipzig": {
+  "city": "Leipzig",
+  "key": "art for platform|leipzig",
+  "lat": 51.3293462,
+  "lng": 12.4047193,
+  "name": "Platform for Contemporary Art",
+  "osm_id": "node/10853354082",
+  "sources": [
+   "osm"
+  ]
+ },
+ "art julia scheck|leipzig": {
+  "city": "Leipzig",
+  "key": "art julia scheck|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-julia-scheck-art/",
+  "name": "Galerie Julia Scheck Art",
+  "opening_hours": "Mo. - Di.: 12 - 17 Uhr, Mi.:12 - 18 Uhr, Do.: 14 - 19 Uhr, Fr.: 12 - 16 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-julia-scheck-art",
+  "website": "https://www.julia-scheck-art.de "
+ },
+ "art potemka|leipzig": {
+  "city": "Leipzig",
+  "email": "post@potemka.de",
+  "key": "art potemka|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/potemka-contemporary-art/",
+  "name": "Galerie Potemka",
+  "opening_hours": "Mi. bis Sa.: 13 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "potemka-contemporary-art",
+  "website": "https://www.potemka.de "
+ },
+ "artae kunstvermittlung|leipzig": {
+  "city": "Leipzig",
+  "email": "info@artae.de",
+  "key": "artae kunstvermittlung|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/artae-galerie-kunstvermittlung/",
+  "name": "ARTAe Galerie",
+  "opening_hours": "Do. bis Sa.: 15 - 19 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "artae-galerie-kunstvermittlung",
+  "website": "https://www.artae.de"
+ },
+ "artae showroom|leipzig": {
+  "city": "Leipzig",
+  "email": "info@artae.de",
+  "key": "artae showroom|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/artae-showroom/",
+  "name": "ARTAe Showroom",
+  "opening_hours": "Mi. & Do.: 16 - 19 Uhr, Fr.: 18 - 22 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "artae-showroom",
+  "website": "https://www.artae.de"
+ },
+ "artae|leipzig": {
+  "city": "Leipzig",
+  "email": "info@artae.de",
+  "key": "artae|leipzig",
+  "lat": 51.3577357,
+  "listing_url": "https://www.rundgang-kunst.de/locations/artae-galerie-kunstvermittlung/",
+  "lng": 12.3675416,
+  "name": "Galerie ARTAe",
+  "opening_hours": "Do. bis Sa.: 15 - 19 Uhr und nach Vereinbarung",
+  "osm_id": "node/12475776413",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "artae-galerie-kunstvermittlung",
+  "website": "https://www.artae.de"
+ },
+ "artescena kunstraum|leipzig": {
+  "city": "Leipzig",
+  "key": "artescena kunstraum|leipzig",
+  "lat": 51.3350279,
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunstraum-artescena/",
+  "lng": 12.3304873,
+  "name": "Kunstraum artescena",
+  "opening_hours": "03.10.: 18 - 23 Uhr, 04.10.: 15 - 22 Uhr, 05.10.: 15 - 20 Uhr",
+  "osm_id": "node/7227123045",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "kunstraum-artescena",
+  "website": "https://artescena.de/"
+ },
+ "arthur kulturhaus|chemnitz": {
+  "city": "Chemnitz",
+  "key": "arthur kulturhaus|chemnitz",
+  "lat": 50.83492,
+  "lng": 12.9120952,
+  "name": "Kulturhaus Arthur",
+  "osm_id": "node/12844881978",
+  "sources": [
+   "osm"
+  ]
+ },
+ "artist is present produzentengalerie|leipzig": {
+  "city": "Leipzig",
+  "email": "padubrin-thomys@online.de",
+  "key": "artist is present produzentengalerie|leipzig",
+  "lat": 51.3316394,
+  "listing_url": "https://www.rundgang-kunst.de/locations/the-artist-is-present-produzentengalerie/",
+  "lng": 12.3331853,
+  "name": "the artist is present - Produzentengalerie",
+  "opening_hours": "Mi. - Fr.: 15 - 19 Uhr Sa.: 10 - 19 Uhr und nach Vereinbarung",
+  "osm_id": "node/3330903545",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "the-artist-is-present-produzentengalerie",
+  "website": "https://www.padubrin-thomys.de"
+ },
+ "aspn|leipzig": {
+  "city": "Leipzig",
+  "email": "ASPN_galerie@web.de",
+  "key": "aspn|leipzig",
+  "lat": 51.326077,
+  "listing_url": "https://www.rundgang-kunst.de/locations/aspn/",
+  "lng": 12.3167449,
+  "name": "ASPN",
+  "opening_hours": "Di. bis Fr.: 12 - 18 Uhr Sa.: 11 - 16 Uhr So. und Mo.: geschlossen",
+  "osm_id": "node/7707545344",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "aspn",
+  "website": "https://aspngalerie.de/"
+ },
+ "atari|leipzig": {
+  "city": "Leipzig",
+  "key": "atari|leipzig",
+  "lat": 51.336023,
+  "lng": 12.4061259,
+  "name": "Atari",
+  "osm_id": "node/2899715701",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://bildet-laeden.de/"
+ },
+ "atelier bauer harald|leipzig": {
+  "city": "Leipzig",
+  "key": "atelier bauer harald|leipzig",
+  "lat": 51.333235,
+  "lng": 12.3741943,
+  "name": "Atelier Harald Bauer",
+  "osm_id": "way/154070104",
+  "sources": [
+   "osm"
+  ]
+ },
+ "atelier eckardt johannes|leipzig": {
+  "city": "Leipzig",
+  "key": "atelier eckardt johannes|leipzig",
+  "lat": 51.3361717,
+  "lng": 12.3333679,
+  "name": "Atelier Johannes Eckardt",
+  "osm_id": "node/6876383012",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.eckardts-philantropische-angelegenheiten.de/"
+ },
+ "atelier fur restaurierungsarbeiten|leipzig": {
+  "city": "Leipzig",
+  "key": "atelier fur restaurierungsarbeiten|leipzig",
+  "lat": 51.3604329,
+  "lng": 12.3617084,
+  "name": "Atelier für Restaurierungsarbeiten",
+  "osm_id": "node/9258009269",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.moebelrestaurierung-elste.de/"
+ },
+ "atelier liebold|leipzig": {
+  "city": "Leipzig",
+  "key": "atelier liebold|leipzig",
+  "lat": 51.3689678,
+  "lng": 12.3629302,
+  "name": "Atelier & Galerie Liebold",
+  "osm_id": "node/9270170398",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.kunst-liebold.de/"
+ },
+ "atelier mnemosyne|leipzig": {
+  "city": "Leipzig",
+  "key": "atelier mnemosyne|leipzig",
+  "lat": 51.3336426,
+  "lng": 12.3261623,
+  "name": "Mnemosyne Atelier",
+  "osm_id": "node/11850816909",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://alessandradonnarumma.com/"
+ },
+ "atelier vom wolf|leipzig": {
+  "city": "Leipzig",
+  "key": "atelier vom wolf|leipzig",
+  "lat": 51.3174391,
+  "lng": 12.3271505,
+  "name": "Atelier vom Wolf",
+  "osm_id": "node/13308458559",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://atelier-vom-wolf.blogspot.com/p/atelier.html"
+ },
+ "ateliergemeinschaft|leipzig": {
+  "city": "Leipzig",
+  "key": "ateliergemeinschaft|leipzig",
+  "lat": 51.3159325,
+  "lng": 12.3101378,
+  "name": "Ateliergemeinschaft",
+  "osm_id": "node/640525617",
+  "sources": [
+   "osm"
+  ]
+ },
+ "auensee haus|leipzig": {
+  "city": "Leipzig",
+  "key": "auensee haus|leipzig",
+  "lat": 51.3697322,
+  "lng": 12.3155169,
+  "name": "Haus Auensee",
+  "osm_id": "way/31103567",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.haus-auensee-leipzig.de/"
+ },
+ "augusteum im neuen|leipzig": {
+  "city": "Leipzig",
+  "email": "kustodie@uni-leipzig.de",
+  "key": "augusteum im neuen|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-im-neuen-augusteum/",
+  "name": "Galerie im Neuen Augusteum",
+  "opening_hours": "Di. bis Fr.: 11 - 14:30 Uhr und 15 - 18 Uhr Sa.: 11 - 14 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-im-neuen-augusteum",
+  "website": "https://www.kustodie.uni-leipzig.de"
+ },
+ "b2|leipzig": {
+  "city": "Leipzig",
+  "key": "b2|leipzig",
+  "lat": 51.3269485,
+  "lng": 12.3199689,
+  "name": "Galerie b2",
+  "osm_id": "node/7707545345",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.galerie-b2.de/"
+ },
+ "baumwollspinnerei leipziger|leipzig": {
+  "city": "Leipzig",
+  "email": "mail@spinnerei.de",
+  "key": "baumwollspinnerei leipziger|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/leipziger-baumwollspinnerei/",
+  "name": "Leipziger Baumwollspinnerei",
+  "opening_hours": null,
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "leipziger-baumwollspinnerei",
+  "website": "https://www.spinnerei.de"
+ },
+ "bausmann erik|halle": {
+  "city": "Halle",
+  "key": "bausmann erik|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-erik-bausmann/",
+  "name": "Galerie Erik Bausmann",
+  "opening_hours": "Öffnung nach telefonischer Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-erik-bausmann",
+  "website": "https://galerie-bausmann.de/"
+ },
+ "bbkl des|leipzig": {
+  "city": "Leipzig",
+  "email": "info@bbkl.org",
+  "key": "bbkl des|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/projektraum-des-bbkl-e-v/",
+  "name": "BBKL e. V. im Kulturhof Gohlis",
+  "opening_hours": "Di. - Do.: 10 - 16 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "projektraum-des-bbkl-e-v",
+  "website": "https://www.bbkl.org"
+ },
+ "bbkl gohlis im kulturhof|leipzig": {
+  "city": "Leipzig",
+  "email": "info@bbkl.org",
+  "key": "bbkl gohlis im kulturhof|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/projektraum-des-bbkl-e-v/",
+  "name": "BBKL e. V. im Kulturhof Gohlis",
+  "opening_hours": "Di. - Do.: 10 - 16 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "projektraum-des-bbkl-e-v",
+  "website": "https://www.bbkl.org"
+ },
+ "bernd fotografie korsten|leipzig": {
+  "city": "Leipzig",
+  "key": "bernd fotografie korsten|leipzig",
+  "lat": 51.3259503,
+  "lng": 12.3173173,
+  "name": "BERND KÖRSTEN fotografie",
+  "osm_id": "node/2583482492",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.raumtotal.de/"
+ },
+ "biehne claudia porzellanatelier|leipzig": {
+  "city": "Leipzig",
+  "key": "biehne claudia porzellanatelier|leipzig",
+  "lat": 51.3255263,
+  "lng": 12.3173938,
+  "name": "Porzellanatelier Claudia Biehne",
+  "osm_id": "node/7645652967",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.biehne-porzellan.de/"
+ },
+ "bildenden der kunste museum|leipzig": {
+  "city": "Leipzig",
+  "email": "mdbk@leipzig.de",
+  "key": "bildenden der kunste museum|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/mdbk/",
+  "name": "Museum der bildenden Künste Leipzig",
+  "opening_hours": "Di., Do. bis So.: 10 - 18 Uhr Mi.: 12 - 20 Uhr Mo. geschlossen Feiertage: 10 - 18 Uhr Eintritt frei - für in die Dauerausstellungen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "mdbk",
+  "website": "https://www.mdbk.de"
+ },
+ "bipolar|leipzig": {
+  "city": "Leipzig",
+  "key": "bipolar|leipzig",
+  "lat": 51.3593605,
+  "lng": 12.3842102,
+  "name": "Galerie Bipolar",
+  "osm_id": "node/4883500418",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.galerie-bipolar.com/"
+ },
+ "blauer fur gemischtes raum sand|leipzig": {
+  "city": "Leipzig",
+  "key": "blauer fur gemischtes raum sand|leipzig",
+  "lat": 51.3377221,
+  "lng": 12.4166991,
+  "name": "\"blauer Sand\" RAUM FÜR GEMISCHTES",
+  "osm_id": "node/10857710694",
+  "sources": [
+   "osm"
+  ]
+ },
+ "blockstellwerk elsteraue|leipzig": {
+  "city": "Leipzig",
+  "key": "blockstellwerk elsteraue|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/blockstellwerk-elsteraue/",
+  "name": "Blockstellwerk Elsteraue",
+  "opening_hours": "Fr.: 18 - 20 Uhr Sa.: 10 - 18 Uhr So.: 10 - 16 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "blockstellwerk-elsteraue"
+ },
+ "bonanza|leipzig": {
+  "city": "Leipzig",
+  "key": "bonanza|leipzig",
+  "lat": 51.2897462,
+  "lng": 12.3910109,
+  "name": "Bonanza Leipzig",
+  "osm_id": "node/5722586948",
+  "sources": [
+   "osm"
+  ]
+ },
+ "buch der deutschen deutsches nationalbibliothek schriftmuseum und|leipzig": {
+  "city": "Leipzig",
+  "email": "dbsm-info@dnb.de",
+  "key": "buch der deutschen deutsches nationalbibliothek schriftmuseum und|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/deutsches-buch-und-schriftmuseum-der-deutschen-nationalbibliothek/",
+  "name": "Deutsches Buch- und Schriftmuseum der Deutschen Nationalbibliothek",
+  "opening_hours": "Di. bis So.: 10 - 18 Uhr Do.: 10 - 20 Uhr Feiertage: 10 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "deutsches-buch-und-schriftmuseum-der-deutschen-nationalbibliothek",
+  "website": "https://www.dnb.de/dbsm"
+ },
+ "buches des en gedok haus im passant|leipzig": {
+  "city": "Leipzig",
+  "email": "info@gedok-mitteldeutschland.de",
+  "key": "buches des en gedok haus im passant|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/gedok-en-passant-galerie-im-haus-des-buches/",
+  "name": "GEDOK en passant Galerie im Haus des Buches",
+  "opening_hours": "Mo. - Fr.: 9 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "gedok-en-passant-galerie-im-haus-des-buches"
+ },
+ "buchkunst fur grafik hochschule und|leipzig": {
+  "city": "Leipzig",
+  "email": "galerie@hgb-leipzig.de ",
+  "key": "buchkunst fur grafik hochschule und|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/hgb/",
+  "name": "Hochschule für Grafik und Buchkunst Leipzig",
+  "opening_hours": "Mi. bis Fr.: 15 - 19 Uhr Sa.: 13 - 17 Uhr sowie nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "hgb",
+  "website": "https://www.hgb-leipzig.de"
+ },
+ "budde haus heinrich|leipzig": {
+  "city": "Leipzig",
+  "key": "budde haus heinrich|leipzig",
+  "lat": 51.3637732,
+  "lng": 12.3737658,
+  "name": "Heinrich Budde Haus",
+  "osm_id": "way/35817084",
+  "sources": [
+   "osm"
+  ]
+ },
+ "burg giebichenstein halle kunsthochschule|halle": {
+  "city": "Halle",
+  "email": "burgpost@burg-halle.de",
+  "key": "burg giebichenstein halle kunsthochschule|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/burggalerie-im-volkspark/",
+  "name": "Burg Giebichenstein Kunsthochschule Halle",
+  "opening_hours": "Mo. - So.: 14 - 19 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "burggalerie-im-volkspark",
+  "website": "https://www.burg-halle.de/galerie.html"
+ },
+ "burggalerie im volkspark|halle": {
+  "city": "Halle",
+  "email": "burgpost@burg-halle.de",
+  "key": "burggalerie im volkspark|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/burggalerie-im-volkspark/",
+  "name": "Burg Giebichenstein Kunsthochschule Halle",
+  "opening_hours": "Mo. - So.: 14 - 19 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "burggalerie-im-volkspark",
+  "website": "https://www.burg-halle.de/galerie.html"
+ },
+ "campus garagen|chemnitz": {
+  "city": "Chemnitz",
+  "key": "campus garagen|chemnitz",
+  "listing_url": "https://www.rundgang-kunst.de/locations/garagen-campus/",
+  "name": "Garagen-Campus",
+  "opening_hours": "Öffnungszeiten siehe Webseite",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "garagen-campus",
+  "website": "https://www.garagen-campus.de/"
+ },
+ "carreras jose leukamiezentrum|leipzig": {
+  "city": "Leipzig",
+  "email": "rainer.haak@uniklinik-leipzig.de",
+  "key": "carreras jose leukamiezentrum|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/leukamiezentrum-jose-carreras/",
+  "name": "Universitätsklinikum Leipzig",
+  "opening_hours": "Mo. - Fr.: 7:30 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "leukamiezentrum-jose-carreras"
+ },
+ "charter projektgalerie|leipzig": {
+  "city": "Leipzig",
+  "email": "info@charter-jungekunst.de",
+  "key": "charter projektgalerie|leipzig",
+  "lat": 51.3321232,
+  "listing_url": "https://www.rundgang-kunst.de/locations/charter-projektgalerie/",
+  "lng": 12.3326145,
+  "name": "CHARTER Projektgalerie",
+  "opening_hours": "Do. - Fr.: 16 - 18:30 Uhr Sa.: 15 - 18 Uhr und nach Vereinbarung",
+  "osm_id": "node/3698685831",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "charter-projektgalerie",
+  "website": "https://www.charter-jungekunst.de/"
+ },
+ "chemnitz gunzenhauser kunstsammlungen museum|chemnitz": {
+  "city": "Chemnitz",
+  "email": "gunzenhauser@stadt-chemnitz.de",
+  "key": "chemnitz gunzenhauser kunstsammlungen museum|chemnitz",
+  "listing_url": "https://www.rundgang-kunst.de/locations/museum-gunzenhauser-kunstsammlungen-chemnitz/",
+  "name": "Museum Gunzenhauser / Kunstsammlungen Chemnitz",
+  "opening_hours": "Di., Do. - So., Feiertag: 11 - 18 Uhr, Mi.: 14 - 21 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "museum-gunzenhauser-kunstsammlungen-chemnitz",
+  "website": "https://kunstsammlungen-chemnitz.de"
+ },
+ "chemnitz haus karl kunstsammlungen rottluff schmidt|chemnitz": {
+  "city": "Chemnitz",
+  "email": "kunstsammlungen@stadt-chemnitz.de",
+  "key": "chemnitz haus karl kunstsammlungen rottluff schmidt|chemnitz",
+  "listing_url": "https://www.rundgang-kunst.de/locations/karl-schmidt-rottluff-haus-kunstsammlungen-chemnitz/",
+  "name": "Karl Schmidt Rottluff Haus / Kunstsammlungen Chemnitz",
+  "opening_hours": "Di. - Do.: 11 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "karl-schmidt-rottluff-haus-kunstsammlungen-chemnitz",
+  "website": "https://www.kunstsammlungen-chemnitz.de"
+ },
+ "chemnitz industriemuseum|chemnitz": {
+  "city": "Chemnitz",
+  "key": "chemnitz industriemuseum|chemnitz",
+  "listing_url": "https://www.rundgang-kunst.de/locations/industriemuseum-chemnitz/",
+  "name": "Industriemuseum Chemnitz",
+  "opening_hours": "Di. - Fr.: 9 - 17 Uhr, Sa., So. & Feiertage: 10 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "industriemuseum-chemnitz",
+  "website": "https://www.werkschau-sachsen.de"
+ },
+ "chemnitz musikkombinat|chemnitz": {
+  "city": "Chemnitz",
+  "key": "chemnitz musikkombinat|chemnitz",
+  "lat": 50.8435427,
+  "lng": 12.9237713,
+  "name": "Musikkombinat Chemnitz",
+  "osm_id": "way/277798598",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.bandbuero-chemnitz.de/"
+ },
+ "cinematheque|leipzig": {
+  "city": "Leipzig",
+  "email": "info@cinematheque-leipzig.de  ",
+  "key": "cinematheque|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/cinematheque/",
+  "name": "CINÉMATHÈQUE",
+  "opening_hours": "Di. - Fr: 11 - 17 Uhr und zu Filmvorführungen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "cinematheque"
+ },
+ "club hitness|leipzig": {
+  "city": "Leipzig",
+  "key": "club hitness|leipzig",
+  "lat": 51.3456451,
+  "lng": 12.4061849,
+  "name": "Hitness Club",
+  "osm_id": "node/13906587901",
+  "sources": [
+   "osm"
+  ]
+ },
+ "concept design fur handwerk klub lipsi store|leipzig": {
+  "city": "Leipzig",
+  "key": "concept design fur handwerk klub lipsi store|leipzig",
+  "lat": 51.3400336,
+  "lng": 12.3754256,
+  "name": "LIPSI KLUB - Concept Store für Handwerk & Design",
+  "osm_id": "node/10185240212",
+  "sources": [
+   "osm"
+  ]
+ },
+ "conne island|leipzig": {
+  "city": "Leipzig",
+  "key": "conne island|leipzig",
+  "lat": 51.3023267,
+  "lng": 12.3745139,
+  "name": "Conne Island",
+  "osm_id": "node/4933368821",
+  "sources": [
+   "osm"
+  ]
+ },
+ "connewitz ut|leipzig": {
+  "city": "Leipzig",
+  "key": "connewitz ut|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/ut-connewitz/",
+  "name": "UT Connewitz",
+  "opening_hours": null,
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "ut-connewitz",
+  "website": "https://utconnewitz.de/"
+ },
+ "d21 kunstraum|leipzig": {
+  "city": "Leipzig",
+  "email": "office@d21-leipzig.de",
+  "key": "d21 kunstraum|leipzig",
+  "lat": 51.3376472,
+  "listing_url": "https://www.rundgang-kunst.de/locations/d21-kunstraum-leipzig/",
+  "lng": 12.3321638,
+  "name": "D21 - Kunstraum Leipzig",
+  "opening_hours": "Sa, bis So: 15 - 19 Uhr und nach Vereinbarung",
+  "osm_id": "node/918015146",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "d21-kunstraum-leipzig",
+  "website": "https://d21-leipzig.de/"
+ },
+ "deli neu|leipzig": {
+  "city": "Leipzig",
+  "email": "info@delikatessenhaus.com",
+  "key": "deli neu|leipzig",
+  "lat": 51.3350525,
+  "listing_url": "https://www.rundgang-kunst.de/locations/delikatessenhaus/",
+  "lng": 12.3576247,
+  "name": "Neu Deli",
+  "opening_hours": "Mi. und Sa.: 16 - 18 Uhr und nach Vereinbarung",
+  "osm_id": "node/11053143095",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "delikatessenhaus",
+  "website": "https://www.neudeli-leipzig.de"
+ },
+ "delikatessenhaus|leipzig": {
+  "city": "Leipzig",
+  "email": "info@delikatessenhaus.com",
+  "key": "delikatessenhaus|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/delikatessenhaus/",
+  "name": "Neu-Deli",
+  "opening_hours": "Mi. und Sa.: 16 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "delikatessenhaus",
+  "website": "https://www.neudeli-leipzig.com"
+ },
+ "der kunsthalle sparkasse|leipzig": {
+  "city": "Leipzig",
+  "email": "kunsthalle@sparkasse-leipzig.de",
+  "key": "der kunsthalle sparkasse|leipzig",
+  "lat": 51.3386032,
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunsthalle-der-sparkasse-leipzig/",
+  "lng": 12.3699158,
+  "name": "Kunsthalle der Sparkasse Leipzig",
+  "opening_hours": "Mi.: 13 - 18 Uhr und nach Vereinbarung",
+  "osm_id": "way/45444817",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "kunsthalle-der-sparkasse-leipzig",
+  "website": "https://www.kunsthalle-sparkasse.de/"
+ },
+ "des gohlis kuk skulpturengarten|leipzig": {
+  "city": "Leipzig",
+  "key": "des gohlis kuk skulpturengarten|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/skulpturengarten-am-buddehaus/",
+  "name": "Skulpturengarten des KuK Gohlis",
+  "opening_hours": "Mo. bis So.: 9 - 19 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "skulpturengarten-am-buddehaus",
+  "website": "https://www.kreativitaetswerkstatt-leipzig.de"
+ },
+ "disciplinary inter shop|leipzig": {
+  "city": "Leipzig",
+  "email": "galerie@galerie-intershop.de",
+  "key": "disciplinary inter shop|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/inter-disciplinary-shop/",
+  "name": "Galerie Intershop",
+  "opening_hours": "Do. bis Fr.: 11 bis 18 Uhr Sa.: 12 bis 16 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "inter-disciplinary-shop",
+  "website": "https://www.galerie-intershop.de"
+ },
+ "dizzy from hundert2|leipzig": {
+  "city": "Leipzig",
+  "key": "dizzy from hundert2|leipzig",
+  "lat": 51.3370259,
+  "lng": 12.3278214,
+  "name": "From Dizzy. hundert2°",
+  "osm_id": "node/9686932558",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://fromdizzy.de/"
+ },
+ "dobritz ely|leipzig": {
+  "city": "Leipzig",
+  "key": "dobritz ely|leipzig",
+  "lat": 51.3347605,
+  "lng": 12.3564676,
+  "name": "Ely Dobritz Galerie",
+  "osm_id": "way/42445314",
+  "sources": [
+   "osm"
+  ],
+  "website": "elydobritzart.com"
+ },
+ "doelitzer muehlengalerie wassermuehle|leipzig": {
+  "city": "Leipzig",
+  "key": "doelitzer muehlengalerie wassermuehle|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/muehlengalerie-doelitzer-wassermuehle/",
+  "name": "Mühlengalerie Dölitzer Wassermühle",
+  "opening_hours": "So.: 13 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "muehlengalerie-doelitzer-wassermuehle",
+  "website": "https://www.doelitzer-wassermuehle.de"
+ },
+ "dolitzer muhlengalerie wassermuhle|leipzig": {
+  "city": "Leipzig",
+  "key": "dolitzer muhlengalerie wassermuhle|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/muehlengalerie-doelitzer-wassermuehle/",
+  "name": "Mühlengalerie Dölitzer Wassermühle",
+  "opening_hours": "So.: 13 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "muehlengalerie-doelitzer-wassermuehle",
+  "website": "https://www.doelitzer-wassermuehle.de"
+ },
+ "domula torsten|leipzig": {
+  "city": "Leipzig",
+  "key": "domula torsten|leipzig",
+  "lat": 51.3367456,
+  "lng": 12.4140255,
+  "name": "Torsten Domula",
+  "osm_id": "node/9583469365",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.todo-works.de/index.html"
+ },
+ "druckkunst fur museum|leipzig": {
+  "city": "Leipzig",
+  "email": "info@druckkunst-museum.de",
+  "key": "druckkunst fur museum|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/museum-fur-druckkunst/",
+  "name": "Museum für Druckkunst Leipzig",
+  "opening_hours": "Mi. bis Fr.: 10 - 17 Uhr Sa. & So.: 11 - 17 Uhr Sonderregelungen an Feiertagen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "museum-fur-druckkunst",
+  "website": "https://www.druckkunst-museum.de "
+ },
+ "dubnow institut|leipzig": {
+  "city": "Leipzig",
+  "key": "dubnow institut|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/dubnow-institut/",
+  "name": "Dubnow-Institut",
+  "opening_hours": "Aktuelle Führungstermine auf unserer Website; Führungen für Gruppen auf Anfrage",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "dubnow-institut",
+  "website": "https://www.dubnow.de/veranstaltung/der-bestimmende-blick-bilder-juedischen-lebens-im-nachkriegspolen"
+ },
+ "earth keramikstudio mylasher|leipzig": {
+  "city": "Leipzig",
+  "email": "tineguenther@gmx.de",
+  "key": "earth keramikstudio mylasher|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/keramikstudio-mylasher-earth/",
+  "name": "Keramikstudio Mylasher.earth",
+  "opening_hours": "nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "keramikstudio-mylasher-earth",
+  "website": "https://mylasher.earth/"
+ },
+ "eine immersive reise titanic|leipzig": {
+  "city": "Leipzig",
+  "email": "info@titanic-experience.com",
+  "key": "eine immersive reise titanic|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/titanic-eine-immersive-reise/",
+  "name": "Titanic: Eine Immersive Reise",
+  "opening_hours": "Di. - Mi.: 10 - 18 Uhr, Do. - Sa.: 10 - 20 Uhr, So. & Fei.: 10 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "titanic-eine-immersive-reise",
+  "website": "https://www.titanic-experience.com"
+ },
+ "emmanuel fischer lokou|leipzig": {
+  "city": "Leipzig",
+  "key": "emmanuel fischer lokou|leipzig",
+  "lat": 51.3398593,
+  "lng": 12.326458,
+  "name": "Emmanuel Fischer-Lokou",
+  "osm_id": "node/10824083988",
+  "sources": [
+   "osm"
+  ]
+ },
+ "erata|leipzig": {
+  "city": "Leipzig",
+  "key": "erata|leipzig",
+  "lat": 51.3222973,
+  "lng": 12.3400665,
+  "name": "Galerie Erata",
+  "osm_id": "node/10961030260",
+  "sources": [
+   "osm"
+  ]
+ },
+ "erben horns kultur|leipzig": {
+  "city": "Leipzig",
+  "key": "erben horns kultur|leipzig",
+  "lat": 51.3233548,
+  "lng": 12.3721333,
+  "name": "Horns Erben Kultur e.V.",
+  "osm_id": "node/10268708359",
+  "sources": [
+   "osm"
+  ]
+ },
+ "erziehungs sportwissenschaft universitaetsbibliothek|leipzig": {
+  "city": "Leipzig",
+  "key": "erziehungs sportwissenschaft universitaetsbibliothek|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/universitaetsbibliothek-leipzig-erziehungs-u-sportwissenschaft/",
+  "name": "Universitätsbibliothek Leipzig - Erziehungs- u. Sportwissenschaft",
+  "opening_hours": "Mo. - Fr.: 8 - 22 Uhr, Sa.: 10 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "universitaetsbibliothek-leipzig-erziehungs-u-sportwissenschaft",
+  "website": "https://www.ub.uni-leipzig.de/standorte/erziehungs-und-sportwissenschaft"
+ },
+ "erziehungs sportwissenschaft universitatsbibliothek|leipzig": {
+  "city": "Leipzig",
+  "key": "erziehungs sportwissenschaft universitatsbibliothek|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/universitaetsbibliothek-leipzig-erziehungs-u-sportwissenschaft/",
+  "name": "Universitätsbibliothek Leipzig - Erziehungs- u. Sportwissenschaft",
+  "opening_hours": "Mo. - Fr.: 8 - 22 Uhr, Sa.: 10 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "universitaetsbibliothek-leipzig-erziehungs-u-sportwissenschaft",
+  "website": "https://www.ub.uni-leipzig.de/standorte/erziehungs-und-sportwissenschaft"
+ },
+ "ff15|leipzig": {
+  "city": "Leipzig",
+  "key": "ff15|leipzig",
+  "lat": 51.3441623,
+  "lng": 12.3098971,
+  "name": "Galerie ff15",
+  "osm_id": "node/6189967796",
+  "sources": [
+   "osm"
+  ]
+ },
+ "filipp josef|leipzig": {
+  "city": "Leipzig",
+  "key": "filipp josef|leipzig",
+  "lat": 51.3270073,
+  "lng": 12.3198687,
+  "name": "Josef Filipp Galerie",
+  "osm_id": "node/5745740002",
+  "sources": [
+   "osm"
+  ]
+ },
+ "forum zeitgeschichtliches|leipzig": {
+  "city": "Leipzig",
+  "email": "besucherdienst-leipzig@hdg.de",
+  "key": "forum zeitgeschichtliches|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/zeitgeschichtliches-forum-leipzig/",
+  "name": "Zeitgeschichtliches Forum Leipzig",
+  "opening_hours": "Mo.: geschlossen Di. bis Fr.: 10 bis 18 Uhr, Sa., So. und Feiertage: 10 bis 18 Uhr Eintritt frei",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "zeitgeschichtliches-forum-leipzig",
+  "website": "https://www.hdg.de/zeitgeschichtliches-forum"
+ },
+ "franckesche halle stiftungen|halle": {
+  "city": "Halle",
+  "key": "franckesche halle stiftungen|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/franckesche-stiftungen-halle/",
+  "name": "Franckesche Stiftungen Halle",
+  "opening_hours": "Di. bis So.: 10 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "franckesche-stiftungen-halle",
+  "website": "https://www.francke-halle.de"
+ },
+ "freilandgalerie|leipzig": {
+  "city": "Leipzig",
+  "key": "freilandgalerie|leipzig",
+  "lat": 51.3609823,
+  "lng": 12.3384131,
+  "name": "Freilandgalerie",
+  "osm_id": "way/193851766",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.blockstellwerk-elsteraue.de/"
+ },
+ "freiluftgalerien parkfriedhof plagwitz|leipzig": {
+  "city": "Leipzig",
+  "email": "gedok.leipzig@gmx.de",
+  "key": "freiluftgalerien parkfriedhof plagwitz|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/freiluftgalerien-parkfriedhof-leipzig-plagwitz/",
+  "name": "Freiluftgalerien Parkfriedhof Leipzig-Plagwitz",
+  "opening_hours": null,
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "freiluftgalerien-parkfriedhof-leipzig-plagwitz"
+ },
+ "fuck it up|leipzig": {
+  "city": "Leipzig",
+  "email": "mail@ninamielcarczyk.de",
+  "key": "fuck it up|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/fuck-it-up/",
+  "name": "Galerie Nina Mielcarczyk",
+  "opening_hours": "Do.: 15 - 20 Uhr, Fr.: 12 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "fuck-it-up"
+ },
+ "fur grassi museum volkerkunde zu|leipzig": {
+  "city": "Leipzig",
+  "email": "mvl-grassimuseum@ses.smwk.sachen.de",
+  "key": "fur grassi museum volkerkunde zu|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/grassi-museum-fur-volkerkunde-zu-leipzig/",
+  "name": "GRASSI Museum für Völkerkunde zu Leipzig",
+  "opening_hours": "Di. bis So.: 10 - 18 Uhr Feiertage: 10 - 18 Uhr Eintritt frei für Dauerausstellungen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "grassi-museum-fur-volkerkunde-zu-leipzig",
+  "website": "https://grassi-voelkerkunde.skd.museum/"
+ },
+ "fur kunst kv verein zeitgenossische|leipzig": {
+  "city": "Leipzig",
+  "email": "info@kunstverein-leipzig.org",
+  "key": "fur kunst kv verein zeitgenossische|leipzig",
+  "lat": 51.3381307,
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunstverein-leipzig/",
+  "lng": 12.3675653,
+  "name": "KV - Verein für zeitgenössische Kunst Leipzig",
+  "opening_hours": "Mi.: 14 - 18 Uhr, Fr. & Sa.: 14 - 18 Uhr und nach Vereinbarung",
+  "osm_id": "node/9725081761",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "kunstverein-leipzig",
+  "website": "https://kunstverein-leipzig.org"
+ },
+ "fur kunst zeitgenossische|leipzig": {
+  "city": "Leipzig",
+  "email": "office@gfzk.de",
+  "key": "fur kunst zeitgenossische|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/gfzk/",
+  "name": "Galerie für Zeitgenössische Kunst",
+  "opening_hours": "Mo.: geschlossen Di. bis Fr.: 14 - 19 Uhr Sa. und So.: 12 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "gfzk",
+  "website": "https://www.gfzk.de"
+ },
+ "g2 hildebrand kunsthalle sammlung|leipzig": {
+  "city": "Leipzig",
+  "email": "info@g2.leipzig.de",
+  "key": "g2 hildebrand kunsthalle sammlung|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/g2-kunsthalle/",
+  "name": "G2 Kunsthalle / Sammlung Hildebrand",
+  "opening_hours": "Mi.: 15 - 20 Uhr, Fr. bis So.: 12 - 17 Uhr, Führungen (nach Online-Anmeldung)",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "g2-kunsthalle",
+  "website": "https://www.g2-leipzig.de"
+ },
+ "g2 kunsthalle|leipzig": {
+  "city": "Leipzig",
+  "email": "info@g2.leipzig.de",
+  "key": "g2 kunsthalle|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/g2-kunsthalle/",
+  "name": "G2 Kunsthalle / Sammlung Hildebrand",
+  "opening_hours": "Mi.: 15 - 20 Uhr, Fr. bis So.: 12 - 17 Uhr, Führungen (nach Online-Anmeldung)",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "g2-kunsthalle",
+  "website": "https://www.g2-leipzig.de"
+ },
+ "galerie k|leipzig": {
+  "city": "Leipzig",
+  "email": "kerstin_herrlich@freenet.de",
+  "key": "galerie k|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-k/",
+  "name": "galerie k.",
+  "opening_hours": "Di. & Do.: 17 - 19 Uhr, Sa.: 15 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-k"
+ },
+ "garagenhof hainstra|chemnitz": {
+  "city": "Chemnitz",
+  "key": "garagenhof hainstra|chemnitz",
+  "lat": 50.8443018,
+  "lng": 12.9405499,
+  "name": "Garagenhof Hainstraße",
+  "osm_id": "node/12877066185",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://chemnitz2025.de/3000garagen-festival/"
+ },
+ "garagenhof theaterstra|chemnitz": {
+  "city": "Chemnitz",
+  "key": "garagenhof theaterstra|chemnitz",
+  "lat": 50.833036,
+  "lng": 12.9150305,
+  "name": "Garagenhof Theaterstraße",
+  "osm_id": "node/12877076868",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://chemnitz2025.de/3000garagen-festival/"
+ },
+ "gerhard kurt mueller stiftung|leipzig": {
+  "city": "Leipzig",
+  "key": "gerhard kurt mueller stiftung|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/gerhard-kurt-mueller-stiftung-leipzig/",
+  "name": "Gerhard-Kurt-Müller-Stiftung Leipzig",
+  "opening_hours": "Mi.: 15 bis 18 Uhr und nach telefonischer Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "gerhard-kurt-mueller-stiftung-leipzig",
+  "website": "https://www.gerhard-kurt-mueller.de"
+ },
+ "gerhard kurt muller stiftung|leipzig": {
+  "city": "Leipzig",
+  "key": "gerhard kurt muller stiftung|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/gerhard-kurt-mueller-stiftung-leipzig/",
+  "name": "Gerhard-Kurt-Müller-Stiftung Leipzig",
+  "opening_hours": "Mi.: 15 bis 18 Uhr und nach telefonischer Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "gerhard-kurt-mueller-stiftung-leipzig",
+  "website": "https://www.gerhard-kurt-mueller.de"
+ },
+ "gfzk|leipzig": {
+  "city": "Leipzig",
+  "email": "office@gfzk.de",
+  "key": "gfzk|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/gfzk/",
+  "name": "Galerie für Zeitgenössische Kunst",
+  "opening_hours": "Mo.: geschlossen Di. bis Fr.: 14 - 19 Uhr Sa. und So.: 12 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "gfzk",
+  "website": "https://www.gfzk.de"
+ },
+ "glasfabrik|leipzig": {
+  "city": "Leipzig",
+  "key": "glasfabrik|leipzig",
+  "lat": 51.3455553,
+  "lng": 12.3080384,
+  "name": "Glasfabrik",
+  "osm_id": "node/13267415401",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.glasfabrik.org/"
+ },
+ "glasgalerie wolfgruber|chemnitz": {
+  "city": "Chemnitz",
+  "key": "glasgalerie wolfgruber|chemnitz",
+  "lat": 50.7693156,
+  "lng": 12.8897517,
+  "name": "Glasgalerie Wolfgruber",
+  "osm_id": "node/4665737551",
+  "sources": [
+   "osm"
+  ]
+ },
+ "gohliser im schloesschen westarkade|leipzig": {
+  "city": "Leipzig",
+  "email": "galerie@gohliserschloesschen.de",
+  "key": "gohliser im schloesschen westarkade|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/westarkade-im-gohliser-schloesschen/",
+  "name": "Gohliser Schlösschen",
+  "opening_hours": "Mi. - Fr.: 14 - 18 Uhr, Sa. & So.: 12 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "westarkade-im-gohliser-schloesschen"
+ },
+ "gohliser schlosschen|leipzig": {
+  "city": "Leipzig",
+  "email": "galerie@gohliserschloesschen.de",
+  "key": "gohliser schlosschen|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/westarkade-im-gohliser-schloesschen/",
+  "name": "Gohliser Schlösschen",
+  "opening_hours": "Mi. - Fr.: 14 - 18 Uhr, Sa. & So.: 12 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "westarkade-im-gohliser-schloesschen"
+ },
+ "goldfisch|leipzig": {
+  "city": "Leipzig",
+  "key": "goldfisch|leipzig",
+  "lat": 51.3452161,
+  "lng": 12.3607517,
+  "name": "Goldfisch",
+  "osm_id": "node/13154995844",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.kunstschule-goldfisch.de"
+ },
+ "grafik original thaler|leipzig": {
+  "city": "Leipzig",
+  "key": "grafik original thaler|leipzig",
+  "lat": 51.326848,
+  "lng": 12.3184669,
+  "name": "Thaler Original Grafik",
+  "osm_id": "node/7707545346",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.thaler-originalgrafik.de"
+ },
+ "grandhotel handelshof icon steigenberger|leipzig": {
+  "city": "Leipzig",
+  "email": "atelier@chunqinghuang.com",
+  "key": "grandhotel handelshof icon steigenberger|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/steigenberger-icon-grandhotel-handelshof-leipzig/",
+  "name": "Steigenberger Icon Grandhotel Handelshof Leipzig",
+  "opening_hours": "Öffnungszeiten rund um die Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "steigenberger-icon-grandhotel-handelshof-leipzig",
+  "website": "https://www.chunqinghuang.art"
+ },
+ "graphikantiquariat koenitz|leipzig": {
+  "city": "Leipzig",
+  "key": "graphikantiquariat koenitz|leipzig",
+  "lat": 51.3401865,
+  "lng": 12.3752438,
+  "name": "Graphikantiquariat Koenitz",
+  "osm_id": "node/9895545693",
+  "sources": [
+   "osm"
+  ]
+ },
+ "haben soll und|leipzig": {
+  "city": "Leipzig",
+  "email": "info@soll-und-haben-verlag.de",
+  "key": "haben soll und|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-soll-und-haben/",
+  "name": "Galerie Soll und Haben",
+  "opening_hours": "Besuch nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-soll-und-haben",
+  "website": "https://galerie.soll-und-haben-verlag.de"
+ },
+ "halle kunstmuseum moritzburg|halle": {
+  "city": "Halle",
+  "email": "info@kunstmuseum-moritzburg.de",
+  "key": "halle kunstmuseum moritzburg|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/stiftung-moritzburg-kunstmuseum-des-landes-sachsen-anhalt/",
+  "name": "Kunstmuseum Moritzburg Halle",
+  "opening_hours": "Do. - Di. & Feiertage: 10 - 18 Uhr, Mi.: geschlossen 24.12. & 31.12. geschlossen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "stiftung-moritzburg-kunstmuseum-des-landes-sachsen-anhalt",
+  "website": "https://www.kunstmuseum-moritzburg.de"
+ },
+ "halle sphere techne|leipzig": {
+  "city": "Leipzig",
+  "email": "kultur@technesphere.de",
+  "key": "halle sphere techne|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/halle-9-techne-sphere-leipzig/",
+  "name": "Kunstraum Techne Sphere",
+  "opening_hours": "Sa. & So.: 15 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "halle-9-techne-sphere-leipzig",
+  "website": "https://www.technesphere.de/kultur"
+ },
+ "hamers penz|halle": {
+  "city": "Halle",
+  "email": "hamers-penz@t-online.de",
+  "key": "hamers penz|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-hamers-penz/",
+  "name": "Galerie Hamers-Penz",
+  "opening_hours": "Mo. bis Fr.: 11 - 18 Uhr Sa.: 10 - 14 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-hamers-penz",
+  "website": "https://www.galerie-hamers-penz.de"
+ },
+ "haus poege|leipzig": {
+  "city": "Leipzig",
+  "email": "kontakt@verein.poege-haus.de",
+  "key": "haus poege|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/poege-haus/",
+  "name": "Pöge-Haus",
+  "opening_hours": "Mo. bis Mi.: 10 bis 15 Uhr Do.: 13 bis 5 Uhr Fr.: 9 bis 12 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "poege-haus",
+  "website": "https://www.pöge-haus.de"
+ },
+ "haus poge|leipzig": {
+  "city": "Leipzig",
+  "email": "kontakt@verein.poege-haus.de",
+  "key": "haus poge|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/poege-haus/",
+  "name": "Pöge-Haus",
+  "opening_hours": "Mo. bis Mi.: 10 bis 15 Uhr Do.: 13 bis 5 Uhr Fr.: 9 bis 12 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "poege-haus",
+  "website": "https://www.pöge-haus.de"
+ },
+ "haus steinstra|leipzig": {
+  "city": "Leipzig",
+  "key": "haus steinstra|leipzig",
+  "lat": 51.3176149,
+  "lng": 12.3706034,
+  "name": "Haus Steinstraße",
+  "osm_id": "way/40025639",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.haus-steinstrasse.de/"
+ },
+ "hgb|leipzig": {
+  "city": "Leipzig",
+  "email": "galerie@hgb-leipzig.de ",
+  "key": "hgb|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/hgb/",
+  "name": "Hochschule für Grafik und Buchkunst Leipzig",
+  "opening_hours": "Mi. bis Fr.: 15 - 19 Uhr Sa.: 13 - 17 Uhr sowie nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "hgb",
+  "website": "https://www.hgb-leipzig.de"
+ },
+ "hilde wilde|leipzig": {
+  "city": "Leipzig",
+  "key": "hilde wilde|leipzig",
+  "lat": 51.3457773,
+  "lng": 12.4071731,
+  "name": "Wilde Hilde",
+  "osm_id": "node/4705735329",
+  "sources": [
+   "osm"
+  ]
+ },
+ "hinten|chemnitz": {
+  "city": "Chemnitz",
+  "key": "hinten|chemnitz",
+  "lat": 50.8305472,
+  "lng": 12.9396664,
+  "name": "Galerie hinten",
+  "osm_id": "node/2818191049",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://galeriehinten.de/"
+ },
+ "hochdruckpartner werkstatt|leipzig": {
+  "city": "Leipzig",
+  "email": "info@hochdruckpartner.com",
+  "key": "hochdruckpartner werkstatt|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-hochpartner/",
+  "name": "hochdruckpartner/Galerie+Werkstatt",
+  "opening_hours": "Mi. bis Fr.: 14 - 18 Uhr Sa.: 12 - 17 Uhr So. und Mo.: geschlossen und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-hochpartner",
+  "website": "https://www.hochdruckpartner.com "
+ },
+ "hochpartner|leipzig": {
+  "city": "Leipzig",
+  "email": "info@hochdruckpartner.com",
+  "key": "hochpartner|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-hochpartner/",
+  "name": "hochdruckpartner/Galerie+Werkstatt",
+  "opening_hours": "Mi. bis Fr.: 14 - 18 Uhr Sa.: 12 - 17 Uhr So. und Mo.: geschlossen und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-hochpartner",
+  "website": "https://www.hochdruckpartner.com "
+ },
+ "hof leipziger sammlung|leipzig": {
+  "city": "Leipzig",
+  "key": "hof leipziger sammlung|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/sammlung-leipziger-hof/",
+  "name": "Sammlung Leipziger Hof",
+  "opening_hours": "Mo. bis So.: 10 - 20 Uhr Führungen auf Anfrage möglich",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "sammlung-leipziger-hof",
+  "website": "https://www.leipziger-hof.de"
+ },
+ "huniat|leipzig": {
+  "city": "Leipzig",
+  "key": "huniat|leipzig",
+  "lat": 51.3200587,
+  "lng": 12.4152181,
+  "name": "Galerie G. Huniat",
+  "osm_id": "node/8458885552",
+  "sources": [
+   "osm"
+  ]
+ },
+ "hvb kunstraum|leipzig": {
+  "city": "Leipzig",
+  "email": "galerie@galerie-koenitz.de",
+  "key": "hvb kunstraum|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/hvb-kunstraum-leipzig/",
+  "name": "HVB KUNSTRAUM LEIPZIG",
+  "opening_hours": "Di. & Do.: 14 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "hvb-kunstraum-leipzig",
+  "website": "https://www.galerie-koenitz.de"
+ },
+ "icelab|leipzig": {
+  "city": "Leipzig",
+  "key": "icelab|leipzig",
+  "lat": 51.3273331,
+  "lng": 12.2895343,
+  "name": "IceLab Leipzig",
+  "osm_id": "node/10579656006",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://icelab-leipzig.de"
+ },
+ "im weltecho|chemnitz": {
+  "city": "Chemnitz",
+  "key": "im weltecho|chemnitz",
+  "lat": 50.8283369,
+  "lng": 12.9200706,
+  "name": "Galerie im Weltecho",
+  "osm_id": "node/2563162780",
+  "sources": [
+   "osm"
+  ]
+ },
+ "in made sachsen werkschau|chemnitz": {
+  "city": "Chemnitz",
+  "key": "in made sachsen werkschau|chemnitz",
+  "listing_url": "https://www.rundgang-kunst.de/locations/ehemaligen-maschinenfabrik-der-vulkan-ag/",
+  "name": "Werkschau - Made in Sachsen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "ehemaligen-maschinenfabrik-der-vulkan-ag"
+ },
+ "inge ost seniorenburo walter|leipzig": {
+  "city": "Leipzig",
+  "key": "inge ost seniorenburo walter|leipzig",
+  "lat": 51.345509,
+  "lng": 12.4038103,
+  "name": "\"Inge & Walter\" - Seniorenbüro Ost",
+  "osm_id": "node/4705740433",
+  "sources": [
+   "osm"
+  ]
+ },
+ "intershop|leipzig": {
+  "city": "Leipzig",
+  "email": "galerie@galerie-intershop.de",
+  "key": "intershop|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/inter-disciplinary-shop/",
+  "name": "Galerie Intershop",
+  "opening_hours": "Do. bis Fr.: 11 bis 18 Uhr Sa.: 12 bis 16 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "inter-disciplinary-shop",
+  "website": "https://www.galerie-intershop.de"
+ },
+ "jelangerjelieber|leipzig": {
+  "city": "Leipzig",
+  "key": "jelangerjelieber|leipzig",
+  "lat": 51.3214352,
+  "lng": 12.3290291,
+  "name": "Jelängerjelieber",
+  "osm_id": "node/12102987486",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.jelaengerjelieber.org"
+ },
+ "jugendhaus sudpol|leipzig": {
+  "city": "Leipzig",
+  "key": "jugendhaus sudpol|leipzig",
+  "lat": 51.305933,
+  "lng": 12.3812586,
+  "name": "Jugendhaus Südpol",
+  "osm_id": "node/412049575",
+  "sources": [
+   "osm"
+  ]
+ },
+ "kaos kulturwerkstatt|leipzig": {
+  "city": "Leipzig",
+  "key": "kaos kulturwerkstatt|leipzig",
+  "lat": 51.3431565,
+  "lng": 12.3347924,
+  "name": "Kulturwerkstatt KAOS",
+  "osm_id": "node/31562655",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.kaos-leipzig.de/"
+ },
+ "kk5|leipzig": {
+  "city": "Leipzig",
+  "email": "info@kk5-galerie.de",
+  "key": "kk5|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-kk5/",
+  "name": "Galerie KK5",
+  "opening_hours": "Do. - Sa.: 14 - 18 Uhr, jeden letzten Freitag im Monat: bis 20 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-kk5",
+  "website": "https://www.kk5-galerie.de"
+ },
+ "kleindienst|leipzig": {
+  "city": "Leipzig",
+  "email": "kontakt@galerieKleindienst.de",
+  "key": "kleindienst|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-kleindienst/",
+  "name": "Galerie Kleindienst",
+  "opening_hours": "Di. bis Fr.: 13 - 18 Uhr Sa.: 11 - 15 Uhr So. und Mo.: geschlossen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-kleindienst",
+  "website": "https://www.galerieKleindienst.de"
+ },
+ "koenitz|leipzig": {
+  "always_include": true,
+  "city": "Leipzig",
+  "email": "galerie@galerie-koenitz.de",
+  "extract": true,
+  "key": "koenitz|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-koenitz/",
+  "name": "Galerie Koenitz",
+  "note": "A relationship, not a taste signal. Was the one hardcoded rule in scoring.py; it lives here now so it can have company.\n",
+  "opening_hours": "Mo. bis Fr.: 10 - 18 Uhr Sa.: 10 - 16 Uhr und nach Vereinbarung",
+  "priority": 2,
+  "sources": [
+   "curated",
+   "rundgang"
+  ],
+  "venue_slug": "galerie-koenitz",
+  "website": "https://www.galerie-koenitz.de"
+ },
+ "kopfsalat|leipzig": {
+  "city": "Leipzig",
+  "key": "kopfsalat|leipzig",
+  "lat": 51.3514991,
+  "lng": 12.4082517,
+  "name": "kopfsalat",
+  "osm_id": "node/13975050201",
+  "sources": [
+   "osm"
+  ]
+ },
+ "kosmos musik|leipzig": {
+  "city": "Leipzig",
+  "key": "kosmos musik|leipzig",
+  "lat": 51.3309141,
+  "lng": 12.3344386,
+  "name": "Musik & Kosmos",
+  "osm_id": "node/13259943520",
+  "sources": [
+   "osm"
+  ]
+ },
+ "kub|leipzig": {
+  "city": "Leipzig",
+  "email": "kontakt@galeriekub.de",
+  "key": "kub|leipzig",
+  "lat": 51.3156791,
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-kub/",
+  "lng": 12.3724288,
+  "name": "galerie KUB",
+  "opening_hours": "Do. & Fr.: 15 - 18 Uhr Sa. & So.: 14 - 18 Uhr",
+  "osm_id": "way/392999867",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "galerie-kub",
+  "website": "https://www.galeriekub.de/"
+ },
+ "kulturbahnhof|chemnitz": {
+  "city": "Chemnitz",
+  "key": "kulturbahnhof|chemnitz",
+  "lat": 50.8234296,
+  "lng": 12.9261066,
+  "name": "Kulturbahnhof",
+  "osm_id": "node/12416184239",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.kulturbahnhof-chemnitz.de/"
+ },
+ "kulturkosmos|leipzig": {
+  "city": "Leipzig",
+  "email": "post@kulturkosmos-leipzig.de",
+  "key": "kulturkosmos|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/kulturkosmos/",
+  "name": "Kulturkosmos",
+  "opening_hours": "Mi. - Do.: 12 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "kulturkosmos",
+  "website": "https://www.kulturkosmos-leipzig.de"
+ },
+ "kulturwarenfabrik|leipzig": {
+  "city": "Leipzig",
+  "key": "kulturwarenfabrik|leipzig",
+  "lat": 51.3340401,
+  "lng": 12.3261801,
+  "name": "Kulturwarenfabrik",
+  "osm_id": "node/6864732155",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.kulturwarenfabrik.com/"
+ },
+ "kunst liebt mut|leipzig": {
+  "city": "Leipzig",
+  "key": "kunst liebt mut|leipzig",
+  "lat": 51.3264559,
+  "lng": 12.3449314,
+  "name": "Kunst liebt Mut",
+  "osm_id": "node/9451447502",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://kunstliebtmut.de/"
+ },
+ "kunst luftner praxis susane|leipzig": {
+  "city": "Leipzig",
+  "key": "kunst luftner praxis susane|leipzig",
+  "lat": 51.3339997,
+  "lng": 12.3257518,
+  "name": "Kunst-Praxis Susane Lüftner",
+  "osm_id": "node/11850816912",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://susanne-lueftner.de"
+ },
+ "kunstdunger|leipzig": {
+  "city": "Leipzig",
+  "key": "kunstdunger|leipzig",
+  "lat": 51.3222334,
+  "lng": 12.3316573,
+  "name": "Kunstdünger",
+  "osm_id": "node/12103026704",
+  "sources": [
+   "osm"
+  ]
+ },
+ "kunsthalle ost|leipzig": {
+  "city": "Leipzig",
+  "email": "kunsthalle.ost@gmail.com",
+  "key": "kunsthalle ost|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunsthalle-ost/",
+  "name": "Kunsthalle.Ost",
+  "opening_hours": "Fr.: 16 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "kunsthalle-ost"
+ },
+ "kunsthalle talstrasse|halle": {
+  "city": "Halle",
+  "email": "talstrasse@t-online.de",
+  "key": "kunsthalle talstrasse|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunstverein-talstrasse/",
+  "name": "KUNSTHALLE \"Talstrasse\"",
+  "opening_hours": "Mi. & Fr.: 13 - 17 Uhr, Do.: 13 - 19 Uhr; Sa., So. & Fei.: 11 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "kunstverein-talstrasse",
+  "website": "https://www.kunstverein-talstrasse.de "
+ },
+ "kunsthalle|leipzig": {
+  "city": "Leipzig",
+  "email": "info@aokunsthalle.com",
+  "key": "kunsthalle|leipzig",
+  "lat": 51.3443029,
+  "listing_url": "https://www.rundgang-kunst.de/locations/ao-kunsthalle/",
+  "lng": 12.3858758,
+  "name": "a&o Kunsthalle",
+  "opening_hours": "Do. bis Sa.: 12 - 18 Uhr und nach Vereinbarung",
+  "osm_id": "node/7625398885",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "ao-kunsthalle",
+  "website": "https://aokunsthalle.com/"
+ },
+ "kunstkraftwerk|leipzig": {
+  "city": "Leipzig",
+  "email": "info@kunstkraftwerk-leipzig.com",
+  "key": "kunstkraftwerk|leipzig",
+  "lat": 51.3306286,
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunstkraftwerk-leipzig/",
+  "lng": 12.3218131,
+  "name": "Kunstkraftwerk Leipzig",
+  "opening_hours": "Do. bis So.: 10 bis 20:30 Uhr",
+  "osm_id": "node/7794524861",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "kunstkraftwerk-leipzig",
+  "website": "https://www.kunstkraftwerk-leipzig.com/"
+ },
+ "kunstraum ortloff|leipzig": {
+  "city": "Leipzig",
+  "key": "kunstraum ortloff|leipzig",
+  "lat": 51.3372881,
+  "lng": 12.3401619,
+  "name": "Kunstraum Ortloff",
+  "osm_id": "node/5914739807",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.ortloff.org/"
+ },
+ "kunstraum ping pong|leipzig": {
+  "city": "Leipzig",
+  "key": "kunstraum ping pong|leipzig",
+  "lat": 51.3339087,
+  "lng": 12.3290559,
+  "name": "Kunstraum Ping•Pong",
+  "osm_id": "node/10669461026",
+  "sources": [
+   "osm"
+  ]
+ },
+ "kunstraum sphere techne|leipzig": {
+  "city": "Leipzig",
+  "email": "kultur@technesphere.de",
+  "key": "kunstraum sphere techne|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/halle-9-techne-sphere-leipzig/",
+  "name": "Kunstraum Techne Sphere",
+  "opening_hours": "Sa. & So.: 15 - 18 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "halle-9-techne-sphere-leipzig",
+  "website": "https://www.technesphere.de/kultur"
+ },
+ "kunsttanker|leipzig": {
+  "city": "Leipzig",
+  "email": "elisabeth-hinze@gmx.de",
+  "key": "kunsttanker|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunsttanker/",
+  "name": "Kunsttanker",
+  "opening_hours": null,
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "kunsttanker"
+ },
+ "kunstverein talstrasse|halle": {
+  "city": "Halle",
+  "email": "talstrasse@t-online.de",
+  "key": "kunstverein talstrasse|halle",
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunstverein-talstrasse/",
+  "name": "KUNSTHALLE \"Talstrasse\"",
+  "opening_hours": "Mi. & Fr.: 13 - 17 Uhr, Do.: 13 - 19 Uhr; Sa., So. & Fei.: 11 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "kunstverein-talstrasse",
+  "website": "https://www.kunstverein-talstrasse.de "
+ },
+ "kunstverein|leipzig": {
+  "city": "Leipzig",
+  "email": "info@kunstverein-leipzig.org",
+  "key": "kunstverein|leipzig",
+  "lat": 51.3381307,
+  "listing_url": "https://www.rundgang-kunst.de/locations/kunstverein-leipzig/",
+  "lng": 12.3675653,
+  "name": "KV - Verein für zeitgenössische Kunst Leipzig",
+  "opening_hours": "Mi.: 14 - 18 Uhr, Fr. & Sa.: 14 - 18 Uhr und nach Vereinbarung",
+  "osm_id": "node/9725081761",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "kunstverein-leipzig",
+  "website": "https://kunstverein-leipzig.org"
+ },
+ "lauramo|leipzig": {
+  "city": "Leipzig",
+  "key": "lauramo|leipzig",
+  "lat": 51.3175667,
+  "lng": 12.3728896,
+  "name": "LAURAMO",
+  "osm_id": "node/11832848671",
+  "sources": [
+   "osm"
+  ]
+ },
+ "leipziger schule|leipzig": {
+  "city": "Leipzig",
+  "key": "leipziger schule|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-leipziger-schule/",
+  "name": "galerie.leipziger-schule",
+  "opening_hours": "Mo. bis So.: 10 - 20 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-leipziger-schule",
+  "website": "https://www.leipziger-hof.de"
+ },
+ "lemon raw|leipzig": {
+  "city": "Leipzig",
+  "key": "lemon raw|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/raw-lemon-gallery/",
+  "name": "Raw Lemon Gallery",
+  "opening_hours": "Fr. - Sa.: 13 - 18 Uhr oder nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "raw-lemon-gallery",
+  "website": "https://www.rawlemongallery.com"
+ },
+ "liebmann topferei|chemnitz": {
+  "city": "Chemnitz",
+  "key": "liebmann topferei|chemnitz",
+  "lat": 50.8428575,
+  "lng": 12.93987,
+  "name": "Töpferei Liebmann",
+  "osm_id": "node/2434295479",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://liebmann-keramik.de/"
+ },
+ "maerzgalerie|leipzig": {
+  "city": "Leipzig",
+  "key": "maerzgalerie|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/maerzgalerie/",
+  "name": "Galerie Reiter",
+  "opening_hours": "Di. bis Fr.: 11 - 18 Uhr, Sa.: 11 - 16 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "maerzgalerie",
+  "website": "https://www.reitergalleries.com/de/"
+ },
+ "malwerk|leipzig": {
+  "city": "Leipzig",
+  "key": "malwerk|leipzig",
+  "lat": 51.3334058,
+  "lng": 12.3361145,
+  "name": "Malwerk",
+  "osm_id": "node/11748104129",
+  "sources": [
+   "osm"
+  ]
+ },
+ "mattheuer stiftung|leipzig": {
+  "city": "Leipzig",
+  "email": "stiftung.umn-wm@t-online.de",
+  "key": "mattheuer stiftung|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/mattheuer-stiftung/",
+  "name": "Mattheuer Stiftung",
+  "opening_hours": "Die Räume der Mattheuer-Stiftung können jederzeit nach Voranmeldung besucht werden. Anmeldung telefonisch und per Mail unter: 0341 2307395 bzw. stiftung.umn-wm@t-online.de.",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "mattheuer-stiftung",
+  "website": "https://www.mattheuer-stiftung.de"
+ },
+ "mdbk|leipzig": {
+  "city": "Leipzig",
+  "email": "mdbk@leipzig.de",
+  "key": "mdbk|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/mdbk/",
+  "name": "Museum der bildenden Künste Leipzig",
+  "opening_hours": "Di., Do. bis So.: 10 - 18 Uhr Mi.: 12 - 20 Uhr Mo. geschlossen Feiertage: 10 - 18 Uhr Eintritt frei - für in die Dauerausstellungen",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "mdbk",
+  "website": "https://www.mdbk.de"
+ },
+ "mielcarczyk nina|leipzig": {
+  "city": "Leipzig",
+  "email": "mail@ninamielcarczyk.de",
+  "key": "mielcarczyk nina|leipzig",
+  "lat": 51.3408522,
+  "listing_url": "https://www.rundgang-kunst.de/locations/fuck-it-up/",
+  "lng": 12.3672314,
+  "name": "Nina Mielcarczyk",
+  "opening_hours": "Do.: 15 - 20 Uhr, Fr.: 12 - 17 Uhr",
+  "osm_id": "node/11972549190",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "fuck-it-up"
+ },
+ "mondscheingalerie|leipzig": {
+  "city": "Leipzig",
+  "key": "mondscheingalerie|leipzig",
+  "lat": 51.3400659,
+  "lng": 12.3230906,
+  "name": "Mondscheingalerie",
+  "osm_id": "node/11938296220",
+  "sources": [
+   "osm"
+  ]
+ },
+ "moonart|leipzig": {
+  "city": "Leipzig",
+  "key": "moonart|leipzig",
+  "lat": 51.3364535,
+  "lng": 12.3736471,
+  "name": "Galerie Moonart",
+  "osm_id": "node/9536070383",
+  "sources": [
+   "osm"
+  ]
+ },
+ "mpeg|leipzig": {
+  "city": "Leipzig",
+  "key": "mpeg|leipzig",
+  "lat": 51.3358656,
+  "lng": 12.3323247,
+  "name": ".mpeg",
+  "osm_id": "node/13732383951",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.filz.works"
+ },
+ "museum stadtgeschichtliches|leipzig": {
+  "city": "Leipzig",
+  "email": "stadtmuseum@leipzig.de",
+  "key": "museum stadtgeschichtliches|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/stadtgeschichtliches-museum-leipzig/",
+  "name": "Stadtgeschichtliches Museum Leipzig",
+  "opening_hours": "Di. bis So.: 10 - 18 Uhr Feiertage: 10 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "stadtgeschichtliches-museum-leipzig",
+  "website": "https://www.stadtmuseum-leipzig.de"
+ },
+ "naund|leipzig": {
+  "city": "Leipzig",
+  "key": "naund|leipzig",
+  "lat": 51.3350494,
+  "lng": 12.4099702,
+  "name": "Naund",
+  "osm_id": "node/10294706602",
+  "sources": [
+   "osm"
+  ]
+ },
+ "oodd studios|leipzig": {
+  "city": "Leipzig",
+  "key": "oodd studios|leipzig",
+  "lat": 51.3645528,
+  "lng": 12.3557572,
+  "name": "OODD Studios",
+  "osm_id": "node/9588356399",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.oodd-studios.com"
+ },
+ "palmstrom|leipzig": {
+  "city": "Leipzig",
+  "key": "palmstrom|leipzig",
+  "lat": 51.3072278,
+  "lng": 12.3821379,
+  "name": "Galerie Palmström",
+  "osm_id": "node/1097872432",
+  "sources": [
+   "osm"
+  ]
+ },
+ "panometer|leipzig": {
+  "city": "Leipzig",
+  "email": "service@panometer.de",
+  "key": "panometer|leipzig",
+  "lat": 51.3141775,
+  "listing_url": "https://www.rundgang-kunst.de/locations/panometer-leipzig/",
+  "lng": 12.3870237,
+  "name": "Panometer Leipzig",
+  "opening_hours": "Mo.-So. & feiertags: 10-17 Uhr",
+  "osm_id": "node/6345652603",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "panometer-leipzig",
+  "website": "https://www.panometer.de/"
+ },
+ "paula piranha|leipzig": {
+  "city": "Leipzig",
+  "key": "paula piranha|leipzig",
+  "lat": 51.3249135,
+  "lng": 12.3429464,
+  "name": "Paula Piranha",
+  "osm_id": "node/1094877606",
+  "sources": [
+   "osm"
+  ]
+ },
+ "pentagon|chemnitz": {
+  "city": "Chemnitz",
+  "key": "pentagon|chemnitz",
+  "lat": 50.835543,
+  "lng": 12.922271,
+  "name": "Pentagon 3",
+  "osm_id": "node/5913271485",
+  "sources": [
+   "osm"
+  ]
+ },
+ "pierced pigeon|leipzig": {
+  "city": "Leipzig",
+  "key": "pierced pigeon|leipzig",
+  "lat": 51.3052638,
+  "lng": 12.3960635,
+  "name": "Pierced Pigeon",
+  "osm_id": "node/13168109968",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.piercedpigeon.de/atelier-studio"
+ },
+ "pilotenkueche|leipzig": {
+  "city": "Leipzig",
+  "email": "info@pilotenkueche.net",
+  "key": "pilotenkueche|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/pilotenkueche/",
+  "name": "Pilotenkueche",
+  "opening_hours": "Mo. - So.: 14 - 18 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "pilotenkueche",
+  "website": "https://www.pilotenkueche.net"
+ },
+ "potemka|leipzig": {
+  "city": "Leipzig",
+  "email": "post@potemka.de",
+  "key": "potemka|leipzig",
+  "lat": 51.3322357,
+  "listing_url": "https://www.rundgang-kunst.de/locations/potemka-contemporary-art/",
+  "lng": 12.3314659,
+  "name": "Galerie Potemka",
+  "opening_hours": "Mi. bis Sa.: 13 - 18 Uhr",
+  "osm_id": "node/9686932560",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "potemka-contemporary-art",
+  "website": "https://www.potemka.de "
+ },
+ "randerscheinung zentrale|leipzig": {
+  "city": "Leipzig",
+  "email": "post@zentrale-randerscheinung.de",
+  "key": "randerscheinung zentrale|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-zentrale-randerscheinung/",
+  "name": "Galerie Zentrale Randerscheinung",
+  "opening_hours": "Do. & Fr.: 16 - 19 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-zentrale-randerscheinung",
+  "website": "https://www.zentrale-randerscheinung.de"
+ },
+ "reiter|berlin": {
+  "always_include": true,
+  "city": "Berlin",
+  "extract": true,
+  "key": "reiter|berlin",
+  "name": "REITER",
+  "note": "The Berlin half of the same gallery.",
+  "priority": 2,
+  "sources": [
+   "curated"
+  ],
+  "website": "https://www.reitergalleries.com/de/"
+ },
+ "reiter|leipzig": {
+  "always_include": true,
+  "city": "Leipzig",
+  "extract": true,
+  "key": "reiter|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/maerzgalerie/",
+  "name": "REITER",
+  "note": "Shows in Leipzig and Berlin and publishes both plainly on its own site, but appears in none of the four listing sources - rundgang does not even carry the venue. The reason this file exists.\n",
+  "opening_hours": "Di. bis Fr.: 11 - 18 Uhr, Sa.: 11 - 16 Uhr",
+  "priority": 2,
+  "sources": [
+   "curated",
+   "rundgang"
+  ],
+  "venue_slug": "maerzgalerie",
+  "website": "https://www.reitergalleries.com/de/"
+ },
+ "rottluff schmidt|chemnitz": {
+  "city": "Chemnitz",
+  "key": "rottluff schmidt|chemnitz",
+  "lat": 50.8326917,
+  "lng": 12.9195058,
+  "name": "Galerie Schmidt-Rottluff",
+  "osm_id": "node/3245776891",
+  "sources": [
+   "osm"
+  ]
+ },
+ "schwind|leipzig": {
+  "city": "Leipzig",
+  "email": "galerieschwind@freenet.de",
+  "key": "schwind|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-schwind/",
+  "name": "Galerie Schwind",
+  "opening_hours": "Di. bis Fr.: 10 - 18 Uhr Sa.: 10 - 14 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-schwind",
+  "website": "https://www.galerie-schwind.de"
+ },
+ "skm|leipzig": {
+  "city": "Leipzig",
+  "email": "hello@skm-galerie.de",
+  "key": "skm|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/skm-galerie-leipzig/",
+  "name": "SKM Galerie Leipzig",
+  "opening_hours": "Fr.: 14 - 18 Uhr, Sa.: 11 - 18 Uhr, So.: 11 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "skm-galerie-leipzig",
+  "website": "https://skm-galerie.de"
+ },
+ "space westpol|leipzig": {
+  "city": "Leipzig",
+  "email": "westpol-presse@gmx.de",
+  "key": "space westpol|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/westpol/",
+  "name": "westpol.space",
+  "opening_hours": "Mi. & Do.: 16 - 19 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "westpol",
+  "website": "https://www.westpol.space"
+ },
+ "stadtbibliothek|leipzig": {
+  "city": "Leipzig",
+  "key": "stadtbibliothek|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/stadtbibliothek-leipzig/",
+  "name": "Stadtbibliothek Leipzig",
+  "opening_hours": "Mo. - Fr.: 10 - 19 Uhr, Sa.: 10 - 16 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "stadtbibliothek-leipzig"
+ },
+ "struktur wandel|leipzig": {
+  "city": "Leipzig",
+  "key": "struktur wandel|leipzig",
+  "lat": 51.3303779,
+  "lng": 12.3405177,
+  "name": "Struktur | Wandel",
+  "osm_id": "node/269786802",
+  "sources": [
+   "osm"
+  ]
+ },
+ "studio zuber|leipzig": {
+  "city": "Leipzig",
+  "key": "studio zuber|leipzig",
+  "lat": 51.3643251,
+  "lng": 12.3897284,
+  "name": "Studio Zuber",
+  "osm_id": "node/6856462527",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://spinpainting-leipzig.de/"
+ },
+ "suburbia|leipzig": {
+  "city": "Leipzig",
+  "email": "info@suburbiacontemporary.com ",
+  "key": "suburbia|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/suburbia-contemporary-leipzig/",
+  "name": "Suburbia Contemporary Leipzig",
+  "opening_hours": "Mi. - Fr.: 12 - 17 Uhr, Sa.: 11 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "suburbia-contemporary-leipzig",
+  "website": "https://suburbiacontemporary.com/"
+ },
+ "sued|leipzig": {
+  "city": "Leipzig",
+  "key": "sued|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-sued/",
+  "name": "Galerie Sued",
+  "opening_hours": "Mo. bis Fr.: 10 - 18 Uhr Sa.: 10 - 14 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "galerie-sued",
+  "website": "https://www.galerie-sued.de"
+ },
+ "tanklager west|leipzig": {
+  "city": "Leipzig",
+  "key": "tanklager west|leipzig",
+  "lat": 51.3369185,
+  "lng": 12.2981976,
+  "name": "Tanklager West",
+  "osm_id": "node/13789091601",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://tanklagerwest.de/"
+ },
+ "tapetenwerk|leipzig": {
+  "city": "Leipzig",
+  "email": "info@tapetenwerk.de",
+  "key": "tapetenwerk|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/tapetenwerk/",
+  "name": "Tapetenwerk",
+  "opening_hours": null,
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "tapetenwerk"
+ },
+ "trianda|leipzig": {
+  "city": "Leipzig",
+  "key": "trianda|leipzig",
+  "lat": 51.3385429,
+  "lng": 12.3657384,
+  "name": "TriAnda",
+  "osm_id": "node/9536070382",
+  "sources": [
+   "osm"
+  ]
+ },
+ "tschart|leipzig": {
+  "city": "Leipzig",
+  "email": "tschart@spaete-gmbh.de",
+  "key": "tschart|leipzig",
+  "lat": 51.3448169,
+  "listing_url": "https://www.rundgang-kunst.de/locations/galerie-tschart/",
+  "lng": 12.3605727,
+  "name": "Galerie TscharT",
+  "opening_hours": "Mo. bis Di.: 9 - 15 Uhr Mi.: 10 - 17 Uhr Do. bis Fr.: 9 - 15 Uhr Sa.: auf Anfrage sowie nach Vereinbarung",
+  "osm_id": "node/13154995867",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "galerie-tschart",
+  "website": "https://galerie-tschart.de"
+ },
+ "unartig|leipzig": {
+  "city": "Leipzig",
+  "key": "unartig|leipzig",
+  "lat": 51.322677,
+  "lng": 12.3402852,
+  "name": "unARTig",
+  "osm_id": "node/6784969906",
+  "sources": [
+   "osm"
+  ]
+ },
+ "universitatsklinikum|leipzig": {
+  "city": "Leipzig",
+  "email": "rainer.haak@uniklinik-leipzig.de",
+  "key": "universitatsklinikum|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/leukamiezentrum-jose-carreras/",
+  "name": "Universitätsklinikum Leipzig",
+  "opening_hours": "Mo. - Fr.: 7:30 - 17 Uhr",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "leukamiezentrum-jose-carreras"
+ },
+ "werkschau|leipzig": {
+  "city": "Leipzig",
+  "email": "mail@spinnerei.de",
+  "key": "werkschau|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/2445/",
+  "name": "Werkschau",
+  "opening_hours": "Di. bis Sa.: 11-18 Uhr So.: 13-18 Uhr Eintritt frei",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "2445",
+  "website": "https://www.spinnerei.de"
+ },
+ "werk|leipzig": {
+  "city": "Leipzig",
+  "key": "werk|leipzig",
+  "lat": 51.3100496,
+  "lng": 12.3713723,
+  "name": "Werk 2",
+  "osm_id": "node/301555895",
+  "sources": [
+   "osm"
+  ]
+ },
+ "westpol|leipzig": {
+  "city": "Leipzig",
+  "email": "westpol-presse@gmx.de",
+  "key": "westpol|leipzig",
+  "listing_url": "https://www.rundgang-kunst.de/locations/westpol/",
+  "name": "westpol.space",
+  "opening_hours": "Mi. & Do.: 16 - 19 Uhr und nach Vereinbarung",
+  "sources": [
+   "rundgang"
+  ],
+  "venue_slug": "westpol",
+  "website": "https://www.westpol.space"
+ },
+ "westwerk|leipzig": {
+  "city": "Leipzig",
+  "key": "westwerk|leipzig",
+  "lat": 51.3302418,
+  "lng": 12.3314574,
+  "name": "Westwerk",
+  "osm_id": "way/1421130865",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://westwerk-leipzig.de"
+ },
+ "x23|leipzig": {
+  "city": "Leipzig",
+  "key": "x23|leipzig",
+  "lat": 51.3391991,
+  "lng": 12.3315286,
+  "name": "x23 Gallery",
+  "osm_id": "node/8491854348",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://www.x23.gallery/"
+ },
+ "zandergalerieofarts|leipzig": {
+  "city": "Leipzig",
+  "key": "zandergalerieofarts|leipzig",
+  "lat": 51.3031813,
+  "lng": 12.3828886,
+  "name": "Zandergalerieofarts",
+  "osm_id": "node/11735534881",
+  "sources": [
+   "osm"
+  ],
+  "website": "https://zandergalerieofarts.de/"
+ },
+ "zimmt|leipzig": {
+  "city": "Leipzig",
+  "email": "info@zimmt.net",
+  "key": "zimmt|leipzig",
+  "lat": 51.3477677,
+  "listing_url": "https://www.rundgang-kunst.de/locations/zimmt/",
+  "lng": 12.4204822,
+  "name": "ZIMMT",
+  "opening_hours": "Öffnunsgzeiten: siehe Programm",
+  "osm_id": "node/12839505438",
+  "sources": [
+   "osm",
+   "rundgang"
+  ],
+  "venue_slug": "zimmt",
+  "website": "https://zimmt.net/"
+ }
+}

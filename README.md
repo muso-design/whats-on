@@ -14,6 +14,10 @@ scoring.py      merging, medium tier, Koenitz override, the default view
 translate.py    English descriptions: published where possible, translated otherwise
 geocode.py      coordinates for venues that arrive with only an address
 wikidata.py     medium from the artist, for listings with no text to read
+venues.py       the venue registry: who exists, independent of who lists them
+direct.py       read a gallery's own site, for the ones no aggregator carries
+llm.py          the local model, allowed only to report what a text says
+venues.yaml     the venues you care about, edited by hand
 state.py        the inventory: every show, its status and dates
 board.py        render the hub page, the manifest, the service worker and icons
 update.py       the whole pipeline: fetch, enrich, score, store, rebuild
@@ -91,6 +95,56 @@ workflow already commits a fresh page — then open it and choose "Add to home
 screen". It installs as a standalone app with its own icon, and the service
 worker caches the shell so the list still opens with no signal. The map needs a
 connection for its tiles and says so when it has none.
+
+## Reading galleries directly
+
+The four listing sources only know about galleries that submit to them. REITER
+shows in Leipzig and Berlin, publishes both plainly on its own homepage, and
+appeared in none of them — rundgang does not even carry the venue. That is a
+shape, not a bug, and no amount of parser tuning reaches outside it.
+
+So `venues.py` collects **venues** rather than events, from indexes that have no
+opinion about art listings: OpenStreetMap (97 art venues in Leipzig, every one
+with coordinates), rundgang's own location pages, the venue id index-berlin puts
+on every card, and `venues.yaml`. That produced a registry of **222 venues, 155
+with a website**.
+
+`direct.py` then reads those websites with a local model. One prompt covers
+every site, whatever it is built with, which is what makes this scale where a
+parser per gallery did not. REITER took eight seconds and gave up both shows
+with correct cities and ISO dates.
+
+The model is allowed to report only what the page says:
+
+- artists and titles are checked back against the page text, so an invented
+  name is dropped
+- dates must parse as dates, or they become null
+- venue, coordinates, opening hours and the URL come from the registry, never
+  from the model
+- answers are cached on the page text, so an unchanged site costs nothing
+
+Run it with `python direct.py --curated` for the venues you marked, or let
+`update.py` read a few each run.
+
+### Which model
+
+Measured on an RTX 2070 SUPER with 8 GB:
+
+| model | size | seconds per record |
+|-------|------|--------------------|
+| `qwen2.5-coder:7b` | 4.7 GB | **2.8** |
+| `gemma3:4b` | 3.3 GB | 60–80 |
+| `qwen3:8b` | 5.2 GB | 45–101 |
+
+All three sit entirely in VRAM, so this is not spilling — the two newer models
+simply spend their time in prompt processing on this card. `gemma3:4b` gave
+visibly better German (it found materials the coder model missed, all of them
+real), so it is worth using for an occasional quality pass via
+`LLM_MODEL=gemma3:4b`, but the default is the one that is twenty times faster.
+
+Set `LLM_MODEL` to change it and `LLM_TIMEOUT` if your machine is slower.
+Nothing here is required: with no Ollama running, every model call returns
+nothing and the rest of the pipeline is unaffected.
 
 ## Sources
 

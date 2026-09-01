@@ -1,0 +1,44 @@
+# Venues you care about, and how they should be treated.
+#
+# Everything here is merged into the venue registry and wins over whatever the
+# automatic discovery found. This is the file to edit when a gallery matters to
+# you, or when discovery gets something wrong.
+#
+#   name            as you would say it; matched loosely, so "BQ" finds "BQ Berlin"
+#   city            Leipzig | Halle | Dresden | Chemnitz | Berlin
+#   website         the page that lists their programme
+#   always_include  their shows bypass the medium filter entirely
+#   priority        a rank nudge: 2 strong, 1 mild, 0 none
+#   extract         read their own site directly, rather than waiting for an
+#                   aggregator to carry them
+#   note            why they are here, for when you read this in a year
+
+venues:
+  - name: Galerie Koenitz
+    city: Leipzig
+    website: https://www.galerie-koenitz.de
+    always_include: true
+    priority: 2
+    extract: true
+    note: >
+      A relationship, not a taste signal. Was the one hardcoded rule in
+      scoring.py; it lives here now so it can have company.
+
+  - name: REITER
+    city: Leipzig
+    website: https://www.reitergalleries.com/de/
+    always_include: true
+    priority: 2
+    extract: true
+    note: >
+      Shows in Leipzig and Berlin and publishes both plainly on its own site,
+      but appears in none of the four listing sources - rundgang does not even
+      carry the venue. The reason this file exists.
+
+  - name: REITER
+    city: Berlin
+    website: https://www.reitergalleries.com/de/
+    always_include: true
+    priority: 2
+    extract: true
+    note: The Berlin half of the same gallery.
