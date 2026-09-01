@@ -1,9 +1,12 @@
-"""Refresh the inventory, then rebuild the hub page.
+"""Refresh both inventories, then rebuild the hub page.
 
 Scrape every source, merge the duplicates, fill in coordinates and English
-descriptions, score, and fold the result into state.json. There is no email:
-the hub is the product, and "what is new" is answered on the page against what
-you have already seen.
+descriptions, score, and fold the result into state.json. Then do the same for
+open calls, which have their own sources, their own clock and their own file.
+There is no email: the hub is the product, and "what is new" is answered on the
+page against what you have already seen.
+
+One command, because two commands is one you will forget to run.
 """
 
 import argparse
@@ -73,6 +76,8 @@ def main(argv=None):
                         help="skip resolving artists against Wikidata")
     parser.add_argument("--no-direct", action="store_true",
                         help="skip reading gallery sites with the local model")
+    parser.add_argument("--no-calls", action="store_true",
+                        help="skip refreshing open calls")
     parser.add_argument("--no-build", action="store_true",
                         help="update the inventory but do not rebuild the page")
     parser.add_argument("--state", default=state_mod.STATE_PATH)
@@ -106,6 +111,20 @@ def main(argv=None):
              ", ".join("%s %d" % (k.replace("_", " "), v)
                        for k, v in sorted(tally.items())),
              ", %d pruned" % removed if removed else ""))
+
+    if not args.no_calls and not args.from_file:
+        print("open calls...")
+        import calls as calls_mod
+        inventory, new_calls = calls_mod.refresh(
+            translate=not args.no_translate)
+        dropped = calls_mod.prune(inventory)
+        calls_mod.save(inventory)
+        tally = calls_mod.counts(inventory)
+        print("  %d new since the last run" % len(new_calls))
+        print("calls: %d (%s)%s"
+              % (len(inventory["calls"]),
+                 ", ".join("%s %d" % kv for kv in sorted(tally.items())),
+                 ", %d pruned" % dropped if dropped else ""))
 
     if not args.no_build:
         import board

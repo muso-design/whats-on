@@ -40,6 +40,7 @@ jobs:
           python test_calendar.py
           python test_wikidata.py
           python test_direct.py
+          python test_calls.py
 
       - name: Fetch and rebuild
         env:
@@ -49,6 +50,10 @@ jobs:
         # No Ollama on the runner, so reading gallery sites is skipped here and
         # happens on the local machine instead. Shows already found that way
         # stay in the inventory; they simply are not refreshed by this job.
+        #
+        # Open calls do refresh here. The nationality rules are plain code and
+        # run anywhere; only the terms that need the model are left unread, and
+        # a verdict already in the inventory is never downgraded to unknown.
         run: python update.py --no-direct
 
       - name: Commit the inventory and the page

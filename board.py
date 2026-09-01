@@ -4,6 +4,11 @@ The email answers "what is new". This answers "what are my options" - every
 show being tracked, filterable by status, city and medium, sorted by relevance
 or by how soon it closes. No server, no build step: one file, opened from disk
 or from a phone.
+
+It carries two inventories, because there are two questions. Where to go is a
+show with a run and a distance. Where to send work is a call with a deadline
+and an entry fee, and distance means nothing - you can apply to Reykjavik from
+Leipzig. They share the page, the filters and the keyboard, and nothing else.
 """
 
 import argparse
@@ -304,6 +309,204 @@ def build_rows(state, today=None):
 
 # --------------------------------------------------------------------------
 
+# --------------------------------------------------------------------------
+# open calls
+# --------------------------------------------------------------------------
+
+CALL_TYPE_TEXT = {"residency": "residency", "grant": "grant", "award": "award",
+                  "commission": "commission", "open call": "open call",
+                  "curators": "for curators", "collaboration": "collaboration",
+                  "job": "job"}
+
+# What a call asks you to produce, in the order it costs you time.
+REQUIRE_TEXT = {
+    "PORTFOLIO": "portfolio", "CV": "CV", "STATEMENT": "statement",
+    "PROJECT_PROPOSAL": "proposal", "MOTIVATION_LETTER": "letter",
+    "REFERENCES": "references", "BIOGRAPHY": "bio", "WEBSITE": "website",
+    "VIDEO": "video", "BUDGET": "budget",
+}
+
+
+# BBK types nothing, but its titles say what they are in plain German.
+BBK_TYPES = [
+    ("kunst am bau", "commission"), ("kunst-am-bau", "commission"),
+    ("wettbewerb", "competition"), ("stipendium", "grant"),
+    ("förderung", "grant"), ("residen", "residency"),
+    ("preis", "award"), ("symposium", "symposium"),
+    ("ausstellung", "exhibition"), ("atelier", "studio"),
+]
+
+
+def call_type(record):
+    """What kind of opportunity it is, in one lowercase word."""
+    given = record.get("type")
+    if given:
+        # An inventory written before a source type was mapped still holds the
+        # raw enum, so both spellings are accepted rather than one rendering
+        # as "art residency" on the card.
+        try:
+            import calls as calls_mod
+            if given in calls_mod.CALL_TYPES:
+                given = calls_mod.CALL_TYPES[given]
+        except ImportError:
+            pass
+        return CALL_TYPE_TEXT.get(given, str(given).replace("_", " ").lower())
+    title = (record.get("title") or "").lower()
+    for needle, label in BBK_TYPES:
+        if needle in title:
+            return label
+    return ""
+
+
+# ArtConnect stores descriptions as rich text and hands them over with the
+# markup still in them, so "**Artist Opportunity**" arrives verbatim.
+_MD_LINK = re.compile(r"\[([^\]]{1,120})\]\([^)]{1,300}\)")
+_MD_MARKS = re.compile(r"\*{1,3}|_{2,3}|`+|^#{1,6}\s*|^>\s*", re.M)
+
+
+def strip_markdown(text):
+    """Plain prose out of the rich-text markup the sources leave behind."""
+    text = _MD_LINK.sub(r"\1", text or "")
+    text = _MD_MARKS.sub("", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def call_blurb(record, limit=BLURB_CHARS):
+    """The first few sentences of a call, cut on a boundary.
+
+    Calls are written as prose and the opening lines carry the terms, so this
+    keeps the beginning rather than hunting for a description the way a show
+    listing needs.
+    """
+    text = strip_markdown(record.get("description_en")
+                          or record.get("description") or "")
+    if len(text) <= limit:
+        return text
+    cut = text[:limit]
+    stop = max(cut.rfind(". "), cut.rfind("? "), cut.rfind("! "))
+    if stop > limit * 0.5:
+        return cut[:stop + 1]
+    return cut[:cut.rfind(" ")].rstrip(",;:") + "…"
+
+
+def deadline_text(record):
+    """'by 30 Sep', or the pattern for the ones that come round every year."""
+    day = _d(record.get("deadline"))
+    if day:
+        return "by %d %s" % (day.day, MONTHS[day.month - 1])
+    pattern = record.get("deadline_pattern")
+    if pattern:
+        return "every %s" % pattern if not pattern[0].isdigit() else pattern
+    return "no deadline given"
+
+
+def call_place(record):
+    """Where the opportunity is, which is not where you apply from."""
+    if record.get("place"):
+        return record["place"]
+    if record.get("online"):
+        return "online"
+    bits = [record.get("city"), record.get("country")]
+    return ", ".join(b for b in bits if b) or ""
+
+
+def call_calendar_url(record):
+    """An all-day reminder on the deadline, and one the week before.
+
+    A deadline you find out about on the day is a deadline you miss, so the
+    entry is placed a week early and named for what it is. Still a link:
+    nothing is written to the calendar until you press save.
+    """
+    day = _d(record.get("deadline"))
+    if not day:
+        return "", ""
+    warn = day - timedelta(days=7)
+    if warn <= date.today():
+        warn, label = day, "Add deadline"
+    else:
+        label = "Remind me"
+    details = [record.get("organisation") or "",
+               "Deadline: %d %s %d" % (day.day, MONTHS[day.month - 1], day.year)]
+    if record.get("requires"):
+        details.append("Wants: " + ", ".join(record["requires"][:6]))
+    if record.get("fee_note"):
+        details.append("Fee: %s" % record["fee_note"])
+    if record.get("url"):
+        details.append(record["url"])
+    params = {
+        "action": "TEMPLATE",
+        "text": "Apply: %s" % (record.get("title") or "open call"),
+        "dates": "%s/%s" % (warn.strftime("%Y%m%d"),
+                            (warn + timedelta(days=1)).strftime("%Y%m%d")),
+        "details": "\n\n".join(x for x in details if x),
+    }
+    return ("https://calendar.google.com/calendar/render?" + urlencode(params),
+            label)
+
+
+def to_call_row(record, today=None, key=None):
+    """One call, flattened for the page.
+
+    The id is the inventory key, which the stored record does not repeat. It
+    has to be threaded through: without it every card shares an empty id, and
+    tracking one application marks all of them.
+    """
+    left = record.get("days_left")
+    requires = [REQUIRE_TEXT.get(r, str(r).replace("_", " ").lower())
+                for r in (record.get("requires") or [])]
+    cal, cal_label = call_calendar_url(record)
+    return {
+        "cal": cal,
+        "cal_label": cal_label,
+        "elig": record.get("eligibility") or "open",
+        "open_to": record.get("open_to") or [],
+        "id": key or record.get("id") or "",
+        "kind": "call",
+        "title": record.get("title") or "",
+        "org": record.get("organisation") or "",
+        "type": call_type(record),
+        "place": call_place(record),
+        "deadline": (record.get("deadline") or "")[:10],
+        "when": deadline_text(record),
+        "left": left,
+        "status": record.get("status") or "rolling",
+        "fit": record.get("sculpture") or "no",
+        "why": record.get("sculpture_why") or "",
+        "spec": record.get("specificity") or "untagged",
+        "fee": record.get("fee"),
+        "fee_note": record.get("fee_note") or "",
+        "requires": requires[:5],
+        "restrictions": record.get("restrictions") or "",
+        "url": record.get("url") or record.get("source_url") or "",
+        "source": record.get("source") or "",
+        "blurb": call_blurb(record),
+        "lang": record.get("language") or "en",
+        "rank": record.get("rank") or 0,
+        "first_seen": record.get("first_seen") or "",
+    }
+
+
+def build_call_rows(inventory, today=None):
+    """Every call worth showing, best first. Closed ones are left out."""
+    rows = [to_call_row(record, today, key)
+            for key, record in (inventory or {}).get("calls", {}).items()
+            if record.get("status") != "closed"]
+    rows.sort(key=lambda r: (-r["rank"], r["deadline"] or "9999"))
+    return rows
+
+
+def load_calls():
+    """The calls inventory, if the calls run has ever happened."""
+    try:
+        import calls as calls_mod
+    except ImportError:
+        return {}
+    try:
+        return calls_mod.load()
+    except Exception:                                          # noqa: BLE001
+        return {}
+
+
 PAGE = """<!doctype html>
 <html lang="en">
 <head>
@@ -412,6 +615,9 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   border:1px solid var(--line);border-radius:9px;padding:0 8px;height:var(--tap);
   max-width:44%}
 
+/* An explicit display beats the browser's own [hidden] rule, so every
+   .filters row and .badge stayed visible once it was told to hide. */
+[hidden]{display:none !important}
 .filters{display:flex;flex-direction:column;gap:4px;margin-top:7px}
 .row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding-bottom:2px;-webkit-overflow-scrolling:touch}
@@ -452,6 +658,14 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   background:var(--sunk);color:var(--muted)}
 .tag.live{background:var(--accent-soft);color:var(--accent)}
 .tag.urgent{background:var(--urgent-soft);color:var(--urgent)}
+.grouphead{font-size:.95rem;font-weight:650;letter-spacing:.02em;
+  text-transform:lowercase;color:var(--muted);margin:22px 0 10px}
+.grouphead:first-child{margin-top:4px}
+.card.call .where{color:var(--muted)}
+select.stage{font:inherit;font-size:.85rem;padding:7px 10px;border-radius:8px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  min-height:38px;cursor:pointer}
+select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .tag.med{background:var(--accent-soft);color:var(--accent)}
 .tag.new{background:var(--new-soft);color:var(--new)}
 .blurb{font-size:.92rem;color:var(--muted);margin:0 0 6px}
@@ -537,6 +751,10 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     <button role="tab" id="tab-browse" aria-controls="results"
             aria-selected="true" tabindex="0" data-tab="browse">
       <span class="g" aria-hidden="true">◍</span><span>Browse</span></button>
+    <button role="tab" id="tab-calls" aria-controls="results"
+            aria-selected="false" tabindex="-1" data-tab="calls">
+      <span class="g" aria-hidden="true">✉</span><span>Calls</span>
+      <span class="badge" id="callcount" hidden></span></button>
     <button role="tab" id="tab-saved" aria-controls="results"
             aria-selected="false" tabindex="-1" data-tab="saved">
       <span class="g" aria-hidden="true">★</span><span>Saved</span>
@@ -556,11 +774,22 @@ select{font:inherit;color:var(--ink);background:var(--surface);
         <option value="soon">Opening soonest</option>
         <option value="closing">Closing soonest</option>
       </select>
+      <select id="csort" aria-label="Sort by" hidden>
+        <option value="rank">Most relevant</option>
+        <option value="deadline">Deadline soonest</option>
+        <option value="runway">Most time to prepare</option>
+      </select>
     </div>
-    <div class="filters">
+    <div class="filters" id="show-filters">
       <div class="row" id="f-status" role="group" aria-label="When"></div>
       <div class="row" id="f-city" role="group" aria-label="Where"></div>
       <div class="row" id="f-medium" role="group" aria-label="Medium"></div>
+    </div>
+    <div class="filters" id="call-filters" hidden>
+      <div class="row" id="f-fit" role="group" aria-label="Relevance"></div>
+      <div class="row" id="f-runway" role="group" aria-label="Time left"></div>
+      <div class="row" id="f-terms" role="group" aria-label="Terms"></div>
+      <div class="row" id="f-ctype" role="group" aria-label="Kind"></div>
     </div>
   </div>
 
@@ -585,6 +814,7 @@ select{font:inherit;color:var(--ink);background:var(--surface);
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script id="data" type="application/json">__DATA__</script>
+<script id="calldata" type="application/json">__CALLS__</script>
 <script>
 (function () {
   "use strict";
@@ -617,6 +847,38 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   }
   rows.forEach(function (r) { r._new = isNew(r); });
 
+  // ---- the other inventory -------------------------------------------
+  var calls = [];
+  try {
+    calls = JSON.parse(document.getElementById("calldata").textContent) || [];
+  } catch (e) { calls = []; }
+  calls.forEach(function (c) { c._new = isNew(c); });
+
+  // Where you are with each application. Four stages, because that is how
+  // many states an application is actually in: one you noticed, one you are
+  // writing, one you sent, and one that came back.
+  var APPS = "whatson.apps.v1";
+  var STAGES = [
+    ["", "not tracking"],
+    ["interested", "interested"],
+    ["preparing", "preparing"],
+    ["submitted", "submitted"],
+    ["answered", "heard back"]
+  ];
+  var apps = {};
+  try { apps = JSON.parse(localStorage.getItem(APPS) || "{}"); } catch (e) {}
+  function saveApps() {
+    try { localStorage.setItem(APPS, JSON.stringify(apps)); } catch (e) {}
+  }
+
+  var FIT = [["yes", "sculpture"], ["maybe", "maybe"], ["no", "everything else"]];
+  var RUNWAY = [
+    ["closing", "closing", "urgent"],
+    ["soon", "this month", ""],
+    ["open", "later", ""],
+    ["rolling", "no deadline", ""]
+  ];
+
   var STATUS = [
     ["closing_soon", "closing soon", "urgent"],
     ["opening_soon", "opening soon", ""],
@@ -634,11 +896,24 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     tab: "browse",
     q: "",
     sort: "rank",
+    csort: "rank",
     onlyNew: false,
     status: new Set(["closing_soon", "opening_soon"]),
     city: new Set(),
-    medium: new Set()
+    medium: new Set(),
+    // Calls open on sculpture only. Nine in ten of the rest are painting
+    // prizes and curator jobs, and the point of the tab is where the work
+    // could go, not what exists.
+    fit: new Set(["yes"]),
+    runway: new Set(),
+    ctype: new Set(),
+    freeOnly: false,
+    canEnter: true          // hide what you are not allowed to apply to
   };
+
+  function mode() {
+    return state.tab === "calls" ? "calls" : state.tab === "saved" ? "both" : "shows";
+  }
 
   // An action's own message beats the running result count: pressing Save
   // should say "Saved", not read the list length back at you.
@@ -679,6 +954,42 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     return textMatch(r);
   }
 
+  function callText(c) {
+    if (!state.q) { return true; }
+    return (c.title + " " + c.org + " " + c.place + " " + c.blurb + " " + c.type)
+      .toLowerCase().indexOf(state.q) !== -1;
+  }
+
+  function matchesCall(c) {
+    if (state.tab === "saved") { return !!apps[c.id] && callText(c); }
+    if (state.canEnter && c.elig === "closed") { return false; }
+    if (state.freeOnly && c.fee !== false) { return false; }
+    if (state.fit.size && !state.fit.has(c.fit)) { return false; }
+    if (state.runway.size && !state.runway.has(c.status)) { return false; }
+    if (state.ctype.size && !state.ctype.has(c.type)) { return false; }
+    return callText(c);
+  }
+
+  function sortedCalls(list) {
+    var copy = list.slice();
+    function byDeadline(a, b) {
+      var ad = a.deadline || "9999", bd = b.deadline || "9999";
+      return ad < bd ? -1 : ad > bd ? 1 : 0;
+    }
+    if (state.csort === "deadline") { copy.sort(byDeadline); }
+    else if (state.csort === "runway") {
+      // Most time to prepare first, and calls with no deadline at the end -
+      // "rolling" is not the same as "loads of time".
+      copy.sort(function (a, b) {
+        var al = a.left == null ? -1 : a.left, bl = b.left == null ? -1 : b.left;
+        return bl - al;
+      });
+    } else {
+      copy.sort(function (a, b) { return b.rank - a.rank || byDeadline(a, b); });
+    }
+    return copy;
+  }
+
   function sorted(list) {
     var copy = list.slice();
     function byDate(a, b) {
@@ -698,24 +1009,29 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   }
 
   // ---- chips ----------------------------------------------------------
+  // Groups that are a single on/off switch rather than a set of values.
+  var TOGGLES = { "new": "onlyNew", "free": "freeOnly", "enter": "canEnter" };
+
+  function pressed(group, value) {
+    var flag = TOGGLES[group];
+    return flag ? state[flag] : state[group].has(value);
+  }
+
   function chip(label, value, count, group, extra) {
     var b = document.createElement("button");
     b.className = "chip " + (extra || "");
     b.type = "button";
     b.dataset.group = group;
     b.dataset.value = value;
-    b.setAttribute("aria-pressed",
-      group === "new" ? String(state.onlyNew) :
-        String(state[group].has(value)));
+    b.setAttribute("aria-pressed", String(pressed(group, value)));
     b.innerHTML = esc(label) +
       (count != null ? '<span class="c">' + count + "</span>" : "");
     b.addEventListener("click", function () {
-      if (group === "new") { state.onlyNew = !state.onlyNew; }
+      var flag = TOGGLES[group];
+      if (flag) { state[flag] = !state[flag]; }
       else if (state[group].has(value)) { state[group].delete(value); }
       else { state[group].add(value); }
-      b.setAttribute("aria-pressed",
-        group === "new" ? String(state.onlyNew) :
-          String(state[group].has(value)));
+      b.setAttribute("aria-pressed", String(pressed(group, value)));
       render();
     });
     return b;
@@ -745,17 +1061,66 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     });
   }
 
+  function buildCallFilters() {
+    if (!calls.length) { return; }
+    var f = document.getElementById("f-fit");
+    FIT.forEach(function (row) {
+      var n = calls.filter(function (c) { return c.fit === row[0]; }).length;
+      if (n) { f.appendChild(chip(row[1], row[0], n, "fit")); }
+    });
+
+    var r = document.getElementById("f-runway");
+    RUNWAY.forEach(function (row) {
+      var n = calls.filter(function (c) { return c.status === row[0]; }).length;
+      if (n) { r.appendChild(chip(row[1], row[0], n, "runway", row[2])); }
+    });
+
+    var t = document.getElementById("f-terms");
+    var free = calls.filter(function (c) { return c.fee === false; }).length;
+    if (free) { t.appendChild(chip("free to enter", "free", free, "free")); }
+    var shut = calls.filter(function (c) { return c.elig === "closed"; }).length;
+    if (shut) {
+      t.appendChild(chip("open to me", "enter", calls.length - shut, "enter"));
+    }
+
+    var kinds = {};
+    calls.forEach(function (c) { kinds[c.type] = (kinds[c.type] || 0) + 1; });
+    var k = document.getElementById("f-ctype");
+    Object.keys(kinds).sort(function (a, b) { return kinds[b] - kinds[a]; })
+      .forEach(function (name) {
+        if (name) { k.appendChild(chip(name, name, kinds[name], "ctype")); }
+      });
+  }
+
   function filtersActive() {
+    if (mode() === "calls") {
+      return state.fit.size !== 1 || !state.fit.has("yes") ||
+        state.runway.size || state.ctype.size || state.freeOnly ||
+        !state.canEnter;
+    }
     return state.status.size || state.city.size || state.medium.size ||
       state.onlyNew;
   }
 
-  function clearFilters() {
-    state.status.clear(); state.city.clear(); state.medium.clear();
-    state.onlyNew = false;
-    document.querySelectorAll(".chip[aria-pressed]").forEach(function (b) {
-      b.setAttribute("aria-pressed", "false");
+  function syncChips() {
+    document.querySelectorAll(".chip[data-group]").forEach(function (b) {
+      b.setAttribute("aria-pressed",
+        String(pressed(b.dataset.group, b.dataset.value)));
     });
+  }
+
+  function clearFilters() {
+    if (mode() === "calls") {
+      // Back to the default, which is not "everything": the sculpture filter
+      // is the tab, not a preference you happened to set.
+      state.fit = new Set(["yes"]);
+      state.runway.clear(); state.ctype.clear();
+      state.freeOnly = false; state.canEnter = true;
+    } else {
+      state.status.clear(); state.city.clear(); state.medium.clear();
+      state.onlyNew = false;
+    }
+    syncChips();
     render();
   }
 
@@ -898,6 +1263,117 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     return out.join("");
   }
 
+  // ---- calls ----------------------------------------------------------
+  function runwayTag(c) {
+    var d = c.left;
+    if (c.status === "rolling") { return '<span class="tag">no deadline</span>'; }
+    if (d == null) { return '<span class="tag">deadline unclear</span>'; }
+    if (d < 0) { return '<span class="tag">closed</span>'; }
+    var text = d === 0 ? "closes today" : d === 1 ? "1 day left" : d + " days left";
+    return '<span class="tag ' + (c.status === "closing" ? "urgent" : "live") +
+      '">' + esc(text) + "</span>";
+  }
+
+  function stagePicker(c) {
+    var current = apps[c.id] || "";
+    var id = "st-" + c.id;
+    var out = ['<label class="sr-only" for="' + esc(id) + '">' +
+      "Application stage for " + esc(c.title) + "</label>",
+      '<select class="stage" id="' + esc(id) + '" data-call="' + esc(c.id) + '">'];
+    STAGES.forEach(function (row) {
+      out.push('<option value="' + esc(row[0]) + '"' +
+        (row[0] === current ? " selected" : "") + ">" + esc(row[1]) + "</option>");
+    });
+    out.push("</select>");
+    return out.join("");
+  }
+
+  function callCard(c) {
+    var stage = apps[c.id] || "";
+    var cls = "card call" + (c.fit === "yes" ? " t3" : "") +
+      (c.status === "closing" ? " urgent" : "") +
+      (c._new ? " isnew" : "") + (stage === "submitted" ? " done" : "");
+    var out = ['<article class="' + cls + '">'];
+
+    out.push("<h2>" + (c.url
+      ? '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">' +
+        esc(c.title) + "</a>" : esc(c.title)) + "</h2>");
+    if (c.org) { out.push('<p class="who">' + esc(c.org) + "</p>"); }
+
+    var where = [];
+    if (c.place) { where.push('<span class="venue">' + esc(c.place) + "</span>"); }
+    where.push('<span class="when">' + esc(c.when) + "</span>");
+    out.push('<div class="where">' + where.join("") + "</div>");
+
+    var tags = [];
+    if (c._new) { tags.push('<span class="tag new">new</span>'); }
+    tags.push(runwayTag(c));
+    if (c.type) { tags.push('<span class="tag">' + esc(c.type) + "</span>"); }
+    if (c.fit === "yes") { tags.push('<span class="tag med">sculpture</span>'); }
+    if (c.fee === false) { tags.push('<span class="tag live">free</span>'); }
+    else if (c.fee === true) {
+      tags.push('<span class="tag urgent">' +
+        esc(c.fee_note ? "fee " + c.fee_note : "entry fee") + "</span>");
+    }
+    if (c.elig === "closed") {
+      tags.push('<span class="tag urgent">only ' +
+        esc(c.open_to.join(", ")) + "</span>");
+    }
+    if (c.spec === "open to all") {
+      tags.push('<span class="tag" title="This listing ticks every artistic ' +
+        'field, so the sculpture tag means little">open to all fields</span>');
+    }
+    if (stage) { tags.push('<span class="tag med">' + esc(stage) + "</span>"); }
+    out.push('<div class="tags">' + tags.join("") + "</div>");
+
+    if (c.blurb) {
+      out.push('<p class="blurb"' + (c.lang === "de" ? ' lang="de"' : "") + ">" +
+        esc(c.blurb) + "</p>");
+    }
+    var foot = [];
+    if (c.why) { foot.push(esc(c.why)); }
+    if (c.requires && c.requires.length) {
+      foot.push("wants " + esc(c.requires.join(", ")));
+    }
+    if (foot.length) {
+      out.push('<p class="why">' + foot.join(" &middot; ") + "</p>");
+    }
+
+    var acts = [stagePicker(c)];
+    if (c.cal) {
+      acts.push('<a class="act" href="' + esc(c.cal) +
+        '" target="_blank" rel="noopener"><span class="i">&#128197;</span>' +
+        esc(c.cal_label) + "</a>");
+    }
+    if (c.url) {
+      acts.push('<a class="act" href="' + esc(c.url) +
+        '" target="_blank" rel="noopener"><span class="i">&#8599;</span>' +
+        "Read the call</a>");
+    }
+    out.push('<div class="acts">' + acts.join("") + "</div>");
+    out.push("</article>");
+    return out.join("");
+  }
+
+  document.addEventListener("change", function (e) {
+    var sel = e.target.closest ? e.target.closest("select.stage") : null;
+    if (!sel) { return; }
+    var id = sel.dataset.call, value = sel.value;
+    if (value) { apps[id] = value; } else { delete apps[id]; }
+    saveApps();
+    var name = STAGES.filter(function (r) { return r[0] === value; })[0];
+    announce(value ? "Marked " + name[1] : "No longer tracking this call");
+    updateCallCount();
+  });
+
+  function updateCallCount() {
+    var n = Object.keys(apps).length;
+    var badge = document.getElementById("callcount");
+    badge.textContent = n ? String(n) : "";
+    badge.hidden = !n;
+    badge.setAttribute("aria-label", n + " calls tracked");
+  }
+
   // ---- map ------------------------------------------------------------
   var map = null, layer = null;
 
@@ -993,12 +1469,25 @@ select{font:inherit;color:var(--ink);background:var(--surface);
 
   var first = true;
 
-  function render() {
-    var list = sorted(rows.filter(matches));
-    var isMap = state.tab === "map";
+  function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
 
-    var shown = list.length + (list.length === 1 ? " exhibition" : " exhibitions") +
-      (state.tab === "saved" ? " saved" : " of " + rows.length);
+  function render() {
+    var isMap = state.tab === "map";
+    var here = mode();
+    var list = here === "calls" ? [] : sorted(rows.filter(matches));
+    var callList = here === "shows" || isMap
+      ? [] : sortedCalls(calls.filter(matchesCall));
+
+    var shown;
+    if (here === "calls") {
+      shown = plural(callList.length, "call", "calls") + " of " + calls.length;
+    } else if (here === "both") {
+      shown = plural(list.length, "show", "shows") + " saved, " +
+        plural(callList.length, "call", "calls") + " tracked";
+    } else {
+      shown = plural(list.length, "exhibition", "exhibitions") +
+        " of " + rows.length;
+    }
     document.getElementById("count").textContent = shown;
     if (pendingMessage) {
       announce(pendingMessage +
@@ -1009,7 +1498,7 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     }
     lastAnnouncedCount = list.length;
     first = false;
-    document.getElementById("reset").hidden = !filtersActive() || state.tab === "saved";
+    document.getElementById("reset").hidden = !filtersActive() || here === "both";
     document.getElementById("map").hidden = !isMap;
     document.getElementById("mapnote").hidden = !isMap;
     document.getElementById("results").hidden = isMap;
@@ -1017,13 +1506,47 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     if (isMap) { drawMap(list); return; }
 
     var results = document.getElementById("results");
-    if (list.length) {
-      results.innerHTML = list.map(card).join("");
+    var html = "";
+    if (here === "calls") {
+      html = callList.length ? callList.map(callCard).join("")
+        : '<p class="empty">' + callEmpty() + "</p>";
+    } else if (here === "both") {
+      if (!list.length && !callList.length) {
+        html = '<p class="empty">' + emptyMessage(list) + "</p>";
+      } else {
+        if (list.length) {
+          html += '<h2 class="grouphead">' +
+            plural(list.length, "show", "shows") + " saved</h2>" +
+            list.map(card).join("");
+        }
+        if (callList.length) {
+          html += '<h2 class="grouphead">' +
+            plural(callList.length, "call", "calls") + " tracked</h2>" +
+            callList.map(callCard).join("");
+        }
+      }
+    } else if (list.length) {
+      html = list.map(card).join("");
     } else {
-      results.innerHTML = '<p class="empty">' + emptyMessage(list) + "</p>";
-      var c2 = document.getElementById("clear2");
-      if (c2) { c2.addEventListener("click", clearFilters); }
+      html = '<p class="empty">' + emptyMessage(list) + "</p>";
     }
+    results.innerHTML = html;
+    var c2 = document.getElementById("clear2");
+    if (c2) { c2.addEventListener("click", clearFilters); }
+  }
+
+  function callEmpty() {
+    if (!calls.length) {
+      return "No open calls have been collected yet. Run the calls refresh " +
+        "and reload.";
+    }
+    if (state.q) { return "No call matches &ldquo;" + esc(state.q) + "&rdquo;."; }
+    var shut = state.canEnter &&
+      calls.filter(function (c) { return c.elig === "closed"; }).length;
+    return "Nothing matches these filters." +
+      (shut ? " " + shut + " calls are hidden because their terms rule you out."
+        : "") +
+      ' <button class="chip" id="clear2">Clear filters</button>';
   }
 
   // ---- wiring ---------------------------------------------------------
@@ -1037,7 +1560,15 @@ select{font:inherit;color:var(--ink);background:var(--surface);
       t.tabIndex = on ? 0 : -1;          // one stop for the whole tab strip
       if (on && moveFocus) { t.focus(); }
     });
-    document.getElementById("controls").hidden = name === "saved";
+    var isCalls = name === "calls";
+    document.getElementById("controls").hidden = false;
+    document.getElementById("show-filters").hidden = isCalls || name === "saved";
+    document.getElementById("call-filters").hidden = !isCalls;
+    document.getElementById("sort").hidden = isCalls;
+    document.getElementById("csort").hidden = !isCalls;
+    var q = document.getElementById("q");
+    q.placeholder = isCalls ? "Residency, prize or place…"
+      : "Artist, title or venue…";
     var panel = document.getElementById(name === "map" ? "map" : "results");
     panel.setAttribute("aria-labelledby", "tab-" + name);
     window.scrollTo(0, 0);
@@ -1103,6 +1634,15 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     if (newCount) {
       parts.push("<b>" + newCount + "</b> new since you last looked");
     }
+    // A call you can enter and have time to prepare for. Anything closing
+    // this week is not one of those, so it is left out of the headline.
+    var worth = calls.filter(function (c) {
+      return c.fit === "yes" && c.elig !== "closed" && c.status === "soon";
+    }).length;
+    if (worth) {
+      parts.push("<b>" + worth + "</b> open call" + (worth === 1 ? "" : "s") +
+        " you could still enter");
+    }
     document.getElementById("summary").innerHTML = parts.length
       ? parts.join(" &middot; ")
       : '<span class="none">Nothing new. ' + rows.length +
@@ -1110,9 +1650,18 @@ select{font:inherit;color:var(--ink);background:var(--surface);
     document.getElementById("stamp").textContent = "Updated " + BUILT;
   }
 
+  var csort = document.getElementById("csort");
+  csort.addEventListener("change", function (e) {
+    state.csort = e.target.value;
+    render();
+  });
+
   summarise();
   buildFilters();
+  buildCallFilters();
   updateSavedCount();
+  updateCallCount();
+  if (!calls.length) { document.getElementById("tab-calls").hidden = true; }
   render();
 
   if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
@@ -1251,14 +1800,21 @@ def write_pwa(directory=None):
     return 5
 
 
-def render(state, today=None):
+def _island(rows):
+    """JSON safe to sit inside a script tag."""
+    return json.dumps(rows, ensure_ascii=False).replace("</", "<\\/")
+
+
+def render(state, today=None, calls_inventory=None):
     """The complete self-contained board page."""
     rows = build_rows(state, today)
+    call_rows = build_call_rows(
+        load_calls() if calls_inventory is None else calls_inventory, today)
     updated = (today or date.today())
     stamp = "%d %s %d" % (updated.day, MONTHS[updated.month - 1], updated.year)
     return (PAGE
-            .replace("__DATA__", json.dumps(rows, ensure_ascii=False)
-                     .replace("</", "<\\/"))
+            .replace("__DATA__", _island(rows))
+            .replace("__CALLS__", _island(call_rows))
             .replace("__BUILT__", stamp))
 
 
@@ -1270,12 +1826,14 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     st = state_mod.load(args.state)
+    inventory = load_calls()
     write_pwa(os.path.dirname(os.path.abspath(args.out)) or HERE)
-    page = render(st)
+    page = render(st, calls_inventory=inventory)
     with open(args.out, "w", encoding="utf-8") as fh:
         fh.write(page)
-    print("wrote %s (%d shows, %d KB)"
-          % (args.out, len(st["events"]), len(page) // 1024))
+    print("wrote %s (%d shows, %d calls, %d KB)"
+          % (args.out, len(st["events"]),
+             len(build_call_rows(inventory)), len(page) // 1024))
     return 0
 
 

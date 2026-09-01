@@ -186,6 +186,62 @@ def materials(text, cache=None):
     return result
 
 
+ELIGIBILITY_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "restricted": {"type": "boolean"},
+        "countries": {"type": "array", "items": {"type": "string"}},
+    },
+    "required": ["restricted", "countries"],
+}
+ELIGIBILITY_PROMPT = (
+    "This is the text of an art open call. Decide whether it limits WHO MAY "
+    "APPLY by nationality or by country of residence.\n"
+    "Set restricted true only if applicants must be from, live in, or hold "
+    "the nationality of specific named places. An invitation addressed to one "
+    "nationality counts, even without the word must: \"invites Canadian "
+    "artists\" and \"open to artists based in Norway\" are both restrictions.\n"
+    "These are NOT restrictions, and for them restricted is false:\n"
+    "- where the residency, exhibition or prize takes place\n"
+    "- where the organisation is based, or where the work will be shown\n"
+    "- travel, visas, accommodation or shipping\n"
+    "- age, career stage, student status, medium or theme\n"
+    "List in countries only the place words that applicants must belong to, "
+    "spelled as they appear in the text. If none, return an empty list.\n\n")
+
+
+def eligibility(text, cache=None):
+    """Which countries a call is closed to outsiders from.
+
+    The single question that decides whether an opportunity is real for you.
+    An award for Argentine nationals is not a near miss, it is not a call at
+    all, and reading three paragraphs of terms to find that out is the kind of
+    work worth handing to a model.
+
+    Returns (restricted, countries). Every country returned must appear in the
+    text; the rest are dropped, and a claim of restriction that survives with
+    nothing named is downgraded, because "restricted, but I cannot say to
+    where" is a guess wearing a boolean.
+    """
+    text = (text or "").strip()[:MAX_CHARS]
+    if len(text) < 30:
+        return False, []
+    # Versioned: the cache is keyed on the text and the model, not the prompt,
+    # so sharpening the wording has to invalidate the old answers by hand.
+    key = cache_key("eligibility.2", text)
+    if cache is not None and key in cache:
+        cached = cache[key]
+        return bool(cached[0]), list(cached[1])
+    answer = ask(ELIGIBILITY_PROMPT + text, ELIGIBILITY_SCHEMA, num_predict=120)
+    if answer is None:
+        return False, []
+    countries = keep_grounded(answer.get("countries"), text)
+    restricted = bool(answer.get("restricted")) and bool(countries)
+    if cache is not None:
+        cache[key] = [restricted, countries]
+    return restricted, countries
+
+
 SUMMARY_SCHEMA = {
     "type": "object",
     "properties": {"summary": {"type": ["string", "null"]}},

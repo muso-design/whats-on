@@ -1,8 +1,12 @@
 # What's on
 
-A hub for exhibitions in Leipzig, Halle, Dresden, Chemnitz and Berlin —
-openings and shows already running — ranked so sculpture comes first, with
-everything else one filter away. Works on a phone and on a desktop, installs to
+A hub for two questions: **where to go**, and **where to send the work**.
+
+Exhibitions in Leipzig, Halle, Dresden, Chemnitz and Berlin — openings and
+shows already running — ranked so sculpture comes first, with everything else
+one filter away. And open calls: residencies, grants, prizes and Kunst am Bau
+commissions, filtered down to the ones you are actually allowed to enter and
+still have time to prepare for. Works on a phone and on a desktop, installs to
 a home screen, and remembers what you have saved.
 
 There is no email. The page answers "what is new" against what you have already
@@ -16,9 +20,11 @@ geocode.py      coordinates for venues that arrive with only an address
 wikidata.py     medium from the artist, for listings with no text to read
 venues.py       the venue registry: who exists, independent of who lists them
 direct.py       read a gallery's own site, for the ones no aggregator carries
+calls.py        open calls: deadlines, runway, entry fees and eligibility
 llm.py          the local model, allowed only to report what a text says
 venues.yaml     the venues you care about, edited by hand
 state.py        the inventory: every show, its status and dates
+calls.json      the calls inventory, on its own clock
 board.py        render the hub page, the manifest, the service worker and icons
 update.py       the whole pipeline: fetch, enrich, score, store, rebuild
 launch.bat      double-click: refresh if stale, then open the hub
@@ -42,7 +48,7 @@ shows and offline support both need a real origin — `file://` gives neither.
 
 ## The hub
 
-Three tabs, at the bottom on a phone and inline on a desktop.
+Four tabs, at the bottom on a phone and inline on a desktop.
 
 Cards carry the exhibition image where the source publishes one (176 of 338),
 lazily loaded, and a line saying how the medium was decided.
@@ -53,8 +59,15 @@ carry their own count, so it is always visible how much sits behind a filter
 rather than missing. Sort by relevance, by what opens first, or by what
 disappears first. Press `/` to jump to the search box.
 
-**Saved** — everything you pressed Save on. The list you actually open on a
-Friday.
+**Calls** — where to send the work. Opens on sculpture, with the ones whose
+terms rule you out already filtered away. Chips for relevance, for how much
+time is left, for whether it is free to enter, and for what kind of thing it is
+— residency, grant, award, commission. Sort by relevance, by deadline, or by
+**most time to prepare**, which is the one that matters when a call wants a
+proposal and a portfolio.
+
+**Saved** — everything you pressed Save on, and every call you are tracking.
+The list you actually open on a Friday.
 
 **Map** — the same filtered set as pins, sized and coloured by what matters:
 sculpture larger, closing-soon in the urgent colour, saved shows in gold. Each
@@ -125,6 +138,95 @@ The model is allowed to report only what the page says:
 
 Run it with `python direct.py --curated` for the venues you marked, or let
 `update.py` read a few each run.
+
+## Open calls
+
+A call is not an exhibition with a different date. A show has a run and a
+distance — closing soon means go now, and Leipzig is walkable while Berlin is a
+train. A call has a deadline and an eligibility rule: distance is irrelevant
+because you can apply to Reykjavík from Leipzig, closing soon may mean it is
+already too late to assemble a portfolio, and a third of them charge you to
+enter. So calls live in their own inventory, `calls.json`, with their own
+sources and their own clock.
+
+**bbk-bundesverband.de** — a plain table kept by the German artists'
+association. Small, curated, almost no noise, and where the regional money is:
+a one-month sculpture stipend at Künstlergut Prösitz an hour from Leipzig, a
+Kunst am Bau commission in Dresden. Two tables, one dated and one for the ones
+that come round every year.
+
+**artconnect.com** — several hundred international opportunities in a
+structured blob, with fees, deadlines, requirements and restrictions already
+typed. Its artistic-field tags are self-declared, though: many listings tick
+every category, so a naive filter on "sculpture" returns mostly calls open to
+anybody. Tag breadth is treated as a confidence signal rather than a fact.
+
+### Deadlines
+
+ArtConnect's listing is sorted **deadline soonest**, so reading the first few
+pages returns only the calls closing this week — the ones there is no longer
+time to enter. It reads thirty pages instead, which is the useful horizon.
+
+The deadline field itself is real: the days spread over three months and pile
+up on the 15th, the 30th and the 1st the way application deadlines do. That it
+also equals the post's expiry is the platform retiring the listing when the
+call shuts, not a bug. What is *not* knowable is which midnight the stored
+instant meant — `21:45Z`, `22:00Z`, `12:00Z` and `16:00Z` all appear, which is
+what a field entered in the organiser's own timezone looks like after
+conversion. Rendering that in Berlin time would move some deadlines across
+midnight, and a deadline shown a day late costs a submission. **The day is
+kept and the hour is thrown away.** The card says "by 30 Sep".
+
+### Runway, not urgency
+
+A single "urgent" flag turned out to be useless: because the source is sorted
+deadline-first, 156 of 330 calls landed inside any threshold worth setting, and
+a board where half the cards shout has no signal in it. Two bands instead —
+**closing** (seven days, decide today or let it go) and **this month** (three
+weeks, enterable if you start now) — and a call you can prepare for is ranked
+*above* one closing tomorrow, because a week is not long enough to build
+anything.
+
+### Eligibility
+
+The one thing here that removes a call from view, so it is the most carefully
+built. An award for Argentine nationals is not a near miss; it is not a call at
+all, and finding that out costs three paragraphs of terms every time.
+
+Nationality requirements are matched in plain code, from a list of about two
+hundred demonyms — the model would not take "invites Canadian artists" as a
+restriction no matter how the prompt was worded, and this is a pattern rather
+than a judgement. Two rules make it safe:
+
+- **the whole coordinated list is read.** In "German and Austrian artists" only
+  *Austrian* touches the noun, and reading that alone turns a call you may
+  enter into one you may not.
+- **it must be a requirement, not a mention.** A nationality in front of
+  "artists" counts only when the surrounding clause is setting a condition.
+  Without this, Ming Fay's biography — "co-founded an Asian American artist
+  collective" — shut you out of his research fellowship, and a festival
+  advertising "the presentation of Italian artists" shut you out of its call.
+  Naming a citizenship or a nationality needs no such evidence; naming an
+  artist does.
+
+Whatever the pattern does not catch goes to the local model, one narrow
+question at a time, with every country it returns checked back against the
+text. Where the two could conflict the door stays open: an explicit "artists
+worldwide may apply" beats a named nationality, because leaving a call in costs
+you a few seconds of reading and taking one out loses it for good.
+
+Of 330 calls, 42 are shut — US state fellowships, an Arts Council award for
+England, Scotland and Wales, a Berlin working grant that wants Berlin
+residency. They are not hidden but sunk, so a misreading can still be caught.
+
+### Tracking an application
+
+Each call has a stage: interested, preparing, submitted, heard back. It lives
+in your browser's local storage like the show marks, and tracked calls appear
+in **Saved** beside your saved exhibitions. Every dated call also offers a
+calendar reminder placed **a week before** the deadline, not on it, carrying
+what the call wants — a deadline you find out about on the day is a deadline
+you miss.
 
 ### Which model
 
@@ -290,6 +392,9 @@ python test_pipeline.py     # the refresh loop and the page build
 python test_robustness.py   # every function against missing and hostile input
 python test_translate.py    # what gets translated, and what must not
 python test_calendar.py     # calendar entries, directions, geocoding
+python test_wikidata.py     # medium from the artist, and namesake rejection
+python test_direct.py       # the venue registry, and what the model may claim
+python test_calls.py        # deadlines, runway, and who may actually apply
 ```
 
 `test_pipeline.py` needs `sample_events.json`:
