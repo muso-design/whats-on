@@ -11,6 +11,27 @@ from datetime import date
 
 import board
 import calls
+import llm
+
+# No model, ever, unless a check supplies the answer. The nightly job has no
+# Ollama, and two checks here that quietly asked the local one passed on the
+# desktop and failed on the runner - ten nights running, each time stopping
+# the refresh that sits behind the checks, so the hub froze on 1 September
+# without a word. What is tested is what the code does with an answer.
+_REAL_ELIGIBILITY = llm.eligibility
+
+
+def no_model():
+    llm.available = lambda: False
+    llm.eligibility = _REAL_ELIGIBILITY
+
+
+def model_says(restricted, countries):
+    llm.available = lambda: True
+    llm.eligibility = lambda text, cache=None: (restricted, list(countries))
+
+
+no_model()
 
 FAILURES = []
 
@@ -132,14 +153,46 @@ check("open to you when it does",
       verdict("Open to German and Austrian artists."), "eligible")
 check("Europe counts as you",
       verdict("Open to European artists under 35."), "eligible")
-check("a nearby city is not you",
-      verdict("Applicants must live and work in Berlin."), "closed")
 check("an explicit welcome to everyone wins over a named nationality",
       verdict("We invite Nigerian sculptors, though international artists "
               "may also apply."), "eligible")
+
+print("\nwhat the code does with the model's answer")
+model_says(True, ["Berlin"])
+check("a nearby city is not you",
+      verdict("Applicants must live and work in Berlin."), "closed")
+model_says(False, [])
 check("where it happens is not who may enter",
       verdict("The residency takes place in Finland. Ceramic artists "
               "worldwide may apply."), "open")
+model_says(True, ["Germany", "Austria"])
+check("a restriction that includes Germany is open to you",
+      verdict("Open to artists based in Germany or Austria."), "eligible")
+model_says(True, ["Norway"])
+check("a named country loses to an explicit worldwide welcome",
+      verdict("Priority to artists in Norway; artists worldwide may apply."),
+      "eligible")
+no_model()
+
+print("\nwith no model, as on the nightly job")
+check("a rule in plain words is still read",
+      verdict("Open call for Nordic artists."), "closed")
+check("terms that need reading say so rather than guess",
+      verdict("Applicants must live and work in Berlin."), "unknown")
+batch = [
+    {"title": "a", "rank": 3,
+     "restrictions": "The City of Toronto invites Canadian artists to apply."},
+    {"title": "b", "rank": 2,
+     "restrictions": "Applicants must live and work in Berlin."},
+    {"title": "c", "rank": 1},
+]
+calls.resolve_eligibility(batch, verbose=False)
+check("the nightly run still shuts a call by nationality",
+      batch[0]["eligibility"], "closed")
+check("and says who it is for", batch[0]["open_to"], ["Canadian"])
+check("and leaves what needs a model as unknown",
+      batch[1]["eligibility"], "unknown")
+check("and a call with no terms is open", batch[2]["eligibility"], "open")
 
 print("\nthe free scan reads more than the model is asked to")
 toronto = {"title": "George Street Hoarding",

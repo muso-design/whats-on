@@ -680,20 +680,35 @@ def eligibility_of(call, cache=None):
     Only the last two change what you would do, which is the point: a board
     that quietly hides a call it misread is worse than one that shows it.
     """
+    free = free_eligibility(call)
+    if free:
+        return free
+    text = eligibility_text(call)
+    if not text:
+        return "open", []
+    import llm
+    if not llm.available():
+        return "unknown", []
+    return _model_eligibility(text, cache)
+
+
+def free_eligibility(call):
+    """The verdicts that need no model, or None.
+
+    These run everywhere, including the nightly job, which has no model: a
+    call that says "Canadian artists" is shut whether or not Ollama is up.
+    """
     scan = eligibility_scan(call)
     named = _demonyms(scan)
     if named:
         if _home(named) or _says_open(scan):
             return "eligible", named
         return "closed", named
+    return None
 
-    text = eligibility_text(call)
-    if not text:
-        return "open", []
 
+def _model_eligibility(text, cache=None):
     import llm
-    if not llm.available():
-        return "unknown", []
     restricted, countries = llm.eligibility(text, cache)
     if not restricted:
         return "open", []
@@ -709,38 +724,38 @@ def resolve_eligibility(calls, budget=ELIGIBILITY_BUDGET, verbose=True):
     rest keep whatever they had, and say 'unknown' rather than 'open'.
     """
     import llm
-    if not llm.available():
-        for call in calls:
-            call.setdefault("eligibility", "unknown" if call.get("restrictions")
-                            else "open")
-        if verbose:
-            print("  eligibility: no model reachable, terms left unread")
-        return 0
-
-    cache = llm.load_cache()
+    model = llm.available()
+    cache = llm.load_cache() if model else None
     spent = 0
     for call in sorted(calls, key=lambda c: -(c.get("rank") or 0)):
-        named = _demonyms(eligibility_scan(call))
-        text = eligibility_text(call)
-        if not named and not text:
-            call["eligibility"] = "open"
-            call["open_to"] = []
+        # The free rules first, everywhere. Until this was split out, a run
+        # with no model skipped them too and left every new call "unknown".
+        free = free_eligibility(call)
+        if free:
+            call["eligibility"], call["open_to"] = free[0], list(free[1])
             continue
-        if not named and spent >= budget and llm.cache_key(
+        text = eligibility_text(call)
+        if not text:
+            call["eligibility"], call["open_to"] = "open", []
+            continue
+        if not model:
+            call.setdefault("eligibility", "unknown")
+            continue
+        if spent >= budget and llm.cache_key(
                 "eligibility.2", text.strip()[:llm.MAX_CHARS]) not in cache:
             call.setdefault("eligibility", "unknown")
             continue
         before = len(cache)
-        verdict, countries = eligibility_of(call, cache)
-        call["eligibility"] = verdict
-        call["open_to"] = countries
+        call["eligibility"], call["open_to"] = _model_eligibility(text, cache)
         if len(cache) != before:
             spent += 1
-    llm.save_cache(cache)
+    if model:
+        llm.save_cache(cache)
     if verbose:
         shut = sum(1 for c in calls if c.get("eligibility") == "closed")
-        print("  eligibility: %d terms read, %d calls are shut to you"
-              % (spent, shut))
+        print("  eligibility: %s, %d calls are shut to you"
+              % ("%d terms read" % spent if model else "no model, free rules only",
+                 shut))
     return spent
 
 

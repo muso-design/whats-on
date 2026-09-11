@@ -574,6 +574,9 @@ a{color:var(--accent)}
   padding:14px 2px 8px}
 h1{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;margin:0}
 .stamp{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin:0}
+.stale{background:var(--urgent-soft);color:var(--urgent);font-weight:600;
+  border:1px solid var(--urgent);border-radius:10px;padding:10px 14px;
+  margin:4px 0 12px;font-size:.95rem;line-height:1.45}
 .summary{font-size:1rem;color:var(--ink);margin:0 0 2px;padding:0 2px 8px;
   max-width:60ch}
 .summary b{font-weight:600}
@@ -745,6 +748,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     <p class="stamp" id="stamp"></p>
   </header>
 
+  <p class="stale" id="stale" role="status" hidden></p>
   <p class="summary" id="summary"></p>
 
   <nav class="nav" id="nav" role="tablist" aria-label="Views">
@@ -820,6 +824,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
   "use strict";
   var rows = JSON.parse(document.getElementById("data").textContent);
   var BUILT = "__BUILT__";
+  var BUILT_ISO = "__BUILT_ISO__";
 
   // ---- what you have decided about each show -------------------------
   // Kept in this browser only. Nothing is uploaded and no account exists.
@@ -1648,6 +1653,21 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
       : '<span class="none">Nothing new. ' + rows.length +
         " exhibitions are being tracked.</span>";
     document.getElementById("stamp").textContent = "Updated " + BUILT;
+
+    // The refresh runs every night, so a page more than a day old means a
+    // night was missed. It said "Updated 1 Sep" in small grey type for ten
+    // days while the nightly job failed, which is true and useless. Old data
+    // that looks current is the one failure this page must never hide.
+    var built = new Date(BUILT_ISO + "T12:00:00");
+    var age = Math.floor((Date.now() - built.getTime()) / 86400000);
+    var stale = document.getElementById("stale");
+    if (age >= 2 && !isNaN(age)) {
+      stale.textContent = "These listings are " + age + " days old - the " +
+        "nightly refresh has not run since " + BUILT + ". Shows and calls " +
+        "since then are missing. Run launch.bat refresh on the PC, or check " +
+        "the Actions tab on GitHub.";
+      stale.hidden = false;
+    }
   }
 
   var csort = document.getElementById("csort");
@@ -1824,7 +1844,8 @@ def render(state, today=None, calls_inventory=None):
     return (PAGE
             .replace("__DATA__", _island(rows))
             .replace("__CALLS__", _island(call_rows))
-            .replace("__BUILT__", stamp))
+            .replace("__BUILT__", stamp)
+            .replace("__BUILT_ISO__", updated.isoformat()))
 
 
 def main(argv=None):
