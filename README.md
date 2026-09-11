@@ -27,6 +27,8 @@ state.py        the inventory: every show, its status and dates
 calls.json      the calls inventory, on its own clock
 board.py        render the hub page, the manifest, the service worker and icons
 update.py       the whole pipeline: fetch, enrich, score, store, rebuild
+scheduled_refresh.py   the nightly run on this PC: refresh, then publish
+install-schedule.bat   double-click once: run that every evening at 19:00
 launch.bat      double-click: refresh if stale, then open the hub
 index.html      the hub; committed, rebuilt on every run
 ```
@@ -160,6 +162,70 @@ structured blob, with fees, deadlines, requirements and restrictions already
 typed. Its artistic-field tags are self-declared, though: many listings tick
 every category, so a naive filter on "sculpture" returns mostly calls open to
 anybody. Tag breadth is treated as a confidence signal rather than a fact.
+
+**opencallforartists.com** — the site behind the 219k-follower Instagram feed
+@opencallforartists_. The feed hides each call behind "comment 111 to get a
+link", and the link goes here, where every post is a listing with the
+organiser, the fee, a plain calendar date and the organiser's own Instagram
+handle as separate fields. So Instagram itself is never touched: no login, no
+scraping a platform that fights back, nothing that could put your account at
+risk. The site is a JavaScript front end over an undocumented backend on a
+`dev.` subdomain, which can change without notice; the health record below is
+there for that day. Of 1,095 listings about 80 are open at any time, and about
+four in five organisers are new to the other two sources. Details are read
+once and cached in `ocfa_cache.json`, so after the first run it costs a
+handful of requests a night. Every record also carries a private contact
+block — email and phone, sometimes a named person's — which is dropped on
+arrival, because the inventory is committed to a public repository. Addresses
+an organiser writes into the public call ("send your application to…") stay,
+as they do on the site: that is how you apply.
+
+### Paying to enter, and paying to be shown
+
+Nearly half of the opencallforartists listings charge a fee, and a fee means
+two different things. $20 to enter a competition with $5,000 in cash prizes is
+paying to enter. $21 for a page in "The Big Book of Mixed Media Artists" is
+paying to be shown, and so is a slot on a digital display in a Paris window.
+The card says **pay to be shown**, the call sinks below every call that is a
+chance at something, and a chip hides them all.
+
+The test is what comes back. Any real cash, however modest, makes it a prize —
+KANE pays £200 and a London show, which is small but real. What does not count
+as cash is decided by the words around the amount: "$20 per entry" is the fee,
+and "$10,000+ Estimated Artist Package" is a valuation of the promotion being
+sold, which is how the Arts to Hearts magazine call nearly passed as a
+ten-thousand-dollar prize. Residencies are never flagged, because their fee
+buys a studio and time rather than a mention.
+
+The phrases are narrow on purpose. The first run flagged 14 calls across both
+sources and two were wrong: the Tom Stoddart Award, whose prize is a book of
+the winner's own work from a real publisher, matched "book of"; the Martin
+Parr Foundation, describing its own supporters, matched "membership". Now it
+takes "book of … artists" and "member artists" or a paid membership. Twelve
+remain, each checked by hand.
+
+### The same call, from two sources
+
+Foundwork's prize is "2026 Foundwork Artist Prize" on ArtConnect and "2026
+Foundwork Artist Prize: 10,000 USD Grant with Studio Visits and Interview" on
+opencallforartists. It is one call and shows as one card, "listed on
+ArtConnect and opencallforartists", with each source filling the other's gaps.
+
+The organiser alone is not enough to merge on — TERAVARNA runs a new themed
+competition every few weeks, and two of them close on the same day. So the
+deadlines must agree within three days, and then the words left once the
+organiser's name and the boilerplate are gone must overlap. The merged record
+keeps whichever id the inventory already had and remembers the others as
+aliases: the application stage you set hangs on that id, and a call must not
+come back as new, stage lost, the week one source stops listing it.
+
+### When a source goes quiet
+
+ArtConnect changed its page some time after 1 September and read nothing for
+ten days before anyone noticed, because a source that breaks returns nothing
+and nothing looks like a quiet week. Every source now records the night it
+first came back empty, and after two such nights the Calls tab says which one
+and how old its calls are.
 
 ### Deadlines
 
@@ -403,10 +469,37 @@ python test_calls.py        # deadlines, runway, and who may actually apply
 python -c "import json,scraper;json.dump(scraper.scrape_all(),open('sample_events.json','w',encoding='utf-8'),ensure_ascii=False,indent=1)"
 ```
 
+No test may reach the local model. The GitHub runner has none, and for ten
+nights in September two checks that quietly asked Ollama failed there, stopped
+the refresh that runs after the checks, and froze the published hub. Where a
+test is about what the code does with a model's answer, it supplies the answer.
+Run the suite the way the runner does before trusting it:
+
+```bash
+OLLAMA_HOST=http://127.0.0.1:9 python test_calls.py
+```
+
 ## Scheduling
 
-`.github/workflows/refresh.yml` runs daily at 06:00 UTC, rebuilds the page and
-commits it. No secrets are required unless you want translation.
+Two refreshes, because they can do different things.
+
+**GitHub, every morning.** `.github/workflows/refresh.yml` runs at 06:00 UTC,
+runs the checks, refreshes everything it can without a model, rebuilds the page
+and commits it. No secrets are needed unless you want translation.
+
+**This PC, every evening.** Double-click `install-schedule.bat` once. It adds
+one task to Windows Task Scheduler, for your account, that runs
+`scheduled_refresh.py` at 19:00 with no window — or at the next login if the
+PC was off. That run does the half that needs the local model: reading gallery
+sites directly, and reading the terms of new open calls. It starts from what
+GitHub has, commits only the files the refresh writes, and publishes, so the
+phone sees REITER without anyone pushing by hand. What it did each night is in
+`refresh.log`. `install-schedule.bat remove` takes it away.
+
+**The page watches both.** If the data is two or more days old, a banner at the
+top says how old, since when, and what to do. The "Updated" stamp said the same
+thing for ten days in small grey type and nobody read it; the banner exists so
+that a broken night cannot pass for a quiet one.
 
 ## Known limitations
 
@@ -432,7 +525,17 @@ commits it. No secrets are required unless you want translation.
   listed a September opening for an August run. Nothing is validated against
   reality.
 - **No Instagram**, by design. One Leipzig gallery lists an Instagram profile as
-  its entire web presence; treat that as a manual channel.
+  its entire web presence; treat that as a manual channel. The
+  @opencallforartists_ feed is covered through the website behind it, not
+  through Instagram.
+- **Pay-to-be-shown is keyword and money based.** It catches the formulaic
+  cases — books, magazines, virtual exhibitions, digital displays — and after
+  two corrections was right on every open listing checked. A paid gallery
+  show with no prize and no telltale wording still reads as an ordinary entry
+  fee, and a new phrasing of an old scheme will slip through until added.
+- **opencallforartists is undocumented.** Its data comes from the backend its
+  own pages use. If that moves, the source goes quiet and the Calls tab says
+  so, but reading it again means a change here.
 - **No taste-learning.** The marks are the honest path to it: rate shows after
   attending and there is a real dataset in a year. Scraped listing text cannot
   produce one.

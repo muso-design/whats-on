@@ -264,6 +264,18 @@ calls.merge(inventory, [dict(one, eligibility="open", open_to=[])], TODAY)
 check("but a run that did read the terms may change its mind",
       inventory["calls"]["a"]["eligibility"], "open")
 
+# A restored verdict has to reach the rank too, not only the label.
+inventory = {"calls": {}}
+shut_call = calls.score({"id": "s", "title": "Sculpture prize", "source": "artconnect",
+                         "deadline": "2026-09-20", "description": "bronze",
+                         "eligibility": "closed", "open_to": ["Nebraska"]}, TODAY)
+calls.merge(inventory, [shut_call], TODAY)
+shut_rank = inventory["calls"]["s"]["rank"]
+nightly = calls.score(dict(shut_call, eligibility="unknown", open_to=[]), TODAY)
+calls.merge(inventory, [nightly], TODAY)
+check("a verdict restored by a run with no model also keeps its low rank",
+      inventory["calls"]["s"]["rank"], shut_rank)
+
 inventory["calls"]["old"] = {"status": "closed", "deadline": "2026-01-01"}
 inventory["calls"]["recent"] = {"status": "closed", "deadline": "2026-08-20"}
 removed = calls.prune(inventory, today=TODAY)
@@ -317,6 +329,213 @@ check("every card carries its own id", sorted(r["id"] for r in rows),
 
 check("no calls file means no calls, not a crash",
       board.build_call_rows({}), [])
+
+
+print("\nopencallforartists: a listing, as the backend hands it over")
+ROW = {"id": 1250, "title": "Infinite Expressions | Open Art Competition",
+       "organization_title": "TERAVARNA", "category": "Call For Submissions",
+       "event_deadline": "2026-09-15", "city": "LOS ANGELES",
+       "country": "United States", "type": "Online Only",
+       "eligibility": "International", "fee_type": "Paid", "price": 20,
+       "instagram_caption": "short caption", "instagram_handle": "@teravarna"}
+DETAIL = {"description": "<p>Submit <b>sculpture</b>, painting and photography.</p>",
+          "apply_now_link": "teravarna.com/apply", "web_link": "https://teravarna.com",
+          "instagram": None, "artistic_fields": "Open, Painting, sculpture",
+          "prize_summary": "cash prizes up to $5,000", "listing_type": "Standard post",
+          "email": "someone@example.invalid", "phone": "0123456"}
+detail = {k: DETAIL.get(k) for k in calls.OCFA_DETAIL_FIELDS}
+call = calls.parse_ocfa(ROW, detail)
+check("the deadline is the plain date", call["deadline"], "2026-09-15")
+check("the fee is read, with its amount", (call["fee"], call["fee_note"]),
+      (True, "$20"))
+check("an all-caps city is written like a city", call["place"],
+      "Los Angeles, United States")
+check("online-only is recorded", call["online"], True)
+check("the description loses its HTML", call["description"],
+      "Submit sculpture, painting and photography.")
+check("a link without a scheme still goes somewhere",
+      call["url"], "https://teravarna.com/apply")
+check("the organiser's Instagram comes from the handle when that is all there is",
+      call["org_instagram"], "https://www.instagram.com/teravarna/")
+check("'Open' in the media list means all fields", call["fields"][0], "ALL")
+check("so the sculpture tag counts for little", calls.specificity(call),
+      "open to all")
+check("a standard post is not promotion", call["promoted"], False)
+check("no email or phone number is kept anywhere",
+      any(k in call for k in ("email", "phone"))
+      or "someone@example" in json.dumps(call), False)
+check("the list row alone still makes a call",
+      calls.parse_ocfa(ROW)["description"], "short caption")
+check("a residency filed as a call for artists is a residency",
+      calls.parse_ocfa(dict(ROW, title="Hayama Artist Residency in Japan",
+                            category="Call For Artists"))["type"], "residency")
+check("the site's own listings count as promoted",
+      calls.parse_ocfa(dict(ROW, organization_title="Open Call for Artists"),
+                       detail)["promoted"], True)
+
+
+print("\npaying to enter, and paying to be shown")
+check("a real prize is money you could win",
+      calls.prize_money("Top 3 receive cash prizes up to $5,000,"), 5000)
+check("the fee is not a prize", calls.prize_money("Entry fee: $25"), 0)
+check("a valuation is not a prize",
+      calls.prize_money("-A $10,000+ Estimated Artist Package"), 0)
+check("a fee in the next sentence does not cancel a prize",
+      calls.prize_money("Winner receives $2,000. Entry is $30 per work."), 2000)
+check("thousands written the European way",
+      calls.prize_money("€1.500 Preisgeld"), 1500)
+
+
+def exposure(**kw):
+    base = {"fee": True, "type": "open call", "title": "", "description": "",
+            "rewards": [], "online": False}
+    base.update(kw)
+    return calls.pay_to_play(base)[0]
+
+
+check("a fee for a place in a book is paying to be shown",
+      exposure(title="The Big Book of Mixed Media Artists 2026"), True)
+check("a fee for a virtual exhibition is paying to be shown",
+      exposure(title="Home", description="an international virtual exhibition"),
+      True)
+check("a fee with a cash prize is paying to enter",
+      exposure(title="Open Art Competition", online=True,
+               rewards=["cash prizes up to $5,000"]), False)
+check("a modest prize is still a prize",
+      exposure(title="KANE Prize", rewards=["£200 cash, online showcase"]),
+      False)
+check("a residency's fee buys a studio, not a mention",
+      exposure(title="Residency", type="residency", online=True), False)
+check("a free call is never paying to be shown",
+      exposure(fee=False, title="Book of Artists"), False)
+check("online-only with a fee and nothing to win is paying to be shown",
+      exposure(title="Themed call", online=True), True)
+check("a book of the winner's work is a prize, not a compilation",
+      exposure(title="Tom Stoddart Award for Excellence", type="award",
+               description="GOST books will collaborate with the recipient to "
+                           "create a book of their work."), False)
+check("describing the organiser's own members is not selling membership",
+      exposure(title="Martin Parr Foundation Awards", type="award",
+               description="Membership contributions support emerging "
+                           "photographers."), False)
+check("but paying for member-artist status is",
+      exposure(title="Super Arts", description="0% commission for member artists"),
+      True)
+sunk = calls.score({"title": "The Big Book of Sculptors", "fee": True,
+                    "deadline": "2026-09-20", "description": "bronze"}, TODAY)
+fair = calls.score({"title": "Sculpture Prize", "fee": True,
+                    "deadline": "2026-09-20", "description": "bronze",
+                    "rewards": ["$3,000"]}, TODAY)
+check("it sinks below a paid call with a prize", sunk["rank"] < fair["rank"], True)
+check("and says why", sunk["pay_why"], "book of sculptors")
+
+
+print("\nthe same call from two sources")
+def listing(source, org, title, deadline):
+    return {"id": source + ":" + title, "source": source, "organisation": org,
+            "title": title, "deadline": deadline}
+
+
+check("a rewritten title from the same organiser on the same day is one call",
+      calls.same_call(
+          listing("ocfa", "Foundwork", "2026 Foundwork Artist Prize: 10,000 USD "
+                  "Grant with Studio Visits and Interview", "2026-09-26"),
+          listing("artconnect", "Foundwork", "2026 Foundwork Artist Prize",
+                  "2026-09-26")), True)
+check("two competitions by one organiser on one day are two calls",
+      calls.same_call(
+          listing("ocfa", "TERAVARNA", "Infinite Expressions | Open Art "
+                  "Competition | TERAVARNA", "2026-09-15"),
+          listing("artconnect", "TERAVARNA", "Visions Without Limits | OPEN Art "
+                  "Competition", "2026-09-15")), False)
+check("deadlines a week apart are two calls",
+      calls.same_call(listing("ocfa", "X", "Sculpture Prize", "2026-09-01"),
+                      listing("artconnect", "X", "Sculpture Prize", "2026-09-08")),
+      False)
+check("one source never merges with itself",
+      calls.same_call(listing("ocfa", "X", "Same", "2026-09-01"),
+                      listing("ocfa", "X", "Same", "2026-09-01")), False)
+
+a = listing("artconnect", "Foundwork", "2026 Foundwork Artist Prize", "2026-09-26")
+a["fee"] = None
+o = listing("ocfa", "Foundwork", "2026 Foundwork Artist Prize: 10,000 USD Grant",
+            "2026-09-26")
+o.update(fee=True, fee_note="$18", org_instagram="https://instagram.com/foundwork")
+merged = calls.merge_duplicate_calls([o, a])
+check("two listings become one record", len(merged), 1)
+check("the better-structured source leads when neither is known",
+      merged[0]["id"], a["id"])
+check("the other is remembered as an alias", merged[0]["aliases"], [o["id"]])
+check("gaps are filled from the other source",
+      (merged[0]["fee"], merged[0]["org_instagram"]),
+      (True, "https://instagram.com/foundwork"))
+check("both sources are recorded", merged[0]["sources"], ["artconnect", "ocfa"])
+
+# The id must survive a source dropping out, or the stage you set is lost.
+inventory = {"calls": {}}
+calls.merge(inventory, calls.score_all(merged, TODAY), TODAY)
+key = merged[0]["id"]
+alone = listing("ocfa", "Foundwork", "2026 Foundwork Artist Prize: 10,000 USD Grant",
+                "2026-09-26")
+fresh = calls.merge(inventory, calls.score_all(
+    calls.merge_duplicate_calls([alone], known=inventory["calls"]), TODAY), TODAY)
+check("when ArtConnect drops it, it lands on the same record",
+      list(inventory["calls"]), [key])
+check("and does not come back as new", len(fresh), 0)
+
+# And the other way round: known first from opencallforartists alone.
+inventory = {"calls": {}}
+calls.merge(inventory, calls.score_all([dict(o)], TODAY), TODAY)
+later = calls.merge_duplicate_calls([dict(o), dict(a)], known=inventory["calls"])
+check("an id already in the inventory wins over source order",
+      later[0]["id"], o["id"])
+
+
+print("\nwho may apply, as declared by the organiser")
+def declared(scope, country):
+    return calls.scope_eligibility({"scope": scope, "country": country})
+
+
+check("national and American is not you", declared("national", "USA"),
+      ("closed", ["USA"]))
+check("national and German is you", declared("national", "Germany"),
+      ("eligible", ["Germany"]))
+check("local and German could be Hamburg - shown, not guessed",
+      declared("local", "Germany"), ("unknown", ["Germany"]))
+check("international is left to the terms", declared("international", "USA"), None)
+check("the declared scope needs no model",
+      calls.free_eligibility({"scope": "regional", "country": "Portugal"}),
+      ("closed", ["Portugal"]))
+
+
+print("\nsources that go quiet")
+inventory = {"calls": {}, "health": {}}
+calls.record_health(inventory, "artconnect", 300, today=date(2026, 9, 1))
+calls.record_health(inventory, "artconnect", 0, today=date(2026, 9, 2))
+calls.record_health(inventory, "artconnect", 0, today=date(2026, 9, 3))
+check("the first silent night is remembered, not the latest",
+      inventory["health"]["artconnect"]["failing_since"], "2026-09-02")
+check("one silent day is not yet worth a warning",
+      board.source_warnings(inventory, today=date(2026, 9, 3)), [])
+warning = board.source_warnings(inventory, today=date(2026, 9, 11))
+check("after two it is said on the page", len(warning), 1)
+check("naming the source and how old its calls are",
+      "ArtConnect" in warning[0] and "1 Sep" in warning[0], True)
+calls.record_health(inventory, "artconnect", 280, today=date(2026, 9, 12))
+check("and it clears the day the source answers again",
+      board.source_warnings(inventory, today=date(2026, 9, 12)), [])
+
+
+print("\nthe card for a call that is listed twice and sells exposure")
+row = board.to_call_row({"title": "Book", "pay_to_play": True, "pay_why": "book of",
+                         "sources": ["artconnect", "ocfa"],
+                         "org_instagram": "https://instagram.com/x"}, key="k")
+check("pay-to-be-shown reaches the page", (row["pay"], row["pay_why"]),
+      (True, "book of"))
+check("sources are named for people", row["sources"],
+      ["ArtConnect", "opencallforartists"])
+check("the organiser's Instagram reaches the page", row["org_ig"],
+      "https://instagram.com/x")
 
 print("\n%d failure(s)" % len(FAILURES))
 raise SystemExit(1 if FAILURES else 0)

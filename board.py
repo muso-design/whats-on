@@ -483,7 +483,38 @@ def to_call_row(record, today=None, key=None):
         "lang": record.get("language") or "en",
         "rank": record.get("rank") or 0,
         "first_seen": record.get("first_seen") or "",
+        "pay": bool(record.get("pay_to_play")),
+        "pay_why": record.get("pay_why") or "",
+        "org_url": record.get("org_url") or "",
+        "org_ig": record.get("org_instagram") or "",
+        "scope": record.get("scope") or "",
+        "sources": [SOURCE_NAMES.get(s, s) for s in record.get("sources") or []],
     }
+
+
+# How each source is named on a card.
+SOURCE_NAMES = {"bbk": "BBK", "artconnect": "ArtConnect",
+                "ocfa": "opencallforartists"}
+
+
+def source_warnings(inventory, today=None, grace_days=2):
+    """Sources that have not answered for a while, as sentences.
+
+    A source that breaks returns nothing, and nothing looks the same as a
+    quiet week. After two days it is said out loud on the page.
+    """
+    today = today or date.today()
+    out = []
+    for source, entry in sorted(((inventory or {}).get("health") or {}).items()):
+        since = _d(entry.get("failing_since"))
+        if not since or (today - since).days < grace_days:
+            continue
+        last = _d(entry.get("last_ok"))
+        out.append("%s has returned nothing since %d %s%s." % (
+            SOURCE_NAMES.get(source, source), since.day, MONTHS[since.month - 1],
+            "; its calls on this page are from %d %s" % (last.day, MONTHS[last.month - 1])
+            if last else ""))
+    return out
 
 
 def build_call_rows(inventory, today=None):
@@ -801,6 +832,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     <span id="count"></span>
     <button class="chip reset" id="reset" hidden>Clear filters</button>
   </div>
+  <p class="stale" id="callwarn" role="status" hidden></p>
 
   <!-- Filtering changes the page silently for anyone not watching it, so the
        result count and every mark are announced here. -->
@@ -819,6 +851,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script id="data" type="application/json">__DATA__</script>
 <script id="calldata" type="application/json">__CALLS__</script>
+<script id="warndata" type="application/json">__WARN__</script>
 <script>
 (function () {
   "use strict";
@@ -858,6 +891,10 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     calls = JSON.parse(document.getElementById("calldata").textContent) || [];
   } catch (e) { calls = []; }
   calls.forEach(function (c) { c._new = isNew(c); });
+  var warnings = [];
+  try {
+    warnings = JSON.parse(document.getElementById("warndata").textContent) || [];
+  } catch (e) { warnings = []; }
 
   // Where you are with each application. Four stages, because that is how
   // many states an application is actually in: one you noticed, one you are
@@ -913,6 +950,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     runway: new Set(),
     ctype: new Set(),
     freeOnly: false,
+    noPayToShow: false,     // on request: most of the board is what you asked for
     canEnter: true          // hide what you are not allowed to apply to
   };
 
@@ -969,6 +1007,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     if (state.tab === "saved") { return !!apps[c.id] && callText(c); }
     if (state.canEnter && c.elig === "closed") { return false; }
     if (state.freeOnly && c.fee !== false) { return false; }
+    if (state.noPayToShow && c.pay) { return false; }
     if (state.fit.size && !state.fit.has(c.fit)) { return false; }
     if (state.runway.size && !state.runway.has(c.status)) { return false; }
     if (state.ctype.size && !state.ctype.has(c.type)) { return false; }
@@ -1015,7 +1054,8 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
   // ---- chips ----------------------------------------------------------
   // Groups that are a single on/off switch rather than a set of values.
-  var TOGGLES = { "new": "onlyNew", "free": "freeOnly", "enter": "canEnter" };
+  var TOGGLES = { "new": "onlyNew", "free": "freeOnly", "enter": "canEnter",
+                  "noshow": "noPayToShow" };
 
   function pressed(group, value) {
     var flag = TOGGLES[group];
@@ -1087,6 +1127,11 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     if (shut) {
       t.appendChild(chip("open to me", "enter", calls.length - shut, "enter"));
     }
+    var shown = calls.filter(function (c) { return c.pay; }).length;
+    if (shown) {
+      t.appendChild(chip("no pay-to-show", "noshow", calls.length - shown,
+                         "noshow"));
+    }
 
     var kinds = {};
     calls.forEach(function (c) { kinds[c.type] = (kinds[c.type] || 0) + 1; });
@@ -1101,7 +1146,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     if (mode() === "calls") {
       return state.fit.size !== 1 || !state.fit.has("yes") ||
         state.runway.size || state.ctype.size || state.freeOnly ||
-        !state.canEnter;
+        state.noPayToShow || !state.canEnter;
     }
     return state.status.size || state.city.size || state.medium.size ||
       state.onlyNew;
@@ -1120,7 +1165,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
       // is the tab, not a preference you happened to set.
       state.fit = new Set(["yes"]);
       state.runway.clear(); state.ctype.clear();
-      state.freeOnly = false; state.canEnter = true;
+      state.freeOnly = false; state.noPayToShow = false; state.canEnter = true;
     } else {
       state.status.clear(); state.city.clear(); state.medium.clear();
       state.onlyNew = false;
@@ -1303,7 +1348,19 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     out.push("<h2>" + (c.url
       ? '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">' +
         esc(c.title) + "</a>" : esc(c.title)) + "</h2>");
-    if (c.org) { out.push('<p class="who">' + esc(c.org) + "</p>"); }
+    if (c.org || c.org_ig) {
+      // Who is behind it, one tap from their own site and their Instagram -
+      // the "by @..." in every feed post, without going through the feed.
+      var who = c.org_url
+        ? '<a href="' + esc(c.org_url) + '" target="_blank" rel="noopener">' +
+          esc(c.org || "organiser") + "</a>"
+        : esc(c.org);
+      if (c.org_ig) {
+        who += (who ? " &middot; " : "") + '<a href="' + esc(c.org_ig) +
+          '" target="_blank" rel="noopener">Instagram</a>';
+      }
+      out.push('<p class="who">' + who + "</p>");
+    }
 
     var where = [];
     if (c.place) { where.push('<span class="venue">' + esc(c.place) + "</span>"); }
@@ -1320,8 +1377,16 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
       tags.push('<span class="tag urgent">' +
         esc(c.fee_note ? "fee " + c.fee_note : "entry fee") + "</span>");
     }
+    if (c.pay) {
+      tags.push('<span class="tag urgent" title="The fee buys exposure (' +
+        esc(c.pay_why) + ') rather than a chance at a prize">' +
+        "pay to be shown</span>");
+    }
     if (c.elig === "closed") {
       tags.push('<span class="tag urgent">only ' +
+        esc(c.open_to.join(", ")) + "</span>");
+    } else if ((c.scope === "local" || c.scope === "regional") && c.open_to.length) {
+      tags.push('<span class="tag">' + esc(c.scope) + " only: " +
         esc(c.open_to.join(", ")) + "</span>");
     }
     if (c.spec === "open to all") {
@@ -1339,6 +1404,9 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     if (c.why) { foot.push(esc(c.why)); }
     if (c.requires && c.requires.length) {
       foot.push("wants " + esc(c.requires.join(", ")));
+    }
+    if (c.sources && c.sources.length > 1) {
+      foot.push("listed on " + esc(c.sources.join(" and ")));
     }
     if (foot.length) {
       out.push('<p class="why">' + foot.join(" &middot; ") + "</p>");
@@ -1504,6 +1572,9 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
     lastAnnouncedCount = list.length;
     first = false;
     document.getElementById("reset").hidden = !filtersActive() || here === "both";
+    var warn = document.getElementById("callwarn");
+    warn.textContent = warnings.join(" ");
+    warn.hidden = here !== "calls" || !warnings.length;
     document.getElementById("map").hidden = !isMap;
     document.getElementById("mapnote").hidden = !isMap;
     document.getElementById("results").hidden = isMap;
@@ -1837,13 +1908,14 @@ def _island(rows):
 def render(state, today=None, calls_inventory=None):
     """The complete self-contained board page."""
     rows = build_rows(state, today)
-    call_rows = build_call_rows(
-        load_calls() if calls_inventory is None else calls_inventory, today)
+    inventory = load_calls() if calls_inventory is None else calls_inventory
+    call_rows = build_call_rows(inventory, today)
     updated = (today or date.today())
     stamp = "%d %s %d" % (updated.day, MONTHS[updated.month - 1], updated.year)
     return (PAGE
             .replace("__DATA__", _island(rows))
             .replace("__CALLS__", _island(call_rows))
+            .replace("__WARN__", _island(source_warnings(inventory, updated)))
             .replace("__BUILT__", stamp)
             .replace("__BUILT_ISO__", updated.isoformat()))
 

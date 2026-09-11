@@ -7,7 +7,7 @@ an eligibility rule: distance is irrelevant because you can apply to Iceland
 from Leipzig, closing soon may mean it is already too late to assemble a
 portfolio, and a third of them charge you to enter.
 
-Two sources, chosen because they fail in opposite directions:
+Three sources, which fail in different directions:
 
   bbk-bundesverband.de   a plain table kept by the German artists' association.
                          Small, curated, almost no noise, and where the
@@ -16,6 +16,13 @@ Two sources, chosen because they fail in opposite directions:
   artconnect.com         several hundred international opportunities in a
                          structured blob, with fees, deadlines, required
                          materials and restrictions already typed.
+  opencallforartists     the site behind a 219k-follower Instagram feed. Most
+                         of it is new to the other two, and most of what it
+                         carries charges an entry fee, which is why paying to
+                         enter and paying to be shown are told apart below.
+
+The same call often arrives from two of them under different titles, so they
+are merged, and the merged record keeps one id for good.
 
 The catch with the second is that its artistic-field tags are self-declared:
 nineteen listings in eighty tick all twenty-five categories, so a naive filter
@@ -25,10 +32,12 @@ same as one that turned out not to be sculpture.
 """
 
 import argparse
+import functools
 import json
 import os
 import re
 import sys
+import time
 from datetime import date, datetime, timedelta
 
 import scoring
@@ -79,7 +88,8 @@ CALL_TYPES = {
 # not the same as wanting sculpture.
 SHOTGUN_FIELDS = 12
 
-SCULPTURE_FIELDS = {"SCULPTURE", "INSTALLATION", "PUBLIC_ART", "APPLIED_ARTS"}
+SCULPTURE_FIELDS = {"SCULPTURE", "INSTALLATION", "PUBLIC_ART", "APPLIED_ARTS",
+                    "CERAMICS"}
 
 # Words that only ever mean sculpture. One of these is enough.
 _STRONG_WORDS = [
@@ -432,6 +442,258 @@ def scrape_artconnect(pages=ARTCONNECT_PAGES, verbose=True):
 
 
 # --------------------------------------------------------------------------
+# opencallforartists.com
+# --------------------------------------------------------------------------
+
+# The Instagram account @opencallforartists_ is the shop window and this is
+# the stock room. Every post there is a listing here, with the organiser, the
+# fee and a plain calendar date as separate fields, so nothing has to be read
+# out of a caption and Instagram is never touched. The site is a JavaScript
+# front end over this backend, which is undocumented and lives on a "dev"
+# subdomain: it can vanish, and the health record says so when it does.
+OCFA_API = "https://dev.opencallforartists.com/product"
+OCFA_LISTING = "https://opencallforartists.com/listing/%s"
+OCFA_PAGE = 100
+OCFA_PAUSE = 0.6
+OCFA_CACHE_PATH = os.path.join(HERE, "ocfa_cache.json")
+# Listings read in full per run. Only ones not already cached cost a request,
+# so after the first run this is a handful a day.
+OCFA_DETAIL_BUDGET = 150
+OCFA_REFETCH_DAYS = 14
+
+OCFA_TYPES = {
+    "Call For Artists": "open call",
+    "Call For Submissions": "open call",
+    "Call For Photography": "open call",
+    "Call For Entries": "competition",
+    "Residency": "residency",
+    "Workshop": "workshop",
+}
+
+# Who may apply, as the organiser declared it.
+OCFA_SCOPES = {"National": "national", "Local": "local",
+               "Regional": "regional", "International": "international"}
+
+# Detail fields worth keeping. The record also carries the organiser's email
+# and phone number - sometimes a named person's - and those never leave the
+# request: calls.json and the cache are committed to a public repository.
+OCFA_DETAIL_FIELDS = ("description", "apply_now_link", "web_link", "instagram",
+                      "artistic_fields", "prize_summary", "listing_type")
+
+# Free-text media, mapped onto the tags ArtConnect uses so one set of rules
+# reads both. Separators are not consistent - semicolons, commas, or nothing.
+_OCFA_FIELDS = [
+    ("SCULPTURE", r"sculpt"), ("INSTALLATION", r"installation"),
+    ("CERAMICS", r"ceramic|pottery|porcelain"),
+    ("PUBLIC_ART", r"public art|mural"),
+    ("PAINTING", r"paint"), ("DRAWING", r"drawing|illustrat"),
+    ("PHOTOGRAPHY", r"photo|lens"), ("PRINTMAKING", r"printmak"),
+    ("DIGITAL", r"digital|new media"), ("VIDEO", r"video|film|moving image"),
+    ("PERFORMANCE", r"performance"), ("MIXED_MEDIA", r"mixed media"),
+    ("TEXTILE", r"textile|fibre|fiber"), ("SOUND", r"sound"),
+    ("DESIGN", r"design"), ("CRAFT", r"craft"),
+]
+_OCFA_FIELD_RES = [(tag, re.compile(pattern, re.IGNORECASE))
+                   for tag, pattern in _OCFA_FIELDS]
+_ALL_FIELDS_RE = re.compile(
+    r"\ball (?:disciplines|media|mediums|fine arts|art ?forms|artistic fields)\b"
+    r"|\bany (?:medium|media|discipline)\b|^\s*open\b", re.IGNORECASE)
+
+
+def _ocfa_fields(text):
+    """'All fine arts; painting; sculpture' -> ['ALL', 'PAINTING', 'SCULPTURE']."""
+    text = text or ""
+    tags = [tag for tag, pattern in _OCFA_FIELD_RES if pattern.search(text)]
+    if _ALL_FIELDS_RE.search(text):
+        tags.insert(0, "ALL")
+    return tags
+
+
+def _web(url):
+    """A link that works from the page: 'foundwork.art' would resolve relative."""
+    url = (url or "").strip()
+    if not url:
+        return None
+    if url.startswith(("mailto:", "https://", "http://")):
+        return scraper.https_url(url)
+    if url.startswith("//"):
+        return "https:" + url
+    return "https://" + url
+
+
+def _prose(text):
+    """Plain text from a description that may or may not be HTML."""
+    text = text or ""
+    if "<" in text and ">" in text:
+        text = scraper.soup(text).get_text(" ")
+        # Tags become spaces, which leaves "sculpture ," behind a closing tag.
+        text = re.sub(r"\s+([,.;:!?])", r"\1", text)
+    return scraper.clean(text)
+
+
+# Organisers pick a category from a short menu and often pick the first one:
+# "Hayama Artist Residency in Japan" is filed as a call for artists. The title
+# says what it is, and the type decides whether its fee buys a studio or a
+# mention, so the title wins over a generic category.
+_TITLE_TYPES = [
+    ("residency", re.compile(r"\bresiden(?:cy|cies|ce|z)\b", re.IGNORECASE)),
+    ("grant", re.compile(r"\b(?:grant|fellowship|stipend|bursary|stipendium)s?\b",
+                         re.IGNORECASE)),
+    ("award", re.compile(r"\b(?:prize|award|preis)s?\b", re.IGNORECASE)),
+    ("commission", re.compile(r"\bcommission\b|kunst am bau|public art",
+                              re.IGNORECASE)),
+]
+
+
+def _refine_type(title, given):
+    if given not in (None, "open call", "competition"):
+        return given
+    for label, pattern in _TITLE_TYPES:
+        if pattern.search(title or ""):
+            return label
+    return given
+
+
+def _place(city, country):
+    city = scraper.clean(city)
+    if city and city.isupper():
+        city = city.title()          # "NEWYORK" is how some organisers type it
+    return ", ".join(x for x in (city, scraper.clean(country)) if x) or None
+
+
+def ocfa_list():
+    """Every listing the site has ever carried; most are long closed."""
+    out, offset, total = [], 0, None
+    while total is None or offset < total:
+        try:
+            payload = scraper.fetch(OCFA_API + "/explore-opencalls/",
+                                    params={"limit": OCFA_PAGE, "offset": offset},
+                                    as_json=True)
+        except scraper.FetchError as exc:
+            print("  ! opencallforartists list failed at %d: %s"
+                  % (offset, str(exc)[:70]))
+            break
+        batch = (payload or {}).get("data") or []
+        total = (payload or {}).get("total_count") or 0
+        if not batch:
+            break
+        out.extend(batch)
+        offset += len(batch)
+        time.sleep(OCFA_PAUSE)
+    return out
+
+
+def ocfa_detail(listing_id):
+    """The full listing, reduced to the fields worth keeping."""
+    try:
+        payload = scraper.fetch(OCFA_API + "/fetch-opencall-detail/%s" % listing_id,
+                                as_json=True)
+    except scraper.FetchError:
+        return None
+    record = (payload or {}).get("data") or {}
+    if isinstance(record, list):
+        record = record[0] if record else {}
+    return {field: record.get(field) for field in OCFA_DETAIL_FIELDS}
+
+
+def load_ocfa_cache(path=OCFA_CACHE_PATH):
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def save_ocfa_cache(cache, path=OCFA_CACHE_PATH):
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(cache, fh, ensure_ascii=False, indent=1, sort_keys=True)
+        fh.write("\n")
+
+
+def parse_ocfa(row, detail=None):
+    """One listing: the list row, and its detail when it has been read."""
+    title = scraper.clean(row.get("title"))
+    if not title:
+        return None
+    detail = detail or {}
+    call = _empty_call("ocfa", OCFA_LISTING % row.get("id"))
+    call["title"] = title
+    call["listing_id"] = row.get("id")
+    call["organisation"] = scraper.clean(row.get("organization_title")) or None
+    call["type"] = _refine_type(title, OCFA_TYPES.get(row.get("category")))
+    call["deadline"] = _iso_stamp(row.get("event_deadline"))
+    call["city"] = scraper.clean(row.get("city")) or None
+    call["country"] = scraper.clean(row.get("country")) or None
+    call["place"] = _place(row.get("city"), row.get("country"))
+    call["online"] = row.get("type") == "Online Only"
+    call["language"] = "en"
+    call["scope"] = OCFA_SCOPES.get(row.get("eligibility"))
+
+    if row.get("fee_type") == "Free":
+        call["fee"] = False
+    elif row.get("fee_type") == "Paid":
+        call["fee"] = True
+        price = row.get("price")
+        if isinstance(price, (int, float)) and price > 0:
+            call["fee_note"] = "$%g" % price
+
+    # The Instagram caption is the short version; the detail has the terms.
+    call["description"] = _prose(detail.get("description")
+                                 or row.get("instagram_caption"))
+    call["url"] = (_web(detail.get("apply_now_link")) or _web(detail.get("web_link"))
+                   or call["source_url"])
+    call["org_url"] = _web(detail.get("web_link"))
+    handle = (row.get("instagram_handle") or "").strip().lstrip("@")
+    call["org_instagram"] = (_web(detail.get("instagram"))
+                             or ("https://www.instagram.com/%s/" % handle
+                                 if handle else None))
+    call["fields"] = _ocfa_fields(detail.get("artistic_fields"))
+    if detail.get("prize_summary"):
+        call["rewards"] = [scraper.clean(detail["prize_summary"])]
+
+    # "Standard post" is what every organiser pays for. Anything above it -
+    # an email campaign, a deadline highlight - bought reach, and the site's
+    # own listings are its own virtual exhibitions.
+    listing_type = scraper.fold(detail.get("listing_type"))
+    house = scraper.fold(call["organisation"]) == "open call for artists"
+    call["promoted"] = house or bool(listing_type and listing_type != "standard post")
+    call["id"] = call_id(call["organisation"], title, call["deadline"])
+    return call
+
+
+def scrape_ocfa(budget=OCFA_DETAIL_BUDGET, verbose=True, today=None):
+    """Open listings from opencallforartists.com, each read in full once."""
+    today = today or date.today()
+    rows = ocfa_list()
+    open_rows = [r for r in rows
+                 if (r.get("event_deadline") or "") >= today.isoformat()]
+    cache = load_ocfa_cache()
+    cutoff = (today - timedelta(days=OCFA_REFETCH_DAYS)).isoformat()
+    fetched, out = 0, []
+    for row in open_rows:
+        key = str(row.get("id"))
+        entry = cache.get(key)
+        if (not entry or (entry.get("fetched") or "") < cutoff) and fetched < budget:
+            detail = ocfa_detail(row.get("id"))
+            fetched += 1
+            time.sleep(OCFA_PAUSE)
+            if detail is not None:
+                entry = dict(detail, fetched=today.isoformat())
+                cache[key] = entry
+        call = parse_ocfa(row, entry)
+        if call:
+            out.append(call)
+    if rows:
+        # A closed listing is never asked for again, so it need not be kept.
+        # Skipped when the list itself failed, or a bad night would empty it.
+        keep = {str(r.get("id")) for r in open_rows}
+        save_ocfa_cache({k: v for k, v in cache.items() if k in keep})
+    if verbose:
+        print("  opencallforartists: %d open of %d listed, %d read in full"
+              % (len(open_rows), len(rows), fetched))
+    return out
+
+
+# --------------------------------------------------------------------------
 # scoring
 # --------------------------------------------------------------------------
 
@@ -441,10 +703,12 @@ def specificity(call):
     A listing that ticks every artistic field is telling you nothing. One that
     ticks two is telling you a lot.
     """
-    count = len(call.get("fields") or [])
-    if not count:
+    fields = call.get("fields") or []
+    if not fields:
         return "untagged"
-    return "open to all" if count >= SHOTGUN_FIELDS else "specific"
+    if "ALL" in fields:
+        return "open to all"          # said in words: "all disciplines"
+    return "open to all" if len(fields) >= SHOTGUN_FIELDS else "specific"
 
 
 def sculpture_relevance(call):
@@ -496,8 +760,95 @@ def status_of(call, today=None):
     return "soon" if left <= SOON_DAYS else "open"
 
 
+# Paying to enter a juried prize is one thing; paying to be shown is another.
+# The second is a business model more than an opportunity - a page in a book
+# of two hundred artists, a slot on a screen in a Paris window - and it is a
+# good part of what an Instagram open-call feed exists to sell. It is told
+# apart by what comes back: real money, or exposure you bought.
+# Narrow on purpose, each phrase the shape of the scheme and not merely a word
+# in it. "Book of" alone flagged the Tom Stoddart Award, whose prize is a book
+# of the winner's work from a real publisher; a bare "membership" flagged the
+# Martin Parr Foundation for describing its own supporters' scheme.
+_EXPOSURE_RE = re.compile(
+    r"\b(?:virtual|online) (?:exhibition|gallery|show|showcase)s?\b"
+    r"|\bdigital (?:display|exhibition|screens?|billboard)s?\b"
+    r"|\bmagazine\b|\bbook of (?:\w+ ){0,4}(?:artists|photographers|creatives|"
+    r"sculptors|painters|makers|illustrators)\b"
+    r"|\b(?:be |get )?published in\b|\bprinted in\b"
+    r"|\bartist spotlight\b|\bartist interview\b|\b(?:be|get) featured\b"
+    r"|\bfeatured in\b|\bmember artists?\b"
+    r"|\b(?:paid|annual|monthly|yearly) membership\b", re.IGNORECASE)
+# A number ends on a digit, so "$2,000." leaves its full stop to the sentence.
+_MONEY_RE = re.compile(
+    r"[$€£]\s?(\d(?:[\d.,]*\d)?)\s*(k\b)?"
+    r"|(\d(?:[\d.,]*\d)?)\s*(k\b)?\s?(?:usd|eur|gbp|euros?|dollars?|pounds)\b",
+    re.IGNORECASE)
+# Not every amount is money you could win. "$20 per entry" is the fee, and
+# "$10000+ Artist Package" is a valuation of the promotion being sold - the
+# Arts to Hearts magazine call slipped through as a ten-thousand-dollar prize
+# before these were read.
+_FEE_NEAR = re.compile(
+    r"\b(?:fees?|entry|entries|application|submission|registration|"
+    r"per (?:image|work|piece|entry|artwork|submission))\b", re.IGNORECASE)
+_VALUE_NEAR = re.compile(
+    r"\b(?:package|packages|value|valued|worth|estimated|in services|in kind|"
+    r"voucher|gift card|credit|discount|exposure|promotion|marketing)\b",
+    re.IGNORECASE)
+_SENTENCE = re.compile(r"[.!?;]\s|\n")
+# Any real cash makes it a prize, however modest: KANE pays £200 and a London
+# show, which is a small prize and not a purchase of exposure.
+CASH_FLOOR = 100
+# Where the fee buys the thing itself: a residency's fee is for a studio and
+# time, not for a mention.
+_NOT_EXPOSURE_TYPES = {"residency", "grant", "commission", "job", "course",
+                       "workshop", "curators", "collaboration"}
+
+
+def prize_money(text):
+    """The biggest amount in a text that reads as money you could win."""
+    text = text or ""
+    best = 0.0
+    for match in _MONEY_RE.finditer(text):
+        # Wide enough for "$10,000+ Estimated Artist Package", and cut at the
+        # sentence, so "Winner receives $2,000. Entry is $30." keeps its prize.
+        before = _SENTENCE.split(text[max(0, match.start() - 22):match.start()])[-1]
+        after = _SENTENCE.split(text[match.end():match.end() + 30])[0]
+        near = before + " " + after
+        if _FEE_NEAR.search(near) or _VALUE_NEAR.search(near):
+            continue
+        raw = match.group(1) or match.group(3) or ""
+        thousands = match.group(2) or match.group(4)
+        # 10,000 and 10.000 are both ten thousand; 1,5 is one and a half.
+        raw = re.sub(r"[.,](?=\d{3}(?!\d))", "", raw).replace(",", ".").rstrip(".")
+        try:
+            value = float(raw)
+        except ValueError:
+            continue
+        best = max(best, value * 1000 if thousands else value)
+    return best
+
+
+def pay_to_play(call):
+    """(True, why) when the fee buys exposure rather than a chance at something."""
+    if call.get("fee") is not True or call.get("type") in _NOT_EXPOSURE_TYPES:
+        return False, None
+    rewards = " ".join(call.get("rewards") or [])
+    body = (call.get("description") or "")[:4000]
+    if prize_money(rewards + " . " + body) >= CASH_FLOOR:
+        return False, None             # a real prize: paying to enter, not to be shown
+    match = _EXPOSURE_RE.search(" ".join([call.get("title") or "", rewards, body]))
+    if match:
+        return True, match.group(0).lower()
+    if call.get("online"):
+        return True, "online only"
+    return False, None
+
+
 def score(call, today=None):
     """Annotate a call in place. Nothing is discarded."""
+    paid, paid_why = pay_to_play(call)
+    call["pay_to_play"] = paid
+    call["pay_why"] = paid_why
     relevance, why = sculpture_relevance(call)
     call["sculpture"] = relevance
     call["sculpture_why"] = why
@@ -511,7 +862,11 @@ def score(call, today=None):
     if call.get("fee") is False:
         rank += 30                      # free to enter
     elif call.get("fee") is True:
-        rank -= 40                      # pay to play
+        rank -= 40                      # a fee to enter
+    if paid:
+        # Below every call that is a chance at something; still on the board,
+        # because "as much as possible in one place" was the brief.
+        rank -= 120
     if call.get("promoted"):
         rank -= 25                      # someone paid to be seen; that is not merit
     if call.get("source") == "bbk":
@@ -719,12 +1074,32 @@ def eligibility_of(call, cache=None):
     return _model_eligibility(text, cache)
 
 
+def scope_eligibility(call):
+    """What the organiser declared about who may apply, where they did.
+
+    opencallforartists asks every organiser: international, national,
+    regional or local, and which country. That is a stated rule rather than
+    a reading of prose, so it goes first.
+    """
+    scope, country = call.get("scope"), call.get("country")
+    if scope not in ("national", "regional", "local") or not country:
+        return None
+    if not _home([country]):
+        return "closed", [country]
+    # National and German means you. Regional or local and German could mean
+    # Hamburg - shown and marked, rather than guessed at either way.
+    return ("eligible" if scope == "national" else "unknown"), [country]
+
+
 def free_eligibility(call):
     """The verdicts that need no model, or None.
 
     These run everywhere, including the nightly job, which has no model: a
     call that says "Canadian artists" is shut whether or not Ollama is up.
     """
+    declared = scope_eligibility(call)
+    if declared:
+        return declared
     scan = eligibility_scan(call)
     named = _demonyms(scan)
     if named:
@@ -787,6 +1162,136 @@ def resolve_eligibility(calls, budget=ELIGIBILITY_BUDGET, verbose=True):
 
 
 # --------------------------------------------------------------------------
+# the same call, listed twice
+# --------------------------------------------------------------------------
+
+# Whose record leads when one call arrives from two sources and neither
+# version is already known. BBK first because it is curated; ArtConnect
+# before opencallforartists because its records carry more structure.
+SOURCE_PRIORITY = {"bbk": 0, "artconnect": 1, "ocfa": 2}
+
+# Words that do not tell one organisation from another.
+_ORG_NOISE = {
+    "the", "of", "and", "for", "art", "arts", "artist", "artists", "gallery",
+    "galerie", "galleries", "foundation", "stiftung", "project", "projects",
+    "studio", "studios", "center", "centre", "museum", "institute",
+    "association", "society", "collective", "residency", "residencies",
+    "program", "programme", "festival", "international", "inc", "ltd", "llc",
+    "gmbh", "ev", "cic", "group", "network", "house", "space", "contemporary",
+    "fine", "city", "council", "kunst", "verein", "kunstverein",
+}
+# Words that do not tell one call from another.
+_TITLE_NOISE = {
+    "open", "call", "calls", "opencall", "for", "the", "and", "of", "in", "on",
+    "at", "to", "an", "with", "by", "from", "your", "our", "now", "new",
+    "artists", "artist", "art", "arts", "international", "competition",
+    "contest", "exhibition", "exhibitions", "show", "application",
+    "applications", "submission", "submissions", "entry", "entries",
+    "deadline", "edition", "annual", "opportunity", "opportunities",
+}
+
+
+@functools.lru_cache(maxsize=8192)
+def _tokens(text):
+    return frozenset(w for w in scraper.fold(text or "").split()
+                     if len(w) >= 2 and not w.isdigit())
+
+
+def _day(value):
+    try:
+        return date.fromisoformat((value or "")[:10])
+    except ValueError:
+        return None
+
+
+def same_call(a, b):
+    """Is this one opportunity seen through two sources?
+
+    The organiser alone is not enough: TERAVARNA runs a new themed competition
+    every few weeks, and two of them close on the same day. The title alone is
+    not enough either, because sources rewrite it - "2026 Foundwork Artist
+    Prize" is "2026 Foundwork Artist Prize: 10,000 USD Grant with Studio
+    Visits and Interview" elsewhere. So the deadline has to agree, and then
+    the words left once the organiser's name and the boilerplate are gone.
+    """
+    if a.get("source") == b.get("source"):
+        return False                   # a source does not list one call twice
+    da, db = _day(a.get("deadline")), _day(b.get("deadline"))
+    if bool(da) != bool(db) or (da and abs((da - db).days) > 3):
+        return False
+    oa = _tokens(a.get("organisation")) - _ORG_NOISE
+    ob = _tokens(b.get("organisation")) - _ORG_NOISE
+    same_org = bool(oa & ob)
+    ta = _tokens(a.get("title")) - _TITLE_NOISE - oa - ob
+    tb = _tokens(b.get("title")) - _TITLE_NOISE - oa - ob
+    if not ta or not tb:
+        # A title that is nothing but the organiser's name and a year: only
+        # the same organiser on the same day will do.
+        return same_org and da == db
+    shared = ta & tb
+    if same_org:
+        return len(shared) / min(len(ta), len(tb)) >= 0.5
+    return len(shared) >= 2 and len(shared) / min(len(ta), len(tb)) >= 0.8
+
+
+def merge_duplicate_calls(calls, known=None):
+    """Fold the same call from several sources into one record.
+
+    The id is the one thing that must not move: the application stage you
+    set, and what counts as new, both hang on it. So a merged record keeps
+    whichever id the inventory already knows, and remembers the others as
+    aliases, so that the day one source drops the call the other still lands
+    on the same record rather than arriving as a stranger.
+    """
+    known = known or {}
+    alias_of = {alias: key for key, record in known.items()
+                for alias in record.get("aliases") or []}
+    for call in calls:
+        call["id"] = alias_of.get(call["id"], call["id"])
+
+    groups = []
+    for call in calls:
+        for group in groups:
+            if all(m.get("source") != call.get("source") for m in group) \
+                    and any(same_call(call, m) for m in group):
+                group.append(call)
+                break
+        else:
+            groups.append([call])
+
+    def lead(call):
+        record = known.get(call["id"])
+        return (record is None, (record or {}).get("first_seen") or "",
+                SOURCE_PRIORITY.get(call.get("source"), 9),
+                -len(call.get("description") or ""))
+
+    out = []
+    for group in groups:
+        if len(group) == 1:
+            out.append(group[0])
+            continue
+        group.sort(key=lead)
+        merged = dict(group[0])
+        aliases = set(known.get(merged["id"], {}).get("aliases") or [])
+        for other in group[1:]:
+            if not merged.get("description") and other.get("description"):
+                for field in ("description", "description_en", "language"):
+                    merged[field] = other.get(field)
+            for field, value in other.items():
+                if field in ("id", "source", "source_url", "description",
+                             "description_en", "language"):
+                    continue
+                if merged.get(field) in (None, "", []) and value not in (None, "", []):
+                    merged[field] = value
+            if other["id"] != merged["id"]:
+                aliases.add(other["id"])
+        merged["aliases"] = sorted(aliases)
+        merged["sources"] = sorted({c.get("source") for c in group if c.get("source")})
+        out.append(merged)
+    return out
+
+
+# --------------------------------------------------------------------------
 # inventory
 # --------------------------------------------------------------------------
 
@@ -796,7 +1301,8 @@ KEEP = ("title", "organisation", "type", "deadline", "deadline_pattern",
         "description", "description_en", "language", "fee", "fee_note",
         "requires", "rewards", "fields", "restrictions", "online", "promoted",
         "sculpture", "sculpture_why", "specificity", "status", "days_left",
-        "rank")
+        "rank", "scope", "listing_id", "org_url", "org_instagram",
+        "pay_to_play", "pay_why")
 
 
 def load(path=CALLS_PATH):
@@ -807,7 +1313,24 @@ def load(path=CALLS_PATH):
         data = json.load(fh)
     data.setdefault("calls", {})
     data.setdefault("last_run", None)
+    data.setdefault("health", {})
     return data
+
+
+def record_health(inventory, source, count, today=None):
+    """Remember when each source last answered, and since when it has not.
+
+    ArtConnect changed its page after 1 September and read nothing for ten
+    days before anyone looked. A source that returns nothing is now written
+    down on the night it happens, and the page says so after two.
+    """
+    today = (today or date.today()).isoformat()
+    entry = inventory.setdefault("health", {}).setdefault(source, {})
+    if count:
+        entry.update(last_ok=today, last_count=count, failing_since=None)
+    elif not entry.get("failing_since"):
+        entry["failing_since"] = today
+    return entry
 
 
 def save(inventory, path=CALLS_PATH):
@@ -823,20 +1346,24 @@ def merge(inventory, calls, today=None):
     known = inventory["calls"]
     now = datetime.now().isoformat(timespec="seconds")
     fresh, seen = [], set()
+    alias_of = {alias: key for key, record in known.items()
+                for alias in record.get("aliases") or []}
 
     for call in calls:
-        key = call["id"]
+        key = alias_of.get(call["id"], call["id"])
         if key in seen:
             continue
         seen.add(key)
         record = {field: call.get(field) for field in KEEP}
         record["last_seen"] = now
+        arriving = set(call.get("sources") or []) | {call.get("source")}
         existing = known.get(key)
         if existing:
             record["first_seen"] = existing.get("first_seen", now)
-            sources = set(existing.get("sources") or [])
-            sources.add(call.get("source"))
+            sources = set(existing.get("sources") or []) | arriving
             record["sources"] = sorted(s for s in sources if s)
+            record["aliases"] = sorted(set(existing.get("aliases") or [])
+                                       | set(call.get("aliases") or []))
             # A verdict already reached is not unreached by a run that could
             # not reach it. The nightly job has no model, so without this it
             # would quietly replace every "closed" with "unknown" and put the
@@ -845,9 +1372,14 @@ def merge(inventory, calls, today=None):
                     and existing.get("eligibility") not in (None, "unknown")):
                 record["eligibility"] = existing["eligibility"]
                 record["open_to"] = existing.get("open_to") or []
+                # The rank was worked out before the verdict came back, so a
+                # restored "closed" was still ranked like an open call - two
+                # shut calls sat in the top twenty until this.
+                score(record, today)
         else:
             record["first_seen"] = now
-            record["sources"] = [call["source"]] if call.get("source") else []
+            record["sources"] = sorted(s for s in arriving if s)
+            record["aliases"] = sorted(call.get("aliases") or [])
             fresh.append(call)
         known[key] = record
 
@@ -881,10 +1413,22 @@ def counts(inventory):
 
 def refresh(inventory=None, translate=True, verbose=True, pages=None,
             eligibility=True):
-    """Fetch both sources, score, and fold into the inventory."""
+    """Fetch every source, merge the duplicates, score, and fold in."""
     inventory = load() if inventory is None else inventory
-    found = scrape_bbk(verbose) + scrape_artconnect(
-        pages=pages or ARTCONNECT_PAGES, verbose=verbose)
+    found = []
+    for name, fetch in (
+            ("bbk", lambda: scrape_bbk(verbose)),
+            ("artconnect", lambda: scrape_artconnect(
+                pages=pages or ARTCONNECT_PAGES, verbose=verbose)),
+            ("ocfa", lambda: scrape_ocfa(verbose=verbose))):
+        try:
+            got = fetch()
+        except Exception as exc:                               # noqa: BLE001
+            # One source failing must not take the others down with it.
+            print("  ! %s failed outright: %s" % (name, str(exc)[:70]))
+            got = []
+        record_health(inventory, name, len(got))
+        found.extend(got)
 
     if translate:
         try:
@@ -902,6 +1446,8 @@ def refresh(inventory=None, translate=True, verbose=True, pages=None,
         except Exception as exc:                               # noqa: BLE001
             print("  ! call translation skipped: %s" % str(exc)[:60])
 
+    before = len(found)
+    found = merge_duplicate_calls(found, known=inventory["calls"])
     scored = score_all(found)
     if eligibility:
         # Ranked first so the budget lands on the calls you might actually
@@ -911,8 +1457,8 @@ def refresh(inventory=None, translate=True, verbose=True, pages=None,
     fresh = merge(inventory, scored)
     if verbose:
         relevant = sum(1 for c in scored if c["sculpture"] == "yes")
-        print("  calls: %d found, %d sculpture-relevant, %d new"
-              % (len(scored), relevant, len(fresh)))
+        print("  calls: %d found (%d listed twice), %d sculpture-relevant, %d new"
+              % (len(scored), before - len(scored), relevant, len(fresh)))
     return inventory, fresh
 
 
