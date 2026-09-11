@@ -47,13 +47,26 @@ class FetchError(RuntimeError):
 
 def fetch(url, params=None, as_json=False):
     """GET with retries. Raises FetchError after MAX_RETRIES failures."""
+    response = fetch_response(url, params)
+    return response.json() if as_json else response.text
+
+
+def fetch_response(url, params=None):
+    """The response itself, for when where it came from matters.
+
+    A site that moves redirects its old address to its new one, and links on
+    the page are relative to where it now lives. index-berlin moved from .de
+    to .com and kept redirecting; every link built on the old address landed
+    on the new homepage instead of the show, and every image link fetched the
+    homepage too. response.url is the address to resolve links against.
+    """
     last = None
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             r = _session.get(url, params=params, timeout=REQUEST_TIMEOUT)
             r.raise_for_status()
             time.sleep(REQUEST_PAUSE)
-            return r.json() if as_json else r.text
+            return r
         except Exception as exc:          # noqa: BLE001 - retry on anything
             last = exc
             if attempt < MAX_RETRIES:
@@ -696,7 +709,8 @@ def scrape_berlin_art_link(verbose=True):
 # every card carries the venue's coordinates, which nothing else gives us.
 # --------------------------------------------------------------------------
 
-INDEX_BERLIN_URL = "https://www.indexberlin.de/"
+# Moved from .de, which now redirects every address to the .com homepage.
+INDEX_BERLIN_URL = "https://www.indexberlin.com/"
 
 # "starts on September 10, 2026" / "until August 23, 2026"
 _IDX_DATE = re.compile(
@@ -732,8 +746,13 @@ def _idx_date(text):
         return None, None
 
 
-def parse_index_berlin(html):
-    """Every exhibition card on the index Berlin listing page."""
+def parse_index_berlin(html, base=INDEX_BERLIN_URL):
+    """Every exhibition card on the index Berlin listing page.
+
+    `base` is the address the page was actually served from: every link and
+    image on it is relative, and resolving them against an address the site
+    has moved away from sends each one to the homepage.
+    """
     events = []
     s = soup(html)
     for group in s.select("div.events"):
@@ -749,8 +768,7 @@ def parse_index_berlin(html):
 
             href = (card.get("data-href")
                     or (title_node or author).get("href") or "")
-            ev = _empty_event("index-berlin",
-                              urljoin(INDEX_BERLIN_URL, href) if href else INDEX_BERLIN_URL)
+            ev = _empty_event("index-berlin", urljoin(base, href) if href else base)
             ev["artists"] = clean(author.get_text(" ")) if author else None
             ev["title"] = (clean(title_node.get_text(" ")) if title_node
                            else ev["artists"])
@@ -764,8 +782,7 @@ def parse_index_berlin(html):
 
             thumb = card.select_one(".list-thumb img")
             if thumb and thumb.get("src"):
-                ev["image"] = https_url(
-                    urljoin(INDEX_BERLIN_URL, thumb["src"]))
+                ev["image"] = https_url(urljoin(base, thumb["src"]))
 
             date_node = card.select_one(".event__date span")
             kind, when = _idx_date(date_node.get_text(" ") if date_node else "")
@@ -791,11 +808,11 @@ def parse_index_berlin(html):
 def scrape_index_berlin(verbose=True):
     """The Berlin listing: running and upcoming shows, with coordinates."""
     try:
-        html = fetch(INDEX_BERLIN_URL)
+        response = fetch_response(INDEX_BERLIN_URL)
     except FetchError as exc:
         print("  ! index-berlin failed: %s" % exc)
         return []
-    events = parse_index_berlin(html)
+    events = parse_index_berlin(response.text, base=response.url)
     if verbose:
         running = sum(1 for e in events if e["exhibition_end"])
         print("  index-berlin: %d exhibitions (%d already running)"

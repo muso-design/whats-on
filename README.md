@@ -59,6 +59,7 @@ scoring.py      merging, medium tier, Koenitz override, the default view
 translate.py    English descriptions: published where possible, translated otherwise
 geocode.py      coordinates for venues that arrive with only an address
 wikidata.py     medium from the artist, for listings with no text to read
+guess.py        a best guess for the rest, from the exhibition picture
 venues.py       the venue registry: who exists, independent of who lists them
 direct.py       read a gallery's own site, for the ones no aggregator carries
 calls.py        open calls: deadlines, runway, entry fees and eligibility
@@ -420,6 +421,48 @@ could speak for this show". Knowing a show is photography is as useful as
 knowing it is sculpture: it stops being noise. `medium_source` records which
 of the two below answered, so any ranking can be questioned.
 
+### A guess from the picture
+
+Keywords and Wikidata still left 157 running shows unclassified, and looking
+at why settled what to do about it: only 6 of them had any description at all.
+129 come from index-berlin, which publishes no text about a show anywhere, not
+even on the show's own page. A text model could only guess from an artist's
+name, which for an emerging artist means inventing. What they do have is the
+exhibition's picture, and the picture usually shows the work.
+
+So `guess.py` has **gemma3:4b**, the vision model already installed, look at
+each one and say what kind of work it shows — sculpture, installation,
+ceramics, painting, drawing, print, photography, video, textile, mixed media —
+with a dozen words on what it actually sees. It may also say "text or poster"
+or "unclear", and then there is no guess. It was measured before it was
+trusted: about four seconds a picture on the graphics card; "sculpture" for a
+ceramics show, "installation" for Cevdet Erek, "painting" for a still life,
+photography for Kicken Berlin and C/O Berlin — and "unclear" for a painting
+show whose picture was a portrait photo, rather than a confident wrong answer.
+
+A guess never moves a show out of "unclassified". Choose **unclassified** and a
+second row of chips appears inside it — looks like sculpture, painting, photo
+or video, something else, no guess — and each card says "looks like
+installation" in a dashed tag, with "guessed from the picture: wooden shelves,
+wooden beams…" beneath. On "Most relevant", a likely sculpture sorts above the
+other unclassified shows and far below anything actually classified; the
+stored rank is never touched, the page adds the lift when it sorts. Answers are
+cached by picture in `guesses.json`, which is committed, so the nightly job
+applies them without a model.
+
+The first run looked at 75 pictures and guessed 71 shows. 65 of the 157
+running unclassified shows now have a guess; the rest have no picture at all,
+and say so rather than get one made up.
+
+Two things turned up on the way. index-berlin had moved from `.de` to `.com`,
+and every link and picture built on the old address was redirected to its
+homepage — "Details" on a Berlin show opened index-berlin's front page. Links
+are now resolved against the address the page was actually served from. And
+index-berlin refuses to have its pictures shown on other sites: it answers 403
+to any image request that comes from another page. That is a decision, and it
+is respected — its pictures are looked at once for the guess, as a visitor to
+its site would see them, and left off the cards.
+
 ### Medium from the artist
 
 Most Berlin listings carry no description at all, so keywords have nothing to
@@ -519,6 +562,7 @@ python test_wikidata.py     # medium from the artist, and namesake rejection
 python test_direct.py       # the venue registry, and what the model may claim
 python test_calls.py        # deadlines, runway, and who may actually apply
 python test_app.py          # the local server: progress, the button, the guards
+python test_guess.py        # guesses from pictures: who gets one, what it may change
 ```
 
 `test_pipeline.py` needs `sample_events.json`:
@@ -574,16 +618,23 @@ that a broken night cannot pass for a quiet one.
 
 ## Known limitations
 
-- **131 shows are still unclassified** — artists with no Wikidata entry, mostly
-  emerging ones, plus 51 shows that name no artist at all. They are listed,
-  searchable and mappable, just not ranked by medium.
+- **About 90 running shows have nothing to classify them by** — no
+  description, no artist Wikidata knows, and no picture. They are listed,
+  searchable and mappable, and their card says there was nothing to go on.
+  Reading each gallery's own website for the show's text is the next step
+  that could reach them.
+- **A guess from a picture is a guess.** A painting show announced with a
+  photograph of the artist, or a sculpture show with a collage, is guessed
+  from what the picture shows. That is why guesses stay inside
+  "unclassified" and are labelled as guesses.
 - **Occupation is not the same as this show.** A painter who also casts bronze
   is filed as sculpture whatever is actually on the walls this month. Josef
   Albers surfaces as sculpture because Wikidata lists "glass artist". The bias
   is deliberately towards over-inclusion.
 - **Images are hotlinked** from the source sites, not copied. They load lazily,
   are forced to https so they are not blocked as mixed content, and a moved
-  image removes its own box rather than leaving a gap.
+  image removes its own box rather than leaving a gap. index-berlin's are not
+  shown at all: it refuses requests from other sites.
 - **Marks are per device.** Local storage, no account, no sync. Clearing site
   data clears them.
 - **Translation quality is not reviewed.** Machine output is labelled

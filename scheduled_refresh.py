@@ -50,6 +50,9 @@ DATA_FILES = [
     "state.json", "calls.json", "ocfa_cache.json", "index.html", "sw.js",
     "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon.ico",
     "llm_cache.json", "translations.json", "artists.json", "venues.json",
+    # Without this the nightly job, which has no model, would find no
+    # remembered answers and clear every guess on the published page.
+    "guesses.json",
 ]
 
 # No console window for git either, and the refresh itself yields to

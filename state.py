@@ -30,6 +30,8 @@ KEEP_FIELDS = (
     "artist_evidence", "koenitz_override", "corroborated",
     "matched_keywords",
     "rank", "in_default_view",
+    # A guess from the picture, for shows nothing else could classify.
+    "medium_guess", "guess_family", "guess_seen",
 )
 
 

@@ -114,5 +114,26 @@ check("a run with no announced opening",
 check("nothing announced at all",
       board.describe_dates({}), "dates not announced")
 
+print("\nindex-berlin - links resolve where the page now lives")
+# The site moved from .de to .com and redirects every old address to the new
+# homepage. Links built on the old address sent "Details" to that homepage
+# instead of the show, and every image link fetched the homepage too.
+CARD = """<div class="events" data-section="galleries">
+<article class="event" data-href="/exhibitions/12345-sculpture-show/"
+         data-latitude="52.5" data-longitude="13.4">
+  <a class="event__title" href="/exhibitions/12345-sculpture-show/">Sculpture Show</a>
+  <span class="event__authors">Ann Artist</span>
+  <div class="event__location"><span>Galerie X</span></div>
+  <div class="list-thumb"><img src="/images/549489_fl_1.jpg?w=300"></div>
+  <div class="event__date"><span>until October 3, 2026</span></div>
+</article></div>"""
+parsed = scraper.parse_index_berlin(CARD, base="https://www.indexberlin.com/")[0]
+check("the show's link is on the address the page came from",
+      parsed["source_url"], "https://www.indexberlin.com/exhibitions/12345-sculpture-show/")
+check("and so is its image",
+      parsed["image"], "https://www.indexberlin.com/images/549489_fl_1.jpg?w=300")
+check("the default base is the current address, not the old one",
+      scraper.INDEX_BERLIN_URL, "https://www.indexberlin.com/")
+
 print("\n%d failure(s)" % len(FAILURES))
 raise SystemExit(1 if FAILURES else 0)

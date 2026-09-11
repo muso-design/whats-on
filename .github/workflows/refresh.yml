@@ -42,6 +42,7 @@ jobs:
           python test_direct.py
           python test_calls.py
           python test_app.py
+          python test_guess.py
 
       - name: Fetch and rebuild
         env:

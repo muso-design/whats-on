@@ -18,7 +18,7 @@ import os
 import re
 import sys
 from datetime import date, datetime, timedelta
-from urllib.parse import quote_plus, urlencode
+from urllib.parse import quote_plus, urlencode, urlparse
 
 import state as state_mod
 
@@ -255,6 +255,25 @@ def _why(record):
     return ""
 
 
+# What a guess from the picture adds when the page sorts: enough to lift a
+# likely sculpture above other unclassified shows, far below any real
+# classification - a tier is worth 100. The stored rank is left alone.
+GUESS_NUDGE = {"sculpture": 20, "painting": 8}
+
+# Sites that refuse to have their pictures shown on other pages: index-berlin
+# answers 403 to any image request that comes from another site, the
+# published hub included. That is a decision, and it is respected - their
+# pictures stay off the cards. The address is still kept, because guess.py
+# looks at each picture once, as a visitor to their page would, and shows
+# nothing.
+NO_EMBED = ("indexberlin.com", "indexberlin.de")
+
+
+def showable_image(url):
+    host = urlparse(url or "").netloc.lower()
+    return "" if any(host == h or host.endswith("." + h) for h in NO_EMBED) else (url or "")
+
+
 def to_row(record, today=None):
     """Trim an inventory record down to what the page needs."""
     blurb = summarise(record)
@@ -273,7 +292,7 @@ def to_row(record, today=None):
         "until": days_until(record, today),
         "medium": medium_label(record),
         "tier": record.get("medium_tier") or 0,
-        "rank": record.get("rank") or 0,
+        "rank": (record.get("rank") or 0) + GUESS_NUDGE.get(record.get("guess_family"), 0),
         "sort_date": (record.get("vernissage_datetime")
                       or record.get("exhibition_start") or "9999"),
         "end_date": record.get("exhibition_end") or "9999",
@@ -283,7 +302,7 @@ def to_row(record, today=None):
         "lang": record.get("language") or "",
         "blurb_lang": ("en" if record.get("description_en")
                        else (record.get("language") or "")),
-        "image": record.get("image") or "",
+        "image": showable_image(record.get("image")),
         "why": _why(record),
         "translated": bool(record.get("description_en")
                            and record.get("language") == "de"),
@@ -296,6 +315,10 @@ def to_row(record, today=None):
         "lat": lat, "lng": lng,
         "cal": cal_url,
         "cal_label": cal_label,
+        # A guess from the picture, for shows nothing else could classify.
+        "guess": record.get("medium_guess") or "",
+        "guess_family": record.get("guess_family") or "",
+        "guess_seen": record.get("guess_seen") or "",
     }
 
 
@@ -695,6 +718,11 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   background:var(--sunk);color:var(--muted)}
 .tag.live{background:var(--accent-soft);color:var(--accent)}
 .tag.urgent{background:var(--urgent-soft);color:var(--urgent)}
+/* A guess from the picture: dashed, so it never passes for a classification. */
+.tag.guess{background:transparent;color:var(--ink);border:1px dashed var(--muted);
+  padding:2px 6px}
+/* The guess filters sit inside "unclassified", and look it. */
+.row.sub{padding-left:12px;margin-left:4px;border-left:2px solid var(--line)}
 .grouphead{font-size:.95rem;font-weight:650;letter-spacing:.02em;
   text-transform:lowercase;color:var(--muted);margin:22px 0 10px}
 .grouphead:first-child{margin-top:4px}
@@ -866,6 +894,8 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
       <div class="row" id="f-status" role="group" aria-label="When"></div>
       <div class="row" id="f-city" role="group" aria-label="Where"></div>
       <div class="row" id="f-medium" role="group" aria-label="Medium"></div>
+      <div class="row sub" id="f-guess" role="group"
+           aria-label="Best guess for unclassified shows" hidden></div>
     </div>
     <div class="filters" id="call-filters" hidden>
       <div class="row" id="f-fit" role="group" aria-label="Relevance"></div>
@@ -980,6 +1010,14 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
     ["painting/drawing", "painting"],
     ["medium unknown", "unclassified"]
   ];
+  // Inside "unclassified": what the local model guessed from each picture.
+  var GUESS = [
+    ["sculpture", "looks like sculpture"],
+    ["painting", "looks like painting"],
+    ["photo/video", "looks like photo or video"],
+    ["other", "looks like something else"],
+    ["none", "no guess"]
+  ];
 
   var state = {
     tab: "browse",
@@ -990,6 +1028,7 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
     status: new Set(["closing_soon", "opening_soon"]),
     city: new Set(),
     medium: new Set(),
+    guess: new Set(),
     // Calls open on sculpture only. Nine in ten of the rest are painting
     // prizes and curator jobs, and the point of the tab is where the work
     // could go, not what exists.
@@ -1041,6 +1080,12 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
     if (state.status.size && !state.status.has(r.status)) { return false; }
     if (state.city.size && !state.city.has(r.city)) { return false; }
     if (state.medium.size && !state.medium.has(r.medium)) { return false; }
+    // The guess only narrows the unclassified shows, and only while they are
+    // the ones being looked at - a hidden filter must not quietly hide cards.
+    if (state.guess.size && state.medium.has("medium unknown") &&
+        r.medium === "medium unknown" && !state.guess.has(r.guess_family || "none")) {
+      return false;
+    }
     return textMatch(r);
   }
 
@@ -1151,6 +1196,14 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
       var n = rows.filter(function (r) { return r.medium === row[0]; }).length;
       if (n) { m.appendChild(chip(row[1], row[0], n, "medium")); }
     });
+
+    var g = document.getElementById("f-guess");
+    GUESS.forEach(function (row) {
+      var n = rows.filter(function (r) {
+        return r.medium === "medium unknown" && (r.guess_family || "none") === row[0];
+      }).length;
+      if (n) { g.appendChild(chip(row[1], row[0], n, "guess")); }
+    });
   }
 
   function buildCallFilters() {
@@ -1196,7 +1249,7 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
         state.noPayToShow || !state.canEnter;
     }
     return state.status.size || state.city.size || state.medium.size ||
-      state.onlyNew;
+      state.guess.size || state.onlyNew;
   }
 
   function syncChips() {
@@ -1215,6 +1268,7 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
       state.freeOnly = false; state.noPayToShow = false; state.canEnter = true;
     } else {
       state.status.clear(); state.city.clear(); state.medium.clear();
+      state.guess.clear();
       state.onlyNew = false;
     }
     syncChips();
@@ -1332,6 +1386,12 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
     tags.push(statusTag(r));
     if (r.tier === 3) { tags.push('<span class="tag med">sculpture</span>'); }
     else if (r.tier === 2) { tags.push('<span class="tag">painting/drawing</span>'); }
+    else if (r.medium === "medium unknown" && r.guess) {
+      // A guess, and it looks like one: dashed, and says what it rests on.
+      tags.push('<span class="tag guess" title="A guess from the exhibition ' +
+        'picture by the local model, not the gallery&#39;s own words">looks like ' +
+        esc(r.guess) + "</span>");
+    }
     else if (r.medium === "medium unknown") {
       tags.push('<span class="tag">no description</span>');
     }
@@ -1350,6 +1410,9 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
     if (r.why) {
       out.push('<p class="why"><span class="sr-only">Classified from: ' +
         "</span>" + esc(r.why) + "</p>");
+    } else if (r.guess && r.guess_seen) {
+      out.push('<p class="why">guessed from the picture: ' + esc(r.guess_seen) +
+        "</p>");
     }
     if (r.hours) {
       out.push('<div class="hours" lang="de"><span class="sr-only">' +
@@ -1619,6 +1682,8 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
     lastAnnouncedCount = list.length;
     first = false;
     document.getElementById("reset").hidden = !filtersActive() || here === "both";
+    // The guesses live inside "unclassified", so their row appears with it.
+    document.getElementById("f-guess").hidden = !state.medium.has("medium unknown");
     var warn = document.getElementById("callwarn");
     warn.textContent = warnings.join(" ");
     warn.hidden = here !== "calls" || !warnings.length;

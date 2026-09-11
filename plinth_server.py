@@ -68,8 +68,10 @@ MILESTONES = [
     ("direct:", 46, "Placing venues on the map"),
     ("coordinates:", 50, "Translating German descriptions"),
     ("english:", 60, "Recognising artists"),
-    ("artists:", 64, "Scoring the shows"),
-    ("inventory:", 68, "Open calls: BBK"),
+    ("artists:", 62, "Scoring the shows"),
+    ("scored ", 63, "Looking at exhibition pictures"),
+    ("guesses:", 69, "Updating the inventory"),
+    ("inventory:", 70, "Open calls: BBK"),
     ("bbk:", 72, "Open calls: ArtConnect"),
     ("artconnect:", 80, "Open calls: opencallforartists"),
     ("opencallforartists:", 86, "Checking who may apply"),
@@ -87,6 +89,8 @@ _NEW = re.compile(r"(\d+) new shows?, (\d+) new open calls?")
 COUNTERS = [
     (re.compile(r"translating (\d+) of (\d+)"), 50, 60,
      "Translating German descriptions"),
+    (re.compile(r"looking at pictures (\d+) of (\d+)"), 63, 69,
+     "Guessing unclassified shows from their pictures"),
     (re.compile(r"reading terms (\d+) of (\d+)"), 86, 91,
      "Checking who may apply"),
 ]

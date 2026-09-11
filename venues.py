@@ -25,6 +25,7 @@ import os
 import re
 import sys
 import time
+from urllib.parse import urljoin
 
 import scoring
 import scraper
@@ -201,7 +202,7 @@ def discover_index_berlin(verbose=True):
                  "source": "index-berlin"}
         if href:
             entry["venue_slug"] = href.rstrip("/").rsplit("/", 1)[-1]
-            entry["listing_url"] = "https://www.indexberlin.de" + href
+            entry["listing_url"] = urljoin(scraper.INDEX_BERLIN_URL, href)
         for attr, key in (("data-latitude", "lat"), ("data-longitude", "lng")):
             raw = card.get(attr)
             if raw:

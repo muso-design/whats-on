@@ -78,6 +78,8 @@ def main(argv=None):
                         help="skip reading gallery sites with the local model")
     parser.add_argument("--no-calls", action="store_true",
                         help="skip refreshing open calls")
+    parser.add_argument("--no-guess", action="store_true",
+                        help="skip guessing unclassified shows from their pictures")
     parser.add_argument("--no-build", action="store_true",
                         help="update the inventory but do not rebuild the page")
     parser.add_argument("--state", default=state_mod.STATE_PATH)
@@ -101,6 +103,13 @@ def main(argv=None):
                     translate=not args.no_translate,
                     geocode=not args.no_geocode,
                     artists=not args.no_artists)
+
+    if not args.no_guess:
+        # Over the whole inventory, not just this run's scrape: a show no
+        # source listed today is still on, and still unclassified.
+        import guess
+        guess.enrich(list(st["events"].values()),
+                     allow_network=not args.from_file)
 
     removed = state_mod.prune(st)
     state_mod.save(st, args.state)
