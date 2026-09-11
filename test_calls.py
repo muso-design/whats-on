@@ -68,7 +68,9 @@ _record = {"title": "Residency", "deadline": "2026-10-01T00:00:00Z",
 _listing = {"data": [_record], "entries": 1, "pages": 1, "total": 1}
 _old = ('<script id="__NEXT_DATA__" type="application/json">%s</script>'
         % json.dumps({"props": {"pageProps": {"opportunities": _listing}}}))
-_stream = '5:["$","div",null,{"opportunities":' + json.dumps(_listing) + "}]"
+# Compact, the way the site writes it.
+_stream = ('5:["$","div",null,{"opportunities":'
+           + json.dumps(_listing, separators=(",", ":")) + "}]")
 _half = len(_stream) // 2
 _new = "".join("<script>self.__next_f.push([1,%s])</script>" % json.dumps(part)
                for part in (_stream[:_half], _stream[_half:]))

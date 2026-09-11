@@ -246,7 +246,7 @@ _NEXT_DATA = re.compile(
 # Next.js app-router pages stream their data as JavaScript string literals
 # inside self.__next_f.push([1, "..."]) calls rather than one JSON block.
 _RSC_CHUNK = re.compile(r'self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)', re.S)
-_RSC_LISTING = re.compile(r'\{"data":\[')
+_RSC_LISTING = re.compile(r'\{\s*"data"\s*:\s*\[')
 
 
 def _artconnect_payload(html):
