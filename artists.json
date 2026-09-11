@@ -1479,6 +1479,13 @@
   ],
   "qid": "Q664257"
  },
+ "Emily Gernild": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q113623889"
+ },
  "Erik Schmidt": {
   "medium": "painting",
   "occupations": [
@@ -3080,6 +3087,7 @@
   ],
   "qid": "Q23565347"
  },
+ "Katia Mossina": null,
  "Katja Enders-Plate": null,
  "Kaya Pilsner": null,
  "Kayleigh Ho": null,
@@ -3431,6 +3439,7 @@
   "qid": "Q15451809"
  },
  "Lotta Beckers": null,
+ "Lottie Stephens": null,
  "Louis Wessendorff": null,
  "Louisa Clement": {
   "medium": "sculpture",
@@ -3450,6 +3459,13 @@
    "artist"
   ],
   "qid": "Q97482631"
+ },
+ "Lu Yang": {
+  "medium": "other art",
+  "occupations": [
+   "film director"
+  ],
+  "qid": "Q17582350"
  },
  "Lucia Tallová": {
   "medium": "painting",
@@ -3489,6 +3505,7 @@
   "qid": "Q95330878"
  },
  "Lutz Marx": null,
+ "Luzie Kork": null,
  "Lynn Hershman Leeson": {
   "medium": "sculpture",
   "occupations": [
@@ -3889,6 +3906,7 @@
  "Matthias Dornfeld": null,
  "Matthias Groebel": null,
  "Matthias Hesselbacher": null,
+ "Maureen Jeram": null,
  "Maurizio Cattelan": {
   "medium": "sculpture",
   "occupations": [
@@ -4484,6 +4502,7 @@
   ],
   "qid": "Q6574272"
  },
+ "Panmela Castro": null,
  "Paola Pivi": {
   "medium": "sculpture",
   "occupations": [
@@ -5898,6 +5917,7 @@
  "Xenia Fourmanov": null,
  "Xie Lei": null,
  "Xuejing Wang": null,
+ "Ya-Wen Fu": null,
  "Yadegar Asisi": {
   "medium": "other art",
   "occupations": [
