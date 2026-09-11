@@ -15,7 +15,15 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|020a9a98e8797bfd": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|02cd481e2e8f0c29": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|02ea56a75bcb41be": [
   false,
   []
  ],
@@ -47,6 +55,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|067345aaec530682": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|069391fe8e421360": [
   false,
   []
@@ -60,6 +72,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|07c7c22b0431ffa4": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|07d142a53aa34edb": [
   false,
   []
  ],
@@ -94,6 +110,10 @@
   [
    "United States"
   ]
+ ],
+ "qwen2.5-coder:7b|eligibility.2|0a83661d772d475f": [
+  false,
+  []
  ],
  "qwen2.5-coder:7b|eligibility.2|0a98cd7894303258": [
   false,
@@ -267,6 +287,18 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|1cd72e3319153a0c": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|1ce259c047c207aa": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|1cf66b19b03f3113": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|1d77d5b253f8893f": [
   false,
   []
@@ -302,6 +334,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|237dedbd200fa249": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|23d2ebbd1d2b03cc": [
   false,
   []
  ],
@@ -343,11 +379,19 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|2af8e80ebc6e8efc": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|2b0af93fb82a21a3": [
   false,
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|2bf60338a5f9ea4f": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|2e38077b73ef86a1": [
   false,
   []
  ],
@@ -373,11 +417,23 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|32a96a7372906d10": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|336e794743b1557a": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|33e617502526c0b7": [
   false,
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|33f64085645f1631": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|342e67ddd766bb43": [
   false,
   []
  ],
@@ -390,6 +446,14 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|38729c153e8d202f": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|39217ee360e7b4af": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|3a69ca5c28f4693d": [
   false,
   []
  ],
@@ -406,6 +470,14 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|3dd3e4d57736a8d0": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|3e16d6300e090e56": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|3e35db894011f270": [
   false,
   []
  ],
@@ -526,6 +598,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|4fd5da98f06230a8": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|501301c90010262d": [
   true,
   [
@@ -541,6 +617,14 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|527e56ca868ae970": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|52e02f44a11212cc": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|52fb9ae82524d35e": [
   false,
   []
  ],
@@ -569,6 +653,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|58a6df5a2edb9f39": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|58f7dd5fafc8fa43": [
   false,
   []
  ],
@@ -607,11 +695,19 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|5e37c83fd0203592": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|5e4e7174e747fa2d": [
   false,
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|5e8f331dc4ac0675": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|5eecddfc6ed31a6f": [
   false,
   []
  ],
@@ -645,6 +741,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|607dcbf8c8a3e5bd": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|60ebcdd7f02f6130": [
   false,
   []
@@ -669,6 +769,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|641f60c15e07f546": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|642c8afd0a32b557": [
   false,
   []
@@ -687,7 +791,19 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|66cc83cfb3490c21": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|66f5a74d521ad74d": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|68e77a24cb212413": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|6a841188a4bdf223": [
   false,
   []
  ],
@@ -773,7 +889,19 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|74b86194a356da8a": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|74e05fc4956e88df": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|752a05b090a42860": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|75502a4d649c5008": [
   false,
   []
  ],
@@ -796,6 +924,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|7ab193f39eeec6da": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|7b58537eb6944cd6": [
   false,
   []
  ],
@@ -911,6 +1043,10 @@
    "Sint Maarten"
   ]
  ],
+ "qwen2.5-coder:7b|eligibility.2|8bfd9f60f8f0ebbc": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|8cd081390a028e4c": [
   false,
   []
@@ -923,6 +1059,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|8d4b3f5edaa98c4d": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|8df1f08de3332aed": [
   false,
   []
@@ -931,7 +1071,23 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|8eafb4aec0bf5e9c": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|8f3288eae97fabff": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|9032a8f02b0462c2": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|90796d7fc1d780eb": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|90dc7b0bc8206ecf": [
   false,
   []
  ],
@@ -956,6 +1112,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|941afbee0c9f418b": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|9514232d89669c76": [
   false,
   []
  ],
@@ -1038,6 +1198,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|9df7a133e0922b81": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|a0a33e4643b4a8f0": [
   false,
   []
@@ -1094,6 +1258,22 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|ac3e87b9b9b45b3d": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|ac6e2c8f9763eaf4": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|ac72130679dcebed": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|aca8e75fb75e7f9c": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|aeac904250959acc": [
   true,
   [
@@ -1109,6 +1289,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|afd0a92d5410db2e": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|b054654c05ceb6b9": [
   false,
   []
  ],
@@ -1150,6 +1334,10 @@
    "Zambia"
   ]
  ],
+ "qwen2.5-coder:7b|eligibility.2|b16575e20262e0e8": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|b16b4604cc8c2e39": [
   false,
   []
@@ -1157,6 +1345,12 @@
  "qwen2.5-coder:7b|eligibility.2|b195e063add4c938": [
   false,
   []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|b1aabcdc847f219f": [
+  true,
+  [
+   "US"
+  ]
  ],
  "qwen2.5-coder:7b|eligibility.2|b1ab4c6ff25c0cbc": [
   false,
@@ -1242,6 +1436,12 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|be03f3b54f414236": [
+  true,
+  [
+   "United States"
+  ]
+ ],
  "qwen2.5-coder:7b|eligibility.2|be13e6a5669dfeec": [
   true,
   [
@@ -1253,6 +1453,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|bf35c8f04413541b": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|bf7d565031feec5e": [
   false,
   []
  ],
@@ -1291,6 +1495,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|c526b706bd9d5509": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|c56c7e63859d2ce6": [
   false,
   []
@@ -1326,6 +1534,10 @@
   ]
  ],
  "qwen2.5-coder:7b|eligibility.2|ccecc3c1e321e4dd": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|ce710c29737a512a": [
   false,
   []
  ],
@@ -1373,6 +1585,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|d5326a4b55ecec5e": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|d654eeb852e6a8bf": [
   true,
   [
@@ -1391,6 +1607,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|d7679360aae86177": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|d7b5c9054797dae4": [
   false,
   []
  ],
@@ -1531,6 +1751,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|e83f1ffe5dbe9c57": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|e9c7461cdba9aacc": [
   false,
   []
@@ -1609,6 +1833,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|f3ab8085111227ac": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|f3c9c4f447139bfb": [
   false,
   []
@@ -1629,11 +1857,23 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|f74df051815e00f8": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|f760fec5cbdc5be0": [
   false,
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|f9d5090bc602c42c": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|fb11a5f6d2b3e1eb": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|fbe5f074cb5e8352": [
   false,
   []
  ],
@@ -1658,6 +1898,10 @@
   [
    "Iceland"
   ]
+ ],
+ "qwen2.5-coder:7b|eligibility.2|ff406c2d088a52be": [
+  false,
+  []
  ],
  "qwen2.5-coder:7b|eligibility.2|ffd2116e25aa54b6": [
   false,
@@ -2074,6 +2318,72 @@
   }
  ],
  "qwen2.5-coder:7b|exhibitions|6a8ee301511c7837": [],
+ "qwen2.5-coder:7b|exhibitions|723645746647b819": [
+  {
+   "artist": "Juliane Jaschnow",
+   "city": null,
+   "end": "2026-02-22",
+   "opening": null,
+   "start": "2025-09-19",
+   "title": "Anstiftung zur Vorspiegelung wahrer Tatsachen"
+  },
+  {
+   "artist": "Juliane Jaschnow & Stefanie Schroeder",
+   "city": null,
+   "end": "2025-06-30",
+   "opening": null,
+   "start": "2025-05-16",
+   "title": "Trilogie"
+  },
+  {
+   "artist": "Juliane Jaschnow & Stefanie Schroeder",
+   "city": null,
+   "end": "2025-01-12",
+   "opening": null,
+   "start": "2025-01-03",
+   "title": "Endlager"
+  },
+  {
+   "artist": "Juliane Jaschnow & Stefanie Schroeder",
+   "city": null,
+   "end": "2025-02-15",
+   "opening": null,
+   "start": "2024-12-30",
+   "title": "13 Versuche, die Luft anzuhalten"
+  },
+  {
+   "artist": "FILZ",
+   "city": null,
+   "end": "2024-11-02",
+   "opening": null,
+   "start": "2024-10-03",
+   "title": "FILZ entwickelt neues Kollektivfilmvorhaben"
+  },
+  {
+   "artist": "Shelly Silver",
+   "city": null,
+   "end": "2024-11-02",
+   "opening": null,
+   "start": "2024-09-22",
+   "title": "Former East/Former West"
+  },
+  {
+   "artist": "FILZ",
+   "city": null,
+   "end": "2024-10-14",
+   "opening": null,
+   "start": "2024-10-11",
+   "title": "LETsDOK"
+  },
+  {
+   "artist": "Juliane Jaschnow & Stefanie Schroeder",
+   "city": null,
+   "end": "2024-08-14",
+   "opening": null,
+   "start": "2024-07-15",
+   "title": "Wir waren Kumpel"
+  }
+ ],
  "qwen2.5-coder:7b|exhibitions|9cd621fd85ba03c3": [
   {
    "artist": "Wanda Stolle",

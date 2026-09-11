@@ -5125,6 +5125,16 @@
   ],
   "qid": "Q6149438"
  },
+ "Shelly Silver": {
+  "medium": "sculpture",
+  "occupations": [
+   "film director",
+   "installation artist",
+   "photographer",
+   "video artist"
+  ],
+  "qid": "Q7493916"
+ },
  "Shilpa Gupta": {
   "medium": "sculpture",
   "occupations": [
@@ -5282,6 +5292,13 @@
    "video artist"
   ],
   "qid": "Q96160"
+ },
+ "Stefanie Schroeder": {
+  "medium": "other art",
+  "occupations": [
+   "photographer"
+  ],
+  "qid": "Q95653186"
  },
  "Stelios Kallinikou": null,
  "Stella Geppert": {
