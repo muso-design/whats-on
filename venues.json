@@ -15,6 +15,7 @@
   51.3178903,
   12.3260135
  ],
+ "aquabitart galerie|berlin": null,
  "artae galerie|leipzig": [
   51.3577357,
   12.3675416
@@ -57,6 +58,18 @@
   51.3225121,
   12.3950247
  ],
+ "dittrich schlechtriem|berlin": [
+  52.5275772,
+  13.4123117
+ ],
+ "dorothee nilsson gallery|berlin": [
+  52.5035288,
+  13.3663999
+ ],
+ "ebensperger|berlin": [
+  52.5278334,
+  13.3386209
+ ],
  "fixotek|berlin": [
   52.4941049,
   13.4463743
@@ -65,20 +78,34 @@
   51.3403418,
   12.370894
  ],
+ "galerie brockstedt|berlin": [
+  52.5030628,
+  13.3144862
+ ],
  "galerie creative game|berlin": [
   52.4258272,
   13.3292847
  ],
+ "galerie deschler|berlin": [
+  52.527252,
+  13.3976475
+ ],
+ "galerie dittmar|berlin": null,
  "galerie feinart berlin|berlin": null,
  "galerie fur zeitgenossische kunst|leipzig": [
   51.3341475,
   12.3661363
  ],
+ "galerie gilla lorcher|berlin": null,
  "galerie im neuen augusteum|leipzig": [
   51.3390493,
   12.3792024
  ],
  "galerie intershop|leipzig": null,
+ "galerie judin|berlin": [
+  52.5018484,
+  13.3659996
+ ],
  "galerie kk5|leipzig": [
   51.3414133,
   12.3682983
@@ -91,7 +118,15 @@
   13.3111978
  ],
  "galerie sievi|berlin": null,
+ "galerie thomas fischer|berlin": [
+  52.527568,
+  13.4050264
+ ],
  "galerie z22|berlin": null,
+ "gallery gudmundsdottir|berlin": [
+  52.5280088,
+  13.4004028
+ ],
  "gedok en passant galerie im haus des buches|leipzig": [
   51.3346543,
   12.3923902
@@ -104,7 +139,19 @@
   51.3371371,
   12.3880849
  ],
+ "gropius bau|berlin": [
+  52.5066209,
+  13.3819472
+ ],
  "halle 14|leipzig": null,
+ "hamburger bahnhof|berlin": [
+  52.52844,
+  13.3720386
+ ],
+ "haus am lutzowplatz|berlin": [
+  52.5043546,
+  13.3535546
+ ],
  "hochdruckpartner galerie werkstatt|leipzig": [
   51.334035,
   12.3260954
@@ -115,6 +162,7 @@
  ],
  "hosek contemporary|berlin": null,
  "hvb kunstraum leipzig|leipzig": null,
+ "jarmuschek partner|berlin": null,
  "karl schmidt rottluff haus kunstsammlungen chemnitz|chemnitz": [
   50.8350609,
   12.8483205
@@ -122,6 +170,10 @@
  "kristin hjellegjerde gallery berlin|berlin": [
   52.5012439,
   13.3660798
+ ],
+ "kuckei kuckei|berlin": [
+  52.5277836,
+  13.3944783
  ],
  "kunsthalle der sparkasse leipzig|leipzig": [
   51.338461,
@@ -159,7 +211,24 @@
   51.3291145,
   12.3436588
  ],
+ "neue nationalgalerie|berlin": [
+  52.5070408,
+  13.3676212
+ ],
+ "neugerriemschneider christinenstrasse|berlin": null,
+ "ngbk|berlin": [
+  52.5218517,
+  13.4076304
+ ],
+ "nina horvitz galerie|berlin": [
+  52.5058293,
+  13.2969465
+ ],
  "oqbo|berlin": null,
+ "palaispopulaire|berlin": [
+  52.5171465,
+  13.3961451
+ ],
  "panometer leipzig|leipzig": [
   51.3142498,
   12.3867879
@@ -180,6 +249,7 @@
   51.3423405,
   12.3783455
  ],
+ "robert morat galerie|berlin": null,
  "sammlung leipziger hof|leipzig": [
   51.3462195,
   12.4030007
@@ -192,7 +262,15 @@
   52.5301201,
   13.3925214
  ],
+ "sexauer gallery|berlin": [
+  52.5510653,
+  13.4388651
+ ],
  "skulpturengarten des kuk gohlis|leipzig": null,
+ "societe|berlin": [
+  52.5000772,
+  13.3151389
+ ],
  "tapetenwerk leipzig halle c 01|leipzig": [
   51.3338486,
   12.3258532
@@ -200,6 +278,10 @@
  "tapetenwerk|leipzig": [
   51.3338486,
   12.3258532
+ ],
+ "taubert contemporary|berlin": [
+  52.5081475,
+  13.3230636
  ],
  "universitatsklinikum leipzig|leipzig": null,
  "untergeschoss 14|leipzig": [

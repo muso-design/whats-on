@@ -169,6 +169,7 @@
   "qid": "Q523915"
  },
  "Alice Dittmar": null,
+ "Alice Peach": null,
  "Alicja Kwade": {
   "medium": "sculpture",
   "occupations": [
@@ -186,6 +187,7 @@
   ],
   "qid": "Q123097333"
  },
+ "Alina Schmuch": null,
  "Aline Baiana": null,
  "Aline Bouvy": {
   "medium": "painting",
@@ -237,6 +239,8 @@
   ],
   "qid": "Q86741190"
  },
+ "Amélie Esterházy": null,
+ "Ana Hoffner ex-Prvulovic*": null,
  "Ana Hupe": null,
  "Ana María Millán": null,
  "Anastasia Shivrina": null,
@@ -281,6 +285,7 @@
   ],
   "qid": "Q497362"
  },
+ "Andreas Gysin": null,
  "Andreas Slominski": {
   "medium": "painting",
   "occupations": [
@@ -392,6 +397,13 @@
   ],
   "qid": "Q95205785"
  },
+ "Anne Neukamp": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q115707577"
+ },
  "Annemirl Bauer": {
   "medium": "painting",
   "occupations": [
@@ -412,6 +424,21 @@
   ],
   "qid": "Q15433183"
  },
+ "Annette Selle": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q117425678"
+ },
+ "Anselm Reyle": {
+  "medium": "sculpture",
+  "occupations": [
+   "installation artist",
+   "painter"
+  ],
+  "qid": "Q328018"
+ },
  "Anselmo Fox": {
   "medium": "sculpture",
   "occupations": [
@@ -419,6 +446,7 @@
   ],
   "qid": "Q23900970"
  },
+ "Antje Blumenstein": null,
  "Antje Majewski": {
   "medium": "painting",
   "occupations": [
@@ -439,6 +467,14 @@
  },
  "Anton Kolomieitsev": null,
  "Anton Steenbock": null,
+ "Antonia Wright": {
+  "medium": "sculpture",
+  "occupations": [
+   "installation artist",
+   "video artist"
+  ],
+  "qid": "Q24005425"
+ },
  "Aram Bartholl": {
   "medium": "sculpture",
   "occupations": [
@@ -459,6 +495,7 @@
   ],
   "qid": "Q4790091"
  },
+ "Arijit Bhattacharyya": null,
  "Arinjoy Sen": null,
  "Arno Rink": {
   "medium": "painting",
@@ -520,6 +557,13 @@
  "Aubrey Levinthal": null,
  "Austin Alphonse": null,
  "Austin Martin White": null,
+ "Axel Geis": {
+  "medium": "other art",
+  "occupations": [
+   "visual artist"
+  ],
+  "qid": "Q99389934"
+ },
  "Axel Wunsch": {
   "medium": "sculpture",
   "occupations": [
@@ -602,6 +646,7 @@
   "qid": "Q813152"
  },
  "Beatrice Marchi": null,
+ "Belia Brückner": null,
  "Belle Santos": null,
  "Ben Cottrell": {
   "medium": "sculpture",
@@ -634,6 +679,7 @@
   ],
   "qid": "Q132235347"
  },
+ "Bernardo Liu": null,
  "Bernd Bankroth": {
   "medium": "sculpture",
   "occupations": [
@@ -659,7 +705,46 @@
   ],
   "qid": "Q97495"
  },
+ "Bernhard Martin": {
+  "medium": "sculpture",
+  "occupations": [
+   "draftsperson",
+   "installation artist",
+   "painter"
+  ],
+  "qid": "Q825603"
+ },
  "Bernhard Schipper": null,
+ "Berta Fischer": {
+  "medium": "sculpture",
+  "occupations": [
+   "painter",
+   "sculptor",
+   "visual artist"
+  ],
+  "qid": "Q99394805"
+ },
+ "Bethan Huws": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "installation artist",
+   "photographer",
+   "sculptor",
+   "video artist"
+  ],
+  "qid": "Q531350"
+ },
+ "Bettina Allamoda": {
+  "medium": "sculpture",
+  "occupations": [
+   "installation artist",
+   "performance artist",
+   "video artist",
+   "visual artist"
+  ],
+  "qid": "Q94367043"
+ },
  "Billy Childish": {
   "medium": "painting",
   "occupations": [
@@ -770,6 +855,13 @@
   "qid": "Q1041683"
  },
  "Carlo Leopold Broschewitz": null,
+ "Caro Jost": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q1044132"
+ },
  "Carola Lampe": null,
  "Carolin Israel": null,
  "Carolina Pérez Pallares": {
@@ -779,6 +871,7 @@
   ],
   "qid": "Q129406998"
  },
+ "Caroline Douville": null,
  "Caroline Kober": {
   "medium": "painting",
   "occupations": [
@@ -877,6 +970,13 @@
   ],
   "qid": "Q29422034"
  },
+ "Charlotte E. Pauly": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q1067170"
+ },
  "Charlotte Elfriede Pauly": null,
  "Charlotte Hiltmann": null,
  "Charlotte Posenenske": {
@@ -964,6 +1064,7 @@
   ],
   "qid": "Q105026364"
  },
+ "Cihangir Guemuestuerkmen": null,
  "Claire de Santa Coloma": null,
  "Clara Brörmann": null,
  "Claudia Hauptmann": {
@@ -1015,6 +1116,7 @@
  },
  "Cornelia Aichinger": null,
  "Cristos Gionakos": null,
+ "Curio Fringe": null,
  "Cécile Bukumba Mumamba": null,
  "Dagmar Ranft-Schinke": {
   "medium": "painting",
@@ -1045,6 +1147,16 @@
   ],
   "qid": "Q61409421"
  },
+ "Daniel Kannenberg": null,
+ "Daniel Mohr": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q131823306"
+ },
+ "Danilo Xhema": null,
+ "Dante Buu": null,
  "Daria Syvakos": null,
  "Darko Lesjak": {
   "medium": "painting",
@@ -1112,6 +1224,7 @@
   ],
   "qid": "Q55235746"
  },
+ "David Schiesser": null,
  "David Zink Yi": {
   "medium": "other art",
   "occupations": [
@@ -1163,8 +1276,26 @@
   "qid": "Q15432791"
  },
  "Dior Thiam": null,
+ "Dirk Bell": {
+  "medium": "sculpture",
+  "occupations": [
+   "draftsperson",
+   "installation artist",
+   "painter",
+   "sculptor"
+  ],
+  "qid": "Q77348238"
+ },
  "Dome Wood": null,
  "Dominik Eggermann": null,
+ "Dora Budor": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "sculptor"
+  ],
+  "qid": "Q28967668"
+ },
  "Dorian Sari": {
   "medium": "other art",
   "occupations": [
@@ -1183,6 +1314,14 @@
  "Dorothee Diebold": null,
  "Dorothee Eleonore Wenzel": null,
  "Dorothy Iannone": null,
+ "Eckhard Böttger": {
+  "medium": "painting",
+  "occupations": [
+   "artist",
+   "painter"
+  ],
+  "qid": "Q108813554"
+ },
  "Ed Davenport": null,
  "Ed Ruscha": {
   "medium": "sculpture",
@@ -1394,6 +1533,7 @@
   ],
   "qid": "Q85099135"
  },
+ "Evan Jose": null,
  "Evan Roth": {
   "medium": "other art",
   "occupations": [
@@ -1459,6 +1599,15 @@
  "Francisco González-Rosas": null,
  "Frank Jimin Hopp": null,
  "Frank Mühlfriedel": null,
+ "Frank Nitsche": {
+  "medium": "sculpture",
+  "occupations": [
+   "draftsperson",
+   "painter",
+   "sculptor"
+  ],
+  "qid": "Q1443855"
+ },
  "Franz West": null,
  "Franziska Holstein": {
   "medium": "painting",
@@ -1474,6 +1623,13 @@
    "artist"
   ],
   "qid": "Q95192507"
+ },
+ "Franziska Klotz": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q1403273"
  },
  "François Briand": null,
  "François Morellet": {
@@ -1556,6 +1712,7 @@
   ],
   "qid": "Q529593"
  },
+ "Gabi Dziuba": null,
  "Gabriel Orozco": {
   "medium": "sculpture",
   "occupations": [
@@ -1590,6 +1747,14 @@
    "video artist"
   ],
   "qid": "Q1490602"
+ },
+ "Gala Porras-Kim": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "sculptor"
+  ],
+  "qid": "Q62056469"
  },
  "Geerten Verheus": {
   "medium": "other art",
@@ -1648,6 +1813,14 @@
    "visual artist"
   ],
   "qid": "Q164351"
+ },
+ "Gert Pötzschig": {
+  "medium": "painting",
+  "occupations": [
+   "painter",
+   "printmaker"
+  ],
+  "qid": "Q101848197"
  },
  "Gervane de Paula": {
   "medium": "painting",
@@ -1786,6 +1959,15 @@
   ],
   "qid": "Q1559872"
  },
+ "Günter Horn": {
+  "medium": "painting",
+  "occupations": [
+   "artist",
+   "graphic artist",
+   "painter"
+  ],
+  "qid": "Q1560609"
+ },
  "Günter Umberg": {
   "medium": "painting",
   "occupations": [
@@ -1893,6 +2075,7 @@
   ],
   "qid": "Q213703"
  },
+ "Hans Krestel": null,
  "Hans Ticha": {
   "medium": "painting",
   "occupations": [
@@ -1920,6 +2103,7 @@
   ],
   "qid": "Q471419"
  },
+ "Hansa Wißkirchen": null,
  "Harald Krainer": {
   "medium": "other art",
   "occupations": [
@@ -2049,6 +2233,13 @@
   ],
   "qid": "Q57395"
  },
+ "Henning Strassburger": {
+  "medium": "other art",
+  "occupations": [
+   "artist"
+  ],
+  "qid": "Q66460478"
+ },
  "Henrik Håkansson": {
   "medium": "sculpture",
   "occupations": [
@@ -2131,6 +2322,7 @@
   ],
   "qid": "Q98366"
  },
+ "Holger Liebs": null,
  "Horst Bartnig": {
   "medium": "sculpture",
   "occupations": [
@@ -2143,6 +2335,7 @@
  "Huddie Hamper": null,
  "Hugo Muhlig": null,
  "Hyejeong Yun": null,
+ "Hélène Yamba-Guimbi": null,
  "Hülya Karci": null,
  "Ian Waelder": null,
  "Ian Wilson": {
@@ -2239,6 +2432,17 @@
    "visual artist"
   ],
   "qid": "Q462325"
+ },
+ "Isa Melsheimer": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "installation artist",
+   "painter",
+   "sculptor",
+   "visual artist"
+  ],
+  "qid": "Q22237144"
  },
  "Isaac Chong Wai": {
   "medium": "other art",
@@ -2395,6 +2599,7 @@
  "Jelena Bulajic": null,
  "Jelena Fužinato": null,
  "Jen Tiger": null,
+ "Jennifer Oellerich": null,
  "Jenny Saville": {
   "medium": "painting",
   "occupations": [
@@ -2479,6 +2684,16 @@
  },
  "Jimmy Durham": null,
  "Jo Anneke Mueckel": null,
+ "Joachim Lenz": null,
+ "Joachim Scholz": {
+  "medium": "painting",
+  "occupations": [
+   "artist",
+   "painter",
+   "photographer"
+  ],
+  "qid": "Q94892980"
+ },
  "Jochen Becker": null,
  "Jochen Hass": {
   "medium": "other art",
@@ -2496,6 +2711,8 @@
  },
  "Joe Neave": null,
  "Johanna Petersen": null,
+ "Johanna Silbermann": null,
+ "Johannes Albers": null,
  "Johannes Bosisio": null,
  "Johannes Bünemann": null,
  "Johannes Eggers": null,
@@ -2550,12 +2767,23 @@
   "qid": "Q1281182"
  },
  "Jonathan Sullam": null,
+ "Jorge Loureiro": null,
  "Jorge Queiroz": {
   "medium": "other art",
   "occupations": [
    "visual artist"
   ],
   "qid": "Q99493673"
+ },
+ "Jos Näpflin": {
+  "medium": "sculpture",
+  "occupations": [
+   "painter",
+   "photographer",
+   "sculptor",
+   "video artist"
+  ],
+  "qid": "Q85100715"
  },
  "Josef Albers": {
   "medium": "sculpture",
@@ -2667,6 +2895,7 @@
   ],
   "qid": "Q55219965"
  },
+ "Julian Krause": null,
  "Julian Röder": {
   "medium": "other art",
   "occupations": [
@@ -2693,6 +2922,7 @@
   ],
   "qid": "Q447568"
  },
+ "Julien Discrit": null,
  "Julien Heintz": null,
  "Julita Wójcik": {
   "medium": "sculpture",
@@ -2835,6 +3065,7 @@
  "Katarzyna Sienkiewicz": null,
  "Kate Mosher Hall": null,
  "Katharina Immekus": null,
+ "Katharina Koppenwallner": null,
  "Katharina Sieverding": {
   "medium": "other art",
   "occupations": [
@@ -2895,6 +3126,7 @@
   "qid": "Q99391982"
  },
  "Ketuta Alexi-Meskhishvili": null,
+ "Kevin Lowenthal": null,
  "Kiki Smith": {
   "medium": "sculpture",
   "occupations": [
@@ -2922,6 +3154,7 @@
   ],
   "qid": "Q131382582"
  },
+ "Kirsten Landwehr": null,
  "Kirsten Ortwed": {
   "medium": "sculpture",
   "occupations": [
@@ -2930,6 +3163,13 @@
    "sculptor"
   ],
   "qid": "Q4989422"
+ },
+ "Klaus Merkel": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q1745433"
  },
  "Klaus Rinke": {
   "medium": "sculpture",
@@ -2943,6 +3183,14 @@
    "visual artist"
   ],
   "qid": "Q830712"
+ },
+ "Klaus-Dieter Kerwitz": {
+  "medium": "painting",
+  "occupations": [
+   "graphic artist",
+   "painter"
+  ],
+  "qid": "Q125904935"
  },
  "Koel Sen": null,
  "Kofi Boamah": null,
@@ -3004,6 +3252,13 @@
  },
  "Lara Koch": null,
  "Lara Meise": null,
+ "Lars Teichmann": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q24232460"
+ },
  "Laura Langer": null,
  "Lauren Greenfield": {
   "medium": "other art",
@@ -3041,6 +3296,14 @@
    "sculptor"
   ],
   "qid": "Q43127000"
+ },
+ "Lee Mullican": {
+  "medium": "painting",
+  "occupations": [
+   "painter",
+   "printmaker"
+  ],
+  "qid": "Q6514618"
  },
  "Lee Ufan": {
   "medium": "sculpture",
@@ -3082,6 +3345,7 @@
   "qid": "Q6523529"
  },
  "Leon Kahane": null,
+ "Leon Leube": null,
  "Leon Tarasewicz": {
   "medium": "painting",
   "occupations": [
@@ -3132,6 +3396,13 @@
  },
  "Lisa Götze": null,
  "Lisa Jo": null,
+ "Lisa Junghanß": {
+  "medium": "other art",
+  "occupations": [
+   "visual artist"
+  ],
+  "qid": "Q99383900"
+ },
  "Lisa Seebach": null,
  "Lisa Tiemann": null,
  "Lola Szlupowicz (Vrogini)": null,
@@ -3143,6 +3414,21 @@
    "visual artist"
   ],
   "qid": "Q55265392"
+ },
+ "Lorna Mills": {
+  "medium": "other art",
+  "occupations": [
+   "multimedia artist"
+  ],
+  "qid": "Q17612584"
+ },
+ "Lothar Hempel": {
+  "medium": "painting",
+  "occupations": [
+   "artist",
+   "draftsperson"
+  ],
+  "qid": "Q15451809"
  },
  "Lotta Beckers": null,
  "Louis Wessendorff": null,
@@ -3269,6 +3555,13 @@
  },
  "Malin Kuht": null,
  "Malin Sauermann": null,
+ "Malwine Stauss": {
+  "medium": "painting",
+  "occupations": [
+   "illustrator"
+  ],
+  "qid": "Q138969357"
+ },
  "Mamma Andersson": null,
  "Manauara Clandestina": null,
  "Mandy Gehrt": null,
@@ -3356,6 +3649,7 @@
   ],
   "qid": "Q1895806"
  },
+ "Maria Hummer": null,
  "Maria Lisogorskaya": null,
  "Maria Loboda": {
   "medium": "sculpture",
@@ -3366,6 +3660,7 @@
   ],
   "qid": "Q55236172"
  },
+ "Maria Nitulescu": null,
  "Maria Thereza Alves": {
   "medium": "sculpture",
   "occupations": [
@@ -3375,6 +3670,7 @@
   ],
   "qid": "Q3847574"
  },
+ "Maria Volokhova": null,
  "Mariana Alcantara": null,
  "Mariana Vassileva": {
   "medium": "sculpture",
@@ -3471,6 +3767,14 @@
   ],
   "qid": "Q1900022"
  },
+ "Markus Linnenbrink": {
+  "medium": "painting",
+  "occupations": [
+   "artist",
+   "painter"
+  ],
+  "qid": "Q43133415"
+ },
  "Markus Sixay": {
   "medium": "other art",
   "occupations": [
@@ -3500,6 +3804,15 @@
    "visual artist"
   ],
   "qid": "Q1385567"
+ },
+ "Martin Eder": {
+  "medium": "painting",
+  "occupations": [
+   "draftsperson",
+   "painter",
+   "performance artist"
+  ],
+  "qid": "Q1361749"
  },
  "Martin Groß": null,
  "Martin Margiela": {
@@ -3550,6 +3863,7 @@
   ],
   "qid": "Q339892"
  },
+ "Mathias Gramoso": null,
  "Mathias Poledna": {
   "medium": "sculpture",
   "occupations": [
@@ -3559,7 +3873,21 @@
   "qid": "Q1908532"
  },
  "Matt Browning": null,
+ "Matthias Bitzer": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "draftsperson",
+   "illustrator",
+   "installation artist",
+   "painter",
+   "sculptor",
+   "visual artist"
+  ],
+  "qid": "Q43373173"
+ },
  "Matthias Dornfeld": null,
+ "Matthias Groebel": null,
  "Matthias Hesselbacher": null,
  "Maurizio Cattelan": {
   "medium": "sculpture",
@@ -3621,6 +3949,21 @@
   ],
   "qid": "Q95340568"
  },
+ "Michael Kunze": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q1928329"
+ },
+ "Michael Laube": {
+  "medium": "painting",
+  "occupations": [
+   "conceptual artist",
+   "painter"
+  ],
+  "qid": "Q1928387"
+ },
  "Michael Morgner": {
   "medium": "sculpture",
   "occupations": [
@@ -3633,6 +3976,7 @@
   "qid": "Q1928641"
  },
  "Michael Mutschler": null,
+ "Michael Rohrbeck": null,
  "Michael Sailstorfer": {
   "medium": "sculpture",
   "occupations": [
@@ -3653,6 +3997,14 @@
   "qid": "Q1555341"
  },
  "Michael Weiß": null,
+ "Michael Zschocher": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q109750547"
+ },
+ "Michaela Zimmer": null,
  "Michał Budny": {
   "medium": "sculpture",
   "occupations": [
@@ -3754,6 +4106,13 @@
   ],
   "qid": "Q77353829"
  },
+ "Mona Breede": {
+  "medium": "other art",
+  "occupations": [
+   "photographer"
+  ],
+  "qid": "Q1943918"
+ },
  "Mona Broschár": {
   "medium": "painting",
   "occupations": [
@@ -3783,6 +4142,15 @@
   "qid": "Q134711265"
  },
  "Mooni Perry": null,
+ "Morag Keil": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "installation artist",
+   "painter"
+  ],
+  "qid": "Q39800899"
+ },
  "Moritz Götze": {
   "medium": "painting",
   "occupations": [
@@ -3918,6 +4286,7 @@
  },
  "Niina Lehtonen Braun": null,
  "Nika Kutateladze": null,
+ "Niklas Taleb": null,
  "Niloufar Emamifar": null,
  "Nina Hartmann": {
   "medium": "other art",
@@ -3944,7 +4313,9 @@
   ],
   "qid": "Q99517077"
  },
+ "No Hygiene": null,
  "Noa Yekutieli": null,
+ "Noah Barker": null,
  "Noi Fuhrer": null,
  "Nomin Zezegmaa": null,
  "Noor Abuarafeh": {
@@ -4024,6 +4395,15 @@
   "qid": "Q2019803"
  },
  "Oliver Coran": null,
+ "Oliver Mark": {
+  "medium": "other art",
+  "occupations": [
+   "artist",
+   "photographer"
+  ],
+  "qid": "Q104847"
+ },
+ "Olivia Berckemeyer": null,
  "Olu Oguibe": {
   "medium": "other art",
   "occupations": [
@@ -4043,6 +4423,7 @@
  "Open Group": null,
  "Ornella Fieres": null,
  "Oska Gutheil": null,
+ "Oskar Gutheil": null,
  "Oskar Schlemmer": {
   "medium": "sculpture",
   "occupations": [
@@ -4086,6 +4467,7 @@
   ],
   "qid": "Q455115"
  },
+ "Ouassila Arras": null,
  "Ozgür Kar": null,
  "Pakui Hardware": {
   "medium": "other art",
@@ -4154,6 +4536,10 @@
   ],
   "qid": "Q1392044"
  },
+ "Paul Mecky": null,
+ "Paul Niedermayer": null,
+ "Paula Breuer": null,
+ "Paula Hummer": null,
  "Paula Strunden": null,
  "Pauline Boudry": {
   "medium": "other art",
@@ -4206,6 +4592,7 @@
   ],
   "qid": "Q2077559"
  },
+ "Peter Polack": null,
  "Peter Roehr": {
   "medium": "sculpture",
   "occupations": [
@@ -4218,6 +4605,13 @@
   ],
   "qid": "Q2077879"
  },
+ "Peter Welz": {
+  "medium": "other art",
+  "occupations": [
+   "film director"
+  ],
+  "qid": "Q2078964"
+ },
  "Peter Wächtler": {
   "medium": "sculpture",
   "occupations": [
@@ -4228,7 +4622,33 @@
   "qid": "Q21550100"
  },
  "Pharaz Azimi": null,
+ "Philip Grözinger": {
+  "medium": "painting",
+  "occupations": [
+   "graphic artist",
+   "painter",
+   "video artist",
+   "visual artist"
+  ],
+  "qid": "Q95239841"
+ },
  "Philip Hudgson Dorrel": null,
+ "Philip Topolovac": {
+  "medium": "other art",
+  "occupations": [
+   "artist",
+   "photographer",
+   "visual artist"
+  ],
+  "qid": "Q99387341"
+ },
+ "Philipp Ernst": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q3379111"
+ },
  "Philipp Fürhofer": null,
  "Phivos Theodoutos": null,
  "Piero Dorazio": {
@@ -4267,9 +4687,18 @@
   "qid": "Q116054"
  },
  "Planting Communities": null,
+ "Pola Sieverding": {
+  "medium": "other art",
+  "occupations": [
+   "artist",
+   "photographer"
+  ],
+  "qid": "Q18389145"
+ },
  "Polina Osipova": null,
  "Polina Ryman": null,
  "Projekte einzelner Künstler:innen": null,
+ "Quentin Lefranc": null,
  "Rabih Mroué": {
   "medium": "other art",
   "occupations": [
@@ -4312,6 +4741,14 @@
    "visual artist"
   ],
   "qid": "Q99394842"
+ },
+ "Rainer Splitt": {
+  "medium": "other art",
+  "occupations": [
+   "artist",
+   "visual artist"
+  ],
+  "qid": "Q2128412"
  },
  "Rainer von Dziegielewski": null,
  "Raphaël Fischer-Dieskau": {
@@ -4367,6 +4804,7 @@
   ],
   "qid": "Q61919478"
  },
+ "Renaud Regnery": null,
  "René Graetz": {
   "medium": "sculpture",
   "occupations": [
@@ -4433,6 +4871,15 @@
   ],
   "qid": "Q368645"
  },
+ "Richard Oelze": {
+  "medium": "painting",
+  "occupations": [
+   "draftsperson",
+   "graphic artist",
+   "painter"
+  ],
+  "qid": "Q175412"
+ },
  "Richard Roberts": null,
  "Richard Scholz": {
   "medium": "painting",
@@ -4495,6 +4942,7 @@
   "qid": "Q164358"
  },
  "Roberto de Pinto": null,
+ "Robin Kötzle": null,
  "Rodney McMillian": {
   "medium": "sculpture",
   "occupations": [
@@ -4504,6 +4952,13 @@
    "video artist"
   ],
   "qid": "Q7357005"
+ },
+ "Roger Eberhard": {
+  "medium": "other art",
+  "occupations": [
+   "photographer"
+  ],
+  "qid": "Q2161681"
  },
  "Rolf Münzner": {
   "medium": "painting",
@@ -4576,6 +5031,7 @@
  },
  "Ruthi Helbitz Cohen": null,
  "Ryan Tan Kwan Yu": null,
+ "Ryuichi Sakamoto": null,
  "Ryūichi Sakamoto": null,
  "SUSI POP": null,
  "Sabine Moritz": {
@@ -4589,6 +5045,7 @@
  },
  "Sabrina Quintero": null,
  "Sacha Ghilardi": null,
+ "Sador Weinsčlucker": null,
  "Salim Green": null,
  "Salma Samar Damluji": {
   "medium": "other art",
@@ -4614,7 +5071,15 @@
  },
  "Sarah Al-Darwich": null,
  "Sarah Lehnerer": null,
+ "Sarita Dey": null,
  "Sasha Marianna Salzmann": null,
+ "Saskia Wendland": {
+  "medium": "other art",
+  "occupations": [
+   "visual artist"
+  ],
+  "qid": "Q99390277"
+ },
  "Saâdane Afif": {
   "medium": "sculpture",
   "occupations": [
@@ -4744,6 +5209,13 @@
   ],
   "qid": "Q129649651"
  },
+ "Sophie Natuschke": {
+  "medium": "painting",
+  "occupations": [
+   "painter"
+  ],
+  "qid": "Q30017100"
+ },
  "Sophie Reinhold": {
   "medium": "painting",
   "occupations": [
@@ -4813,6 +5285,13 @@
    "artist"
   ],
   "qid": "Q88083479"
+ },
+ "Stephanie Kloss": {
+  "medium": "other art",
+  "occupations": [
+   "visual artist"
+  ],
+  "qid": "Q99389976"
  },
  "Stephen Prina": {
   "medium": "sculpture",
@@ -4897,6 +5376,7 @@
   ],
   "qid": "Q2371020"
  },
+ "Svenja Kreh": null,
  "Sylvie Fleury": {
   "medium": "sculpture",
   "occupations": [
@@ -4995,6 +5475,7 @@
   ],
   "qid": "Q55236464"
  },
+ "Theresa Reiwer": null,
  "Therese Koppe": {
   "medium": "other art",
   "occupations": [
@@ -5029,6 +5510,7 @@
   ],
   "qid": "Q2423825"
  },
+ "Thomas Grötz": null,
  "Thomas Knauf": {
   "medium": "other art",
   "occupations": [
@@ -5058,6 +5540,17 @@
   "qid": "Q316120"
  },
  "Thomas Theodore Heine": null,
+ "Thomas Zitzwitz": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "installation artist",
+   "painter",
+   "video artist"
+  ],
+  "qid": "Q15430745"
+ },
+ "Thorsten Klapsch": null,
  "Thu-Van Tran": null,
  "Thuy Tien Nguyen": null,
  "Théodore Diouf": {
@@ -5083,6 +5576,14 @@
   ],
   "qid": "Q55265394"
  },
+ "Tilman Wendland": {
+  "medium": "sculpture",
+  "occupations": [
+   "sculptor"
+  ],
+  "qid": "Q23061706"
+ },
+ "Timo Klöppel": null,
  "Timur Si-Qin": {
   "medium": "sculpture",
   "occupations": [
@@ -5098,6 +5599,7 @@
   ],
   "qid": "Q125540"
  },
+ "Tine Furler": null,
  "Tino Sehgal": {
   "medium": "other art",
   "occupations": [
@@ -5114,6 +5616,7 @@
   ],
   "qid": "Q112325973"
  },
+ "Tobias Dostal": null,
  "Tomás Saraceno": {
   "medium": "sculpture",
   "occupations": [
@@ -5184,6 +5687,13 @@
  },
  "V. Mitch McEwen": null,
  "Valentina Kozinets": null,
+ "Valentina Murabito": {
+  "medium": "other art",
+  "occupations": [
+   "photographer"
+  ],
+  "qid": "Q28843591"
+ },
  "Valerio Nicolai": null,
  "Vanessa Amoah Opoku": null,
  "Vasil Barela": null,
@@ -5305,6 +5815,7 @@
   ],
   "qid": "Q1362461"
  },
+ "Wilfried Habrich": null,
  "Wilhelm Klotzek": null,
  "Willem de Rooij": {
   "medium": "sculpture",

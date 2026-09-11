@@ -1766,6 +1766,34 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|exhibitions|0d6aa57e2865f47d": [
+  {
+   "artist": "pEpAs",
+   "city": null,
+   "end": "2024-09-20",
+   "opening": "2024-09-20T14:00",
+   "start": "2024-09-20",
+   "title": "Kunstsalon-Ursprung"
+  },
+  {
+   "artist": "pEpAs",
+   "city": null,
+   "end": "2026-09-20",
+   "opening": "2026-09-20T14:00",
+   "start": "2026-09-20",
+   "title": "Finissage & Kunstsalon"
+  }
+ ],
+ "qwen2.5-coder:7b|exhibitions|286aa8166af96dc9": [
+  {
+   "artist": "Jochen Mühlenbrink",
+   "city": null,
+   "end": "2026-10-17",
+   "opening": "2026-09-05T11:00",
+   "start": "2026-09-05",
+   "title": "Doch Doch"
+  }
+ ],
  "qwen2.5-coder:7b|exhibitions|6a539d7213e2cd38": [
   {
    "artist": "Paula Strunden & Pascal Marcel Dreier-Wang",
@@ -1944,6 +1972,32 @@
    "opening": "2026-09-05T11:00",
    "start": "2026-09-05",
    "title": "Doch Doch"
+  }
+ ],
+ "qwen2.5-coder:7b|exhibitions|e1cfec52ffe98722": [
+  {
+   "artist": "Helen Hu",
+   "city": "Berlin",
+   "end": "2026-09-26",
+   "opening": null,
+   "start": "2026-09-10",
+   "title": "Spotlight"
+  },
+  {
+   "artist": "Wanda Stolle",
+   "city": "Berlin",
+   "end": "2026-11-07",
+   "opening": null,
+   "start": "2026-09-10",
+   "title": "loose ends"
+  },
+  {
+   "artist": "Carsten Goering",
+   "city": "Leipzig",
+   "end": "2026-10-17",
+   "opening": null,
+   "start": "2026-09-05",
+   "title": "Andoya"
   }
  ],
  "qwen2.5-coder:7b|exhibitions|e7bd3dc889c7b625": [
