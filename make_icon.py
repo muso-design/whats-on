@@ -9,13 +9,10 @@ this - board.py simply serves the files that are here.
                                for Android home screens that crop to a shape
   icon-180.png                 full-bleed, for iPhone home screens
   icon.ico                     16-256 px, for the Windows desktop and Start menu
-  icon-refresh.ico             the same with a refresh badge, for the shortcut
-                               that updates everything
 
 Run: python make_icon.py
 """
 
-import math
 import os
 import sys
 
@@ -34,8 +31,6 @@ STONE_DARK = (190, 180, 163)
 BRONZE_LIGHT = (236, 182, 112)
 BRONZE_MID = (196, 132, 64)
 BRONZE_DARK = (116, 70, 32)
-BADGE = (246, 241, 232)
-BADGE_INK = (24, 70, 60)
 
 
 def u(value):
@@ -217,36 +212,13 @@ def sculpture(scale=1.0, lift=0.0):
     return art
 
 
-def refresh_badge(tile):
-    """A round badge with a circular arrow, bottom right."""
-    d = ImageDraw.Draw(tile)
-    cx = cy = 836
-    d.ellipse(box(672, 672, 1000, 1000), fill=BADGE_INK + (255,))
-    d.ellipse(box(690, 690, 982, 982), fill=BADGE + (255,))
-    radius, width = 86, 30
-    start, end = 300, 235        # clockwise, leaving a gap at the top
-    d.arc(box(cx - radius, cy - radius, cx + radius, cy + radius),
-          start=start, end=end, fill=BADGE_INK + (255,), width=u(width))
-    # The arrowhead sits on the arc's end and points on round the circle.
-    theta = math.radians(end)
-    mid = radius - width / 2
-    px, py = cx + mid * math.cos(theta), cy + mid * math.sin(theta)
-    tx, ty = -math.sin(theta), math.cos(theta)          # clockwise tangent
-    nx, ny = math.cos(theta), math.sin(theta)
-    d.polygon([(u(px + 50 * tx), u(py + 50 * ty)),
-               (u(px + 34 * nx), u(py + 34 * ny)),
-               (u(px - 34 * nx), u(py - 34 * ny))], fill=BADGE_INK + (255,))
-
-
-def render(full_bleed=False, maskable=False, badge=False):
+def render(full_bleed=False, maskable=False):
     tile, shape = background(full_bleed or maskable)
     # A maskable icon may be cropped to a circle: keep the art inside 80%.
     art = sculpture(scale=0.78 if maskable else 1.0, lift=6 if maskable else 0)
     tile = Image.alpha_composite(tile, art)
     if not (full_bleed or maskable):
         tile.putalpha(ImageChops.multiply(tile.getchannel("A"), shape))
-    if badge:
-        refresh_badge(tile)
     return tile
 
 
@@ -264,10 +236,8 @@ def main():
         os.path.join(HERE, "icon-180.png"), optimize=True)
     sizes = [(n, n) for n in (16, 24, 32, 48, 64, 128, 256)]
     reduce(tile, 256).save(os.path.join(HERE, "icon.ico"), sizes=sizes)
-    reduce(render(badge=True), 256).save(os.path.join(HERE, "icon-refresh.ico"),
-                                         sizes=sizes)
     print("wrote icon-512.png, icon-192.png, icon-maskable-512.png, "
-          "icon-180.png, icon.ico, icon-refresh.ico")
+          "icon-180.png, icon.ico")
     return 0
 
 

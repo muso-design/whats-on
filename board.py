@@ -699,10 +699,41 @@ select{font:inherit;color:var(--ink);background:var(--surface);
   text-transform:lowercase;color:var(--muted);margin:22px 0 10px}
 .grouphead:first-child{margin-top:4px}
 .card.call .where{color:var(--muted)}
+/* --card and --focus never existed, so the dropdown lost its background and,
+   worse, its keyboard focus ring: an undefined variable makes the whole
+   outline declaration invalid, which resets it to none. */
 select.stage{font:inherit;font-size:.85rem;padding:7px 10px;border-radius:8px;
-  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
   min-height:38px;cursor:pointer}
-select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* The refresh button: only on this PC, where Plinth's server can do the work. */
+.refresh{margin-left:auto;display:inline-flex;align-items:center;gap:8px;
+  font:inherit;font-size:.9rem;font-weight:600;padding:8px 16px 8px 12px;
+  min-height:var(--tap);border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer}
+.refresh:hover{border-color:var(--accent)}
+.refresh[disabled]{cursor:progress}
+.refresh svg{width:20px;height:20px;flex:none}
+.refresh.running{color:var(--accent);border-color:var(--accent)}
+.refresh.running svg{animation:plinth-spin 1s linear infinite}
+.refresh.done{background:var(--accent);border-color:var(--accent);color:var(--on-fill)}
+.refresh.failed{border-color:var(--urgent);color:var(--urgent)}
+@keyframes plinth-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.refresh.running svg{animation:none}}
+.progress{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:12px 14px 10px;margin:4px 0 12px}
+.pbar{height:8px;border-radius:99px;background:var(--sunk);overflow:hidden}
+.pfill{height:100%;width:0;background:var(--accent);border-radius:99px;
+  transition:width .6s ease}
+.progress.failed .pfill{background:var(--urgent)}
+.pstep{display:flex;justify-content:space-between;gap:12px;margin:8px 0 0;
+  font-size:.92rem;color:var(--ink)}
+.ppct{font-family:var(--mono);color:var(--muted);flex:none}
+.plog{margin-top:6px;font-size:.8rem;color:var(--muted)}
+.plog summary{cursor:pointer;min-height:28px}
+.plog div.lines{max-height:170px;overflow:auto;font-family:var(--mono);
+  font-size:.74rem;line-height:1.5;white-space:pre-wrap;padding-top:4px}
 .tag.med{background:var(--accent-soft);color:var(--accent)}
 .tag.new{background:var(--new-soft);color:var(--new)}
 .blurb{font-size:.92rem;color:var(--muted);margin:0 0 6px}
@@ -780,7 +811,20 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
   <header class="top">
     <h1><img class="logo" src="icon-192.png" alt="" width="34" height="34">Plinth</h1>
     <p class="stamp" id="stamp"></p>
+    <button class="refresh" id="refresh" type="button" hidden>
+      <span class="ricon" aria-hidden="true"></span><span class="rlabel">Refresh</span>
+    </button>
   </header>
+
+  <div class="progress" id="progress" hidden>
+    <div class="pbar" role="progressbar" aria-label="Refresh progress"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pbar">
+      <div class="pfill" id="pfill"></div>
+    </div>
+    <p class="pstep"><span id="pstep">Starting</span><span class="ppct" id="ppct"></span></p>
+    <details class="plog"><summary>What it is doing</summary>
+      <div class="lines" id="plog"></div></details>
+  </div>
 
   <p class="stale" id="stale" role="status" hidden></p>
   <p class="summary" id="summary"></p>
@@ -1758,6 +1802,148 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
   if (!calls.length) { document.getElementById("tab-calls").hidden = true; }
   render();
 
+  // ---- refresh, when Plinth's own server on this PC is serving the page ----
+  // On the phone there is no PC to do the work, so the button never appears.
+  // Here, pressing it runs the real refresh and shows how far it has got.
+  var rbtn = document.getElementById("refresh");
+  var panel = document.getElementById("progress");
+  var ICONS = {
+    idle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
+      'stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7"/>' +
+      '<path d="M20 4v5h-5"/></svg>',
+    done: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" ' +
+      'stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+    failed: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
+      'stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5"/><path d="M12 16.5v.5"/>' +
+      '<circle cx="12" cy="12" r="9"/></svg>'
+  };
+  ICONS.running = ICONS.idle;
+  var since = 0, lastStep = "";
+
+  function setButton(kind, label) {
+    rbtn.className = "refresh " + kind;
+    rbtn.querySelector(".ricon").innerHTML = ICONS[kind];
+    rbtn.querySelector(".rlabel").textContent = label;
+    rbtn.disabled = kind === "running";
+    rbtn.setAttribute("aria-busy", String(kind === "running"));
+  }
+
+  function counted(n, one, many) { return (n || 0) + " " + ((n === 1) ? one : many); }
+
+  function showProgress(s) {
+    panel.hidden = false;
+    panel.classList.toggle("failed", s.state === "failed");
+    document.getElementById("pfill").style.width = s.percent + "%";
+    document.getElementById("pbar").setAttribute("aria-valuenow", String(s.percent));
+    document.getElementById("pstep").textContent = s.step || "Starting";
+    document.getElementById("ppct").textContent = s.percent + "%";
+    var log = document.getElementById("plog");
+    (s.lines || []).forEach(function (line) {
+      var row = document.createElement("div");
+      row.textContent = line;
+      log.appendChild(row);
+    });
+    log.scrollTop = log.scrollHeight;
+    // One announcement per step, not per line: a screen reader should hear
+    // "Reading Berlin", not the name of every gallery.
+    if (s.step && s.step !== lastStep && s.state === "running") {
+      announce(s.step);
+      lastStep = s.step;
+    }
+  }
+
+  function finish(s) {
+    if (s.state === "done") {
+      var summary = counted(s.new_shows, "new show", "new shows") + ", " +
+        counted(s.new_calls, "new call", "new calls");
+      setButton("done", "Refreshed");
+      document.getElementById("pstep").textContent = "Refreshed · " + summary;
+      announce("Refreshed. " + summary + ". Showing the new listings.");
+      try {
+        sessionStorage.setItem("plinth.refreshed",
+          JSON.stringify({ at: Date.now(), summary: summary }));
+      } catch (e) {}
+      // Long enough to see the tick, short enough not to wait for it.
+      setTimeout(function () { location.reload(); }, 1800);
+    } else if (s.state === "busy") {
+      setButton("idle", "Refresh");
+      document.getElementById("pstep").textContent = s.message ||
+        "A scheduled refresh is already running; it publishes when it finishes.";
+    } else {
+      setButton("failed", "Try again");
+      document.getElementById("pstep").textContent = s.message ||
+        "The refresh stopped early. What it did is under “What it is doing”.";
+      announce("The refresh failed.");
+    }
+  }
+
+  function poll() {
+    fetch("/api/status?since=" + since, { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (s) {
+        since = s.next;
+        showProgress(s);
+        if (s.state === "running") { setTimeout(poll, 700); } else { finish(s); }
+      })
+      .catch(function () { setTimeout(poll, 2000); });
+  }
+
+  function startRefresh() {
+    since = 0;
+    lastStep = "";
+    document.getElementById("plog").textContent = "";
+    setButton("running", "Refreshing…");
+    showProgress({ percent: 0, step: "Starting", lines: [], state: "running" });
+    fetch("/api/refresh", { method: "POST" })
+      .then(function (r) { return r.json(); })
+      .then(function () { poll(); })
+      .catch(function () {
+        setButton("failed", "Try again");
+        document.getElementById("pstep").textContent =
+          "Plinth's server on this PC is not answering. Open Plinth from its icon again.";
+      });
+  }
+
+  if (location.hostname === "127.0.0.1" || location.hostname === "localhost") {
+    fetch("/api/ping", { cache: "no-store" })
+      .then(function (r) { return r.json(); })
+      .then(function (p) {
+        if (p.app !== "plinth") { return; }
+        rbtn.hidden = false;
+        setButton("idle", "Refresh");
+        rbtn.addEventListener("click", startRefresh);
+        var recent = null;
+        try { recent = JSON.parse(sessionStorage.getItem("plinth.refreshed") || "null"); }
+        catch (e) {}
+        if (p.state === "running") {
+          setButton("running", "Refreshing…");
+          poll();
+        } else if (/[?&]refresh=1/.test(location.search)) {
+          history.replaceState(null, "", location.pathname);
+          startRefresh();
+        } else if (recent && Date.now() - recent.at < 60000) {
+          // The tick survives the reload, so you see what the refresh found.
+          sessionStorage.removeItem("plinth.refreshed");
+          setButton("done", "Refreshed");
+          panel.hidden = false;
+          document.getElementById("pfill").style.width = "100%";
+          document.getElementById("ppct").textContent = "";
+          document.getElementById("pstep").textContent = "Refreshed at " +
+            new Date(recent.at).toTimeString().slice(0, 5) + " · " + recent.summary;
+          setTimeout(function () {
+            setButton("idle", "Refresh");
+            panel.hidden = true;
+          }, 12000);
+        }
+        // Keep the server awake while this window is open; it sleeps after
+        // half an hour of silence.
+        setInterval(function () {
+          fetch("/api/ping", { cache: "no-store" }).catch(function () {});
+        }, 240000);
+      })
+      .catch(function () {});
+  }
+
   if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
     navigator.serviceWorker.register("sw.js").catch(function () {});
   }
@@ -1822,6 +2008,8 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') { return; }
   const url = new URL(req.url);
   if (url.origin !== location.origin) { return; }   // tiles and fonts: as-is
+  // The refresh button's live status must never come from a cache.
+  if (url.pathname.indexOf('/api/') === 0) { return; }
 
   // The page itself must be revalidated, not taken from the browser's own
   // HTTP cache. GitHub Pages serves index.html with ten minutes of freshness,

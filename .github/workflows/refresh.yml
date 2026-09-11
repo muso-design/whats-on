@@ -41,6 +41,7 @@ jobs:
           python test_wikidata.py
           python test_direct.py
           python test_calls.py
+          python test_app.py
 
       - name: Fetch and rebuild
         env:

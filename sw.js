@@ -20,6 +20,8 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') { return; }
   const url = new URL(req.url);
   if (url.origin !== location.origin) { return; }   // tiles and fonts: as-is
+  // The refresh button's live status must never come from a cache.
+  if (url.pathname.indexOf('/api/') === 0) { return; }
 
   // The page itself must be revalidated, not taken from the browser's own
   // HTTP cache. GitHub Pages serves index.html with ten minutes of freshness,

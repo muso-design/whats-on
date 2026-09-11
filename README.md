@@ -9,18 +9,36 @@ working.)
 
 ## Getting started on this PC
 
-Double-click **`install.bat`** once. It puts two icons on the Desktop and in
-the Start menu:
+Double-click **`install.bat`** once. It puts the **Plinth** icon on the
+Desktop and in the Start menu — among ninety other desktop icons it is easy to
+lose, so right-click it and **Pin to taskbar**, or press the Windows key and
+type "Plinth". Then it asks whether Plinth should also refresh by itself at
+07:00 and 19:00; say yes and you never have to press anything.
+`install.bat remove` takes all of it away again.
 
-- **Plinth** opens the hub in its own window — Chrome or Edge in app mode, so
-  it behaves like an app and keeps the same saved shows and tracked calls.
-- **Refresh Plinth** refreshes everything now. A window shows the progress,
-  says how many new shows and calls it found, publishes, waits until the site
-  has caught up, and opens Plinth on the result.
+The icon runs `plinth.pyw`, which starts Plinth's small local server if it is
+not already running and opens the hub in its own window — Chrome or Edge in
+app mode, at `http://127.0.0.1:47817/`. Served from there, the page has a
+**Refresh** button in its top corner:
 
-Then it asks whether Plinth should also refresh by itself at 07:00 and 19:00.
-Say yes and you never have to press anything. `install.bat remove` takes all
-of it away again.
+- press it and a bar shows how far the refresh has got — "Reading Berlin",
+  "Reading gallery sites with the local model", "Translating German
+  descriptions", "Open calls: opencallforartists" — with the raw output one
+  tap away under "What it is doing";
+- when it finishes the button turns into a green tick, **Refreshed**, the page
+  reloads onto the new listings, and it says what it found: "Refreshed at
+  20:52 · 6 new shows, 1 new call";
+- it also publishes, so the phone has the same listings a minute later.
+
+On the phone there is no PC behind the page, so there is no button; the two
+daily refreshes keep it current. The desktop window lives at its own address,
+so shows saved there are separate from any saved in a browser tab on the
+published site.
+
+The server listens on 127.0.0.1 only, answers only requests addressed to that
+host, refuses a refresh pressed from any other website, and serves nine files
+by name and nothing else from the folder. After half an hour with nothing
+asked of it it shuts itself down; the window keeps it awake while it is open.
 
 The icons are drawn by `make_icon.py` — a bronze head in profile on a stone
 plinth under a gallery spotlight — and committed, so nothing else needs Pillow.
@@ -51,7 +69,9 @@ calls.json      the calls inventory, on its own clock
 board.py        render the hub page, the manifest, the service worker and icons
 update.py       the whole pipeline: fetch, enrich, score, store, rebuild
 scheduled_refresh.py   refresh on this PC, then publish; --manual shows progress
-install.bat     double-click once: the Plinth icons, and the daily schedule
+plinth.pyw      the Plinth icon: start the local server, open the app window
+plinth_server.py   serves the page locally, with the Refresh button's API
+install.bat     double-click once: the Plinth icon, and the daily schedule
 make_icon.py    draws the icons; run only when the design changes
 launch.bat      serve the hub locally, for looking at it offline
 index.html      the hub; committed, rebuilt on every run
@@ -498,6 +518,7 @@ python test_calendar.py     # calendar entries, directions, geocoding
 python test_wikidata.py     # medium from the artist, and namesake rejection
 python test_direct.py       # the venue registry, and what the model may claim
 python test_calls.py        # deadlines, runway, and who may actually apply
+python test_app.py          # the local server: progress, the button, the guards
 ```
 
 `test_pipeline.py` needs `sample_events.json`:
@@ -539,10 +560,12 @@ the processor, and a three-minute job was headed for an hour of pegged CPU.
 With the card busy, the model's steps wait for a run when it is free — the
 07:00 one usually is — and everything else refreshes as normal.
 
-**Whenever you like.** The **Refresh Plinth** icon runs the same script with
-`--manual`: the same steps, shown in a window, ending with Plinth opened on
-the result once the site has it. A lock keeps a click and a scheduled run from
-ever working at the same time.
+**Whenever you like.** The Refresh button in the app runs the same script with
+`--manual --no-open --no-wait`: the same steps, read line by line into the
+progress bar. `python scheduled_refresh.py --manual` does it in a console
+instead, and waits until the published site has the new build. A lock keeps a
+click and a scheduled run from ever working at the same time; if one is
+already going, the button says so rather than starting a second.
 
 **The page watches both.** If the data is two or more days old, a banner at the
 top says how old, since when, and what to do. The "Updated" stamp said the same

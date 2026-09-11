@@ -1,15 +1,16 @@
-"""Put Plinth on this PC: a launch icon, a refresh icon, and the schedule if
-you want it.
+"""Put Plinth on this PC: one icon, and the schedule if you want it.
 
-  install.bat            icons on the Desktop and in the Start menu, then asks
-                         whether to refresh by itself every day
+  install.bat            the Plinth icon on the Desktop and in the Start menu,
+                         then asks whether to refresh by itself every day
   install.bat remove     takes all of it away again
 
-  Plinth           opens the hub in its own window - Chrome or Edge in app
-                   mode, so it looks and behaves like an app, with the same
-                   saved shows and tracked calls as the browser
-  Refresh Plinth   refreshes everything now, shows its progress, publishes,
-                   and opens the result once the site has it
+  Plinth   runs plinth.pyw: starts Plinth's small local server if it is not
+           running and opens the hub in its own window, where the Refresh
+           button in the corner refreshes everything and shows its progress
+
+There used to be a second icon, "Refresh Plinth", which ran the refresh in a
+console window. The button inside the app replaced it; installing again
+removes the old icon.
 
 The schedule is a Windows Task Scheduler task for your account only, at 07:00
 and 19:00, catching up at the next login if the PC was off. It is only ever
@@ -55,10 +56,8 @@ def interpreter(windowless):
 
 
 def place_shortcuts():
-    browser = scheduled_refresh.app_browser()
     icon = os.path.join(HERE, "icon.ico")
-    refresh_icon = os.path.join(HERE, "icon-refresh.ico")
-    script = os.path.join(HERE, "scheduled_refresh.py")
+    launcher = os.path.join(HERE, "plinth.pyw")
     lines = [
         "$shell = New-Object -ComObject WScript.Shell",
         "$desktop = [Environment]::GetFolderPath('Desktop')",
@@ -66,24 +65,18 @@ def place_shortcuts():
         % ps_quote(FOLDER),
         "New-Item -ItemType Directory -Force $programs | Out-Null",
         "foreach ($dir in @($desktop, $programs)) {",
-    ]
-    if browser:
-        lines += [
-            "  $s = $shell.CreateShortcut((Join-Path $dir 'Plinth.lnk'))",
-            "  $s.TargetPath = %s" % ps_quote(browser),
-            "  $s.Arguments = %s" % ps_quote("--app=" + SITE),
-            "  $s.IconLocation = %s" % ps_quote(icon + ",0"),
-            "  $s.Description = 'Shows to see and open calls to enter'",
-            "  $s.Save()",
-        ]
-    lines += [
-        "  $r = $shell.CreateShortcut((Join-Path $dir 'Refresh Plinth.lnk'))",
-        "  $r.TargetPath = %s" % ps_quote(interpreter(windowless=False)),
-        "  $r.Arguments = %s" % ps_quote('"%s" --manual' % script),
-        "  $r.WorkingDirectory = %s" % ps_quote(HERE),
-        "  $r.IconLocation = %s" % ps_quote(refresh_icon + ",0"),
-        "  $r.Description = 'Refresh Plinth now and open it'",
-        "  $r.Save()",
+        "  $s = $shell.CreateShortcut((Join-Path $dir 'Plinth.lnk'))",
+        "  $s.TargetPath = %s" % ps_quote(interpreter(windowless=True)),
+        "  $s.Arguments = %s" % ps_quote('"%s"' % launcher),
+        "  $s.WorkingDirectory = %s" % ps_quote(HERE),
+        "  $s.IconLocation = %s" % ps_quote(icon + ",0"),
+        "  $s.Description = 'Shows to see and open calls to enter'",
+        "  $s.Save()",
+        # The refresh lives in the app now; the old second icon goes.
+        "  Remove-Item -LiteralPath (Join-Path $dir 'Refresh Plinth.lnk') "
+        "-ErrorAction SilentlyContinue",
+        "  Remove-Item -LiteralPath (Join-Path $dir 'Plinth.url') "
+        "-ErrorAction SilentlyContinue",
         "}",
         "Write-Output $desktop",
     ]
@@ -91,20 +84,8 @@ def place_shortcuts():
     if code != 0:
         return False, output
     desktop = output.splitlines()[-1] if output else ""
-    if not browser:
-        # No Chrome or Edge to open it as an app: a plain link, same icon.
-        for folder in (desktop, _programs_folder()):
-            with open(os.path.join(folder, "Plinth.url"), "w", encoding="utf-8") as fh:
-                fh.write("[InternetShortcut]\nURL=%s\nIconFile=%s\nIconIndex=0\n"
-                         % (SITE, icon))
     _retire_old_shortcut(desktop)
     return True, desktop
-
-
-def _programs_folder():
-    code, output = powershell(
-        "Join-Path ([Environment]::GetFolderPath('Programs')) %s" % ps_quote(FOLDER))
-    return output.strip() if code == 0 else HERE
 
 
 def _retire_old_shortcut(desktop):
@@ -174,7 +155,9 @@ def main(argv=None):
     if not ok:
         print("  Windows did not accept the shortcuts: %s" % where[:200])
         return 1
-    print("  Added \"Plinth\" and \"Refresh Plinth\" to the Desktop and the Start menu.")
+    print("  Added \"Plinth\" to the Desktop and the Start menu.")
+    print("  Tip: right-click it and choose \"Pin to taskbar\" (on Windows 11 under")
+    print("  \"Show more options\"), so it is one click away from anywhere.")
 
     if "--schedule" in argv:
         wanted = True

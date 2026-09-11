@@ -196,6 +196,10 @@ SITE = "https://muso-design.github.io/whats-on/"
 LIVE_WAIT = 300               # seconds to wait for GitHub Pages to publish
 MANUAL = False
 OPEN_AFTER = True             # --no-open: refresh with progress, open nothing
+# --no-wait: publish, but do not hold on until GitHub Pages has it. The app's
+# Refresh button uses this - the page it reloads is the one this PC just built,
+# so there is nothing to wait for.
+WAIT_LIVE = True
 
 
 def say(message):
@@ -271,10 +275,12 @@ def run_update(env):
         output = result.stdout + result.stderr
         log(output.strip())
         return result.returncode, output
+    # Piped, so it needs no console of its own - and without _QUIET, a child
+    # of the windowless app server would be given a fresh console window.
     process = subprocess.Popen(command, cwd=HERE, env=env, text=True,
                                encoding="utf-8", errors="replace",
                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                               creationflags=_POLITE)
+                               creationflags=_QUIET | _POLITE)
     lines = []
     for line in process.stdout:
         lines.append(line)
@@ -290,12 +296,17 @@ def run_update(env):
 # --------------------------------------------------------------------------
 
 def main(argv=None):
-    global MANUAL, OPEN_AFTER
+    global MANUAL, OPEN_AFTER, WAIT_LIVE
     argv = sys.argv[1:] if argv is None else argv
     MANUAL = "--manual" in argv
     OPEN_AFTER = "--no-open" not in argv
+    WAIT_LIVE = "--no-wait" not in argv
     if MANUAL:
-        os.system("title Plinth - refreshing")
+        # Not os.system("title ..."): started from the app's server there is
+        # no console, and cmd would open one just to set its title.
+        if os.name == "nt" and sys.stdout.isatty():
+            import ctypes
+            ctypes.windll.kernel32.SetConsoleTitleW("Plinth - refreshing")
         print("\n  Plinth - refreshing everything now\n", flush=True)
     log("\n==== %s%s ====" % (datetime.now().isoformat(timespec="seconds"),
                               " (manual)" if MANUAL else ""))
@@ -371,7 +382,7 @@ def refresh():
             return 1
     say("Published.")
 
-    if MANUAL:
+    if MANUAL and WAIT_LIVE:
         with open(os.path.join(HERE, "index.html"), encoding="utf-8") as fh:
             wanted = build_id(fh.read())
         print("  Waiting for the site to show it (usually a minute or two) ",
