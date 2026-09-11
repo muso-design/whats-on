@@ -333,12 +333,17 @@ def main(argv=None):
 
 
 def refresh():
+    # Said before each slow, silent step, so the app's bar never sits at zero
+    # wondering: the pull and the model's first load take half a minute
+    # between them and print nothing on their own.
+    say("Getting what GitHub has.")
     if run("git", "pull", "--rebase", "--autostash") != 0:
         run("git", "rebase", "--abort")
         say("Could not start from what GitHub has; nothing was changed.")
         return 1
 
     env = dict(os.environ)
+    say("Checking the graphics card.")
     placement = model_placement()
     if placement == "gpu":
         say("Graphics card free: gallery sites, call terms and translations "

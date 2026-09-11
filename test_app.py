@@ -31,6 +31,8 @@ print("reading a refresh's output as progress")
 job = plinth_server.Job()
 seen = []
 for line in [
+        "  Getting what GitHub has.",
+        "  Checking the graphics card.",
         "  Graphics card free: gallery sites, call terms and translations ...",
         "  Reading the listings. This takes a few minutes.",
         "      fetching...",
@@ -50,6 +52,7 @@ for line in [
     job.feed(line)
     seen.append(job.percent)
 check("progress only ever moves forward", seen == sorted(seen), True)
+check("the silent first half-minute already shows movement", seen[:2], [1, 2])
 check("and ends at the top", job.percent, 100)
 check("with the last step named", job.step, "Done")
 check("the new counts are read", (job.shows, job.calls), (6, 1))
@@ -62,6 +65,20 @@ check("gallery sites get their own step",
 busy = plinth_server.Job()
 busy.feed("  A refresh is already running (started 19:00). Nothing to do; ...")
 check("a scheduled run already working is recognised", busy.state, "busy")
+
+counting = plinth_server.Job()
+counting.feed("        coordinates: already placed=250")
+steps = []
+for n in (1, 20, 40):
+    counting.feed("  translating %d of 40" % n)
+    steps.append((counting.percent, counting.step))
+check("the translation step counts its items",
+      steps[1][1], "Translating German descriptions: 20 of 40")
+check("and the bar moves with them, inside the step's own share",
+      [p for p, _ in steps], [50, 55, 60])
+counting.feed("  reading terms 30 of 60")
+check("so does reading the terms of calls",
+      (counting.percent, counting.step), (88, "Checking who may apply: 30 of 60"))
 berlin = plinth_server.Job()
 berlin.state = "running"
 berlin.feed("        index-berlin: 251 exhibitions (188 already running)")

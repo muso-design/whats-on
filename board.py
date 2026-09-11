@@ -1844,11 +1844,13 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
       log.appendChild(row);
     });
     log.scrollTop = log.scrollHeight;
-    // One announcement per step, not per line: a screen reader should hear
-    // "Reading Berlin", not the name of every gallery.
-    if (s.step && s.step !== lastStep && s.state === "running") {
-      announce(s.step);
-      lastStep = s.step;
+    // One announcement per step, not per line or per count: a screen reader
+    // should hear "Translating German descriptions" once, not "12 of 40",
+    // "13 of 40" and the name of every gallery.
+    var stepName = (s.step || "").split(":")[0];
+    if (stepName && stepName !== lastStep && s.state === "running") {
+      announce(stepName);
+      lastStep = stepName;
     }
   }
 
@@ -1892,6 +1894,7 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
     since = 0;
     lastStep = "";
     document.getElementById("plog").textContent = "";
+    rbtn.removeAttribute("aria-label");
     setButton("running", "Refreshing…");
     showProgress({ percent: 0, step: "Starting", lines: [], state: "running" });
     fetch("/api/refresh", { method: "POST" })
@@ -1922,18 +1925,19 @@ select.stage:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
           history.replaceState(null, "", location.pathname);
           startRefresh();
         } else if (recent && Date.now() - recent.at < 60000) {
-          // The tick survives the reload, so you see what the refresh found.
+          // The tick survives the reload and stays on the button, with the
+          // time, until it is pressed again: a refresh takes minutes, and a
+          // confirmation that vanished after twelve seconds was easy to miss.
           sessionStorage.removeItem("plinth.refreshed");
-          setButton("done", "Refreshed");
+          var at = new Date(recent.at).toTimeString().slice(0, 5);
+          setButton("done", "Refreshed " + at);
+          rbtn.setAttribute("aria-label", "Refreshed at " + at + ". Refresh again");
           panel.hidden = false;
           document.getElementById("pfill").style.width = "100%";
           document.getElementById("ppct").textContent = "";
-          document.getElementById("pstep").textContent = "Refreshed at " +
-            new Date(recent.at).toTimeString().slice(0, 5) + " · " + recent.summary;
-          setTimeout(function () {
-            setButton("idle", "Refresh");
-            panel.hidden = true;
-          }, 12000);
+          document.getElementById("pstep").textContent = "Refreshed at " + at +
+            " · " + recent.summary;
+          setTimeout(function () { panel.hidden = true; }, 60000);
         }
         // Keep the server awake while this window is open; it sleeps after
         // half an hour of silence.

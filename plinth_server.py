@@ -54,6 +54,8 @@ FILES = {
 # What the refresh prints, in the order it prints it, as progress. The label
 # is what the page shows; the number only ever moves forward.
 MILESTONES = [
+    ("Getting what GitHub has", 1, "Getting the latest from GitHub"),
+    ("Checking the graphics card", 2, "Checking the graphics card"),
     ("Graphics card free", 3, "Checking the graphics card"),
     ("graphics card is busy", 3, "Checking the graphics card"),
     ("Ollama is not running", 3, "Checking the graphics card"),
@@ -78,6 +80,16 @@ MILESTONES = [
 ]
 
 _NEW = re.compile(r"(\d+) new shows?, (\d+) new open calls?")
+
+# The two long steps count their items, and the bar moves with each one
+# between the percentages either side. Before this, the first translation
+# backlog sat on one label for seven minutes and looked stuck.
+COUNTERS = [
+    (re.compile(r"translating (\d+) of (\d+)"), 50, 60,
+     "Translating German descriptions"),
+    (re.compile(r"reading terms (\d+) of (\d+)"), 86, 91,
+     "Checking who may apply"),
+]
 
 
 def refresh_command():
@@ -134,6 +146,14 @@ class Job:
             for needle, percent, label in MILESTONES:
                 if needle in line and percent >= self.percent:
                     self.percent, self.step = percent, label
+            for pattern, low, high, label in COUNTERS:
+                counted = pattern.search(line)
+                if counted:
+                    done, total = int(counted.group(1)), max(1, int(counted.group(2)))
+                    percent = low + (high - low) * min(done, total) // total
+                    if percent >= self.percent:
+                        self.percent = percent
+                        self.step = "%s: %d of %d" % (label, done, total)
             found = _NEW.search(line)
             if found:
                 self.shows, self.calls = int(found.group(1)), int(found.group(2))

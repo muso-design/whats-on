@@ -1129,6 +1129,16 @@ def resolve_eligibility(calls, budget=ELIGIBILITY_BUDGET, verbose=True):
     model = llm.available()
     cache = llm.load_cache() if model else None
     spent = 0
+
+    def uncached(call):
+        text = eligibility_text(call)
+        return (text and not free_eligibility(call) and llm.cache_key(
+            "eligibility.2", text.strip()[:llm.MAX_CHARS]) not in cache)
+
+    # How many terms the model will actually read, for "30 of 60" in the
+    # app's progress bar - three silent minutes on one step looks stuck.
+    total = min(budget, sum(1 for c in calls if uncached(c))) if model else 0
+
     for call in sorted(calls, key=lambda c: -(c.get("rank") or 0)):
         # The free rules first, everywhere. Until this was split out, a run
         # with no model skipped them too and left every new call "unknown".
@@ -1151,6 +1161,9 @@ def resolve_eligibility(calls, budget=ELIGIBILITY_BUDGET, verbose=True):
         call["eligibility"], call["open_to"] = _model_eligibility(text, cache)
         if len(cache) != before:
             spent += 1
+            if verbose and total:
+                print("  reading terms %d of %d" % (min(spent, total), total),
+                      flush=True)
     if model:
         llm.save_cache(cache)
     if verbose:

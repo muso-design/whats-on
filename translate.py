@@ -284,6 +284,16 @@ def english_for(event, cache, provider=None, allow_network=True):
 FLUSH_EVERY = 5               # translations between cache writes
 
 
+def _waiting(event, cache):
+    """Would this event go to the translator? english_for's checks, no call."""
+    text = (event.get("raw_description") or "").strip()
+    if not text or published_english(text):
+        return False
+    if (event.get("language") or detect_language(text)) == "en":
+        return False
+    return _key(text) not in cache
+
+
 def enrich(events, cache=None, provider=None, allow_network=True, verbose=True,
            cache_path=CACHE_PATH, budget=0):
     """Add `description_en` to every event that can have one.
@@ -301,7 +311,15 @@ def enrich(events, cache=None, provider=None, allow_network=True, verbose=True,
     if provider == "local" and not budget:
         budget = LOCAL_BUDGET          # a few minutes of the graphics card, not an hour
     tally = {}
-    done = 0
+    done = attempts = 0
+
+    # How many will actually go to the translator, so progress can be shown
+    # as "12 of 40". The first backlog took seven minutes, and a bar that sits
+    # on one step that long looks broken.
+    translating = provider != "none" and allow_network
+    total = sum(1 for event in events if _waiting(event, cache)) if translating else 0
+    if budget:
+        total = min(total, budget)
 
     for event in events:
         may_call = allow_network and (not budget or done < budget)
@@ -309,6 +327,11 @@ def enrich(events, cache=None, provider=None, allow_network=True, verbose=True,
         if english:
             event["description_en"] = english
         tally[how] = tally.get(how, 0) + 1
+        if how in ("translated", "unavailable") and translating and total:
+            attempts += 1
+            if verbose:
+                print("  translating %d of %d" % (min(attempts, total), total),
+                      flush=True)
         if how == "translated":
             done += 1
             if cache_path and done % FLUSH_EVERY == 0:
