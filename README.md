@@ -1,6 +1,29 @@
-# What's on
+# Plinth
 
-A hub for two questions: **where to go**, and **where to send the work**.
+A plinth is what a sculpture stands on. This is what the rest stands on: a hub
+for two questions, **where to go**, and **where to send the work**.
+
+(It was called "What's on" until September 2026. The published address stays
+`muso-design.github.io/whats-on/`, so a copy already installed on a phone keeps
+working.)
+
+## Getting started on this PC
+
+Double-click **`install.bat`** once. It puts two icons on the Desktop and in
+the Start menu:
+
+- **Plinth** opens the hub in its own window — Chrome or Edge in app mode, so
+  it behaves like an app and keeps the same saved shows and tracked calls.
+- **Refresh Plinth** refreshes everything now. A window shows the progress,
+  says how many new shows and calls it found, publishes, waits until the site
+  has caught up, and opens Plinth on the result.
+
+Then it asks whether Plinth should also refresh by itself at 07:00 and 19:00.
+Say yes and you never have to press anything. `install.bat remove` takes all
+of it away again.
+
+The icons are drawn by `make_icon.py` — a bronze head in profile on a stone
+plinth under a gallery spotlight — and committed, so nothing else needs Pillow.
 
 Exhibitions in Leipzig, Halle, Dresden, Chemnitz and Berlin — openings and
 shows already running — ranked so sculpture comes first, with everything else
@@ -27,9 +50,10 @@ state.py        the inventory: every show, its status and dates
 calls.json      the calls inventory, on its own clock
 board.py        render the hub page, the manifest, the service worker and icons
 update.py       the whole pipeline: fetch, enrich, score, store, rebuild
-scheduled_refresh.py   the nightly run on this PC: refresh, then publish
-install-schedule.bat   double-click once: run that every evening at 19:00
-launch.bat      double-click: refresh if stale, then open the hub
+scheduled_refresh.py   refresh on this PC, then publish; --manual shows progress
+install.bat     double-click once: the Plinth icons, and the daily schedule
+make_icon.py    draws the icons; run only when the design changes
+launch.bat      serve the hub locally, for looking at it offline
 index.html      the hub; committed, rebuilt on every run
 ```
 
@@ -437,11 +461,24 @@ carries both languages; leave alone anything a source **declares** English;
 never replaced — scoring reads both, so the German and English keyword lists
 each do their work.
 
-| Variable | Effect |
-|----------|--------|
-| `DEEPL_API_KEY` | DeepL. Recommended; the free tier's 500k characters/month is far more than this needs. |
+| Setting | Translator |
+|---------|------------|
+| `DEEPL_API_KEY` | DeepL. The best German; the free tier's 500k characters/month is far more than this needs, but it needs an account. |
+| nothing set | **The local model**, whenever Ollama is running and the graphics card is free. |
 | `TRANSLATE_PROVIDER=mymemory` | No signup, but 5k characters/day anonymously. `MYMEMORY_EMAIL` raises it to 50k. |
-| neither | Nothing is translated; everything else runs unchanged. |
+| `TRANSLATE_PROVIDER=none` | Nothing is translated; everything else runs unchanged. |
+
+Until September 2026 "nothing set" meant no translation at all, and because no
+key was ever set, a hundred German descriptions sat untranslated behind a log
+line that said only `provider: none`. The local model was measured before it
+was trusted: gallery prose came back readable with every name, title and date
+intact, at about five seconds a description on the graphics card. It
+translates the first 1,800 characters — a card shows about 260 — and marks a
+cut translation with `[…]`. An answer much shorter or longer than its source
+is refused as a summary or a commentary, and German handed back as English is
+refused outright, so a bad answer leaves the original rather than a wrong
+"translation". Up to 40 descriptions a run, so the backlog clears over a few
+runs without holding the card for long.
 
 ```bash
 python translate.py --dry-run     # what would be translated
@@ -487,14 +524,25 @@ Two refreshes, because they can do different things.
 runs the checks, refreshes everything it can without a model, rebuilds the page
 and commits it. No secrets are needed unless you want translation.
 
-**This PC, every evening.** Double-click `install-schedule.bat` once. It adds
-one task to Windows Task Scheduler, for your account, that runs
-`scheduled_refresh.py` at 19:00 with no window — or at the next login if the
-PC was off. That run does the half that needs the local model: reading gallery
-sites directly, and reading the terms of new open calls. It starts from what
+**This PC, morning and evening.** Say yes when `install.bat` asks, and one
+task in Windows Task Scheduler runs `scheduled_refresh.py` at 07:00 and 19:00
+with no window, or at the next login if the PC was off. That run does the half
+that needs the local model: reading gallery sites directly, reading the terms
+of new open calls, and translating German descriptions. It starts from what
 GitHub has, commits only the files the refresh writes, and publishes, so the
-phone sees REITER without anyone pushing by hand. What it did each night is in
-`refresh.log`. `install-schedule.bat remove` takes it away.
+phone sees REITER without anyone pushing by hand. What it did each time is in
+`refresh.log`.
+
+It only uses the model when Ollama can put it on the graphics card. On the
+first evening ZBrush and a game held 7 of the card's 8 GB, the model ran 96% on
+the processor, and a three-minute job was headed for an hour of pegged CPU.
+With the card busy, the model's steps wait for a run when it is free — the
+07:00 one usually is — and everything else refreshes as normal.
+
+**Whenever you like.** The **Refresh Plinth** icon runs the same script with
+`--manual`: the same steps, shown in a window, ending with Plinth opened on
+the result once the site has it. A lock keeps a click and a scheduled run from
+ever working at the same time.
 
 **The page watches both.** If the data is two or more days old, a banner at the
 top says how old, since when, and what to do. The "Updated" stamp said the same

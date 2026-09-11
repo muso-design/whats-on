@@ -116,15 +116,30 @@ check("empty page builds",
 
 print("\nthe PWA files are written")
 board.write_pwa(workdir)
-for name in ("manifest.webmanifest", "sw.js", "icon-192.png", "icon-512.png"):
+for name in ("manifest.webmanifest", "sw.js", "icon-192.png", "icon-512.png",
+             "icon-maskable-512.png", "icon-180.png", "icon.ico"):
     check(name, os.path.exists(os.path.join(workdir, name)), True)
 with open(os.path.join(workdir, "manifest.webmanifest"), encoding="utf-8") as fh:
     manifest = json.load(fh)
-check("manifest names two icons", len(manifest["icons"]), 2)
+check("the app is called Plinth", manifest["name"], "Plinth")
+check("every icon the manifest names exists",
+      all(os.path.exists(os.path.join(workdir, i["src"])) for i in manifest["icons"]),
+      True)
+check("one icon is safe to crop to a circle",
+      [i["purpose"] for i in manifest["icons"]].count("maskable"), 1)
 check("manifest is installable",
       all(k in manifest for k in ("name", "start_url", "display", "icons")), True)
 with open(os.path.join(workdir, "icon-192.png"), "rb") as fh:
     check("icon is a real PNG", fh.read(8), b"\x89PNG\r\n\x1a\n")
+
+# The drawn icons are committed; a build must never overwrite them with the
+# flat fallback, which it did on every build until make_icon.py existed.
+drawn = os.path.join(workdir, "icon-512.png")
+with open(drawn, "wb") as fh:
+    fh.write(b"\x89PNG\r\n\x1a\nDRAWN")
+board.write_pwa(workdir)
+with open(drawn, "rb") as fh:
+    check("a build leaves a drawn icon alone", fh.read(), b"\x89PNG\r\n\x1a\nDRAWN")
 
 print("\n%d failure(s)" % len(FAILURES))
 raise SystemExit(1 if FAILURES else 0)

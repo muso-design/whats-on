@@ -544,11 +544,12 @@ PAGE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2E6A5C">
-<meta name="description" content="Exhibitions on now in Leipzig and Berlin.">
-<title>What's on</title>
+<meta name="description" content="Shows to see and open calls to enter, around Leipzig and Berlin.">
+<meta name="plinth-build" content="__BUILD_ID__">
+<title>Plinth</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -601,9 +602,11 @@ a{color:var(--accent)}
   padding:0 14px calc(84px + var(--safe-b))}
 
 /* ---------- header ---------- */
-.top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   padding:14px 2px 8px}
-h1{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;margin:0}
+h1{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;margin:0;
+  display:inline-flex;align-items:center;gap:9px}
+h1 .logo{width:34px;height:34px;border-radius:9px;flex:none}
 .stamp{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin:0}
 .stale{background:var(--urgent-soft);color:var(--urgent);font-weight:600;
   border:1px solid var(--urgent);border-radius:10px;padding:10px 14px;
@@ -775,7 +778,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 <div class="wrap">
 
   <header class="top">
-    <h1>What&rsquo;s on</h1>
+    <h1><img class="logo" src="icon-192.png" alt="" width="34" height="34">Plinth</h1>
     <p class="stamp" id="stamp"></p>
   </header>
 
@@ -1765,10 +1768,16 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 """
 
 
+# The name. A plinth is what a sculpture stands on - and this is what the rest
+# stands on: where to go, and where to send the work. The published address
+# stays /whats-on/, because renaming the repository would move it and break
+# the copy already installed on the phone.
+APP_NAME = "Plinth"
+
 MANIFEST = {
-    "name": "What's on - Leipzig & Berlin",
-    "short_name": "What's on",
-    "description": "Exhibitions on now in Leipzig, Berlin and around.",
+    "name": APP_NAME,
+    "short_name": APP_NAME,
+    "description": "Shows to see and open calls to enter, around Leipzig and Berlin.",
     "start_url": "./index.html",
     "scope": "./",
     "display": "standalone",
@@ -1777,9 +1786,13 @@ MANIFEST = {
     "theme_color": "#2E6A5C",
     "icons": [
         {"src": "icon-192.png", "sizes": "192x192", "type": "image/png",
-         "purpose": "any maskable"},
+         "purpose": "any"},
         {"src": "icon-512.png", "sizes": "512x512", "type": "image/png",
-         "purpose": "any maskable"},
+         "purpose": "any"},
+        # Android crops home-screen icons to its own shape; this one keeps the
+        # bust inside the safe circle so the crop cannot take its head off.
+        {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png",
+         "purpose": "maskable"},
     ],
 }
 
@@ -1787,9 +1800,10 @@ MANIFEST = {
 # Network first, falling back to the cache, so a rebuilt page is picked up on
 # the next load rather than being pinned forever.
 SERVICE_WORKER = """
-const CACHE = 'whatson-v2';
+const CACHE = 'plinth-v3';
 const SHELL = ['./', './index.html', './manifest.webmanifest',
-               './icon-192.png', './icon-512.png'];
+               './icon-192.png', './icon-512.png', './icon-maskable-512.png',
+               './icon-180.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL))
@@ -1889,15 +1903,22 @@ def write_pwa(directory=None):
         fh.write("\n")
     with open(os.path.join(directory, "sw.js"), "w", encoding="utf-8") as fh:
         fh.write(SERVICE_WORKER.lstrip())
-    icons = {}
-    for size in (192, 512):
-        icons[size] = _png(size, (46, 106, 92), (243, 243, 241))
-        with open(os.path.join(directory, "icon-%d.png" % size), "wb") as fh:
-            fh.write(icons[size])
-    # A desktop shortcut needs an .ico; browsers and phones do not.
-    with open(os.path.join(directory, "icon.ico"), "wb") as fh:
-        fh.write(_ico(icons[192], 192))
-    return 5
+    # The icons are drawn by make_icon.py and committed. The flat fallback
+    # below is only for a folder that has none, so the manifest never points
+    # at nothing - it must never overwrite the drawn ones, which it did on
+    # every build until make_icon.py existed.
+    fallback = None
+    for name, size in (("icon-192.png", 192), ("icon-512.png", 512),
+                       ("icon-maskable-512.png", 512), ("icon-180.png", 180)):
+        path = os.path.join(directory, name)
+        if not os.path.exists(path):
+            fallback = _png(size, (46, 106, 92), (243, 243, 241))
+            with open(path, "wb") as fh:
+                fh.write(fallback)
+    if not os.path.exists(os.path.join(directory, "icon.ico")):
+        with open(os.path.join(directory, "icon.ico"), "wb") as fh:
+            fh.write(_ico(fallback or _png(192, (46, 106, 92), (243, 243, 241)), 192))
+    return 2
 
 
 def _island(rows):
@@ -1910,14 +1931,22 @@ def render(state, today=None, calls_inventory=None):
     rows = build_rows(state, today)
     inventory = load_calls() if calls_inventory is None else calls_inventory
     call_rows = build_call_rows(inventory, today)
-    updated = (today or date.today())
+    now = datetime.now()
+    updated = (today or now.date())
     stamp = "%d %s %d" % (updated.day, MONTHS[updated.month - 1], updated.year)
+    if today is None:
+        # With two refreshes a day and a button for a third, the date alone
+        # cannot tell you whether the one you just asked for has landed.
+        stamp += ", %s" % now.strftime("%H:%M")
     return (PAGE
             .replace("__DATA__", _island(rows))
             .replace("__CALLS__", _island(call_rows))
             .replace("__WARN__", _island(source_warnings(inventory, updated)))
             .replace("__BUILT__", stamp)
-            .replace("__BUILT_ISO__", updated.isoformat()))
+            .replace("__BUILT_ISO__", updated.isoformat())
+            # Unique per build, so the refresher can tell when the published
+            # copy has caught up with the one it just made.
+            .replace("__BUILD_ID__", now.isoformat(timespec="seconds")))
 
 
 def main(argv=None):

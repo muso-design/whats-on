@@ -253,6 +253,42 @@ SUMMARY_PROMPT = (
     "If the text says nothing about the work itself, return null.\n\n")
 
 
+TRANSLATE_SCHEMA = {
+    "type": "object",
+    "properties": {"english": {"type": "string"}},
+    "required": ["english"],
+}
+TRANSLATE_PROMPT = (
+    "Translate this German text about an art exhibition or open call into "
+    "natural English.\n"
+    "Keep every name, title, place, date and time exactly as written.\n"
+    "Do not add, explain, shorten or summarise anything.\n\n")
+
+
+def translate(text):
+    """One piece of German as English, or None.
+
+    Measured before it was used: gallery prose came back readable, with every
+    name, title and date intact, at about five seconds a description on the
+    graphics card. Nothing is cached here - the caller keeps translations in
+    translations.json beside the other translators' - and an answer whose
+    length is far from the source's is refused: much shorter is a summary,
+    much longer is commentary, and neither is a translation.
+    """
+    text = (text or "").strip()
+    if not text:
+        return None
+    answer = ask(TRANSLATE_PROMPT + text, TRANSLATE_SCHEMA,
+                 num_predict=max(200, len(text) // 2))
+    english = " ".join(((answer or {}).get("english") or "").split())
+    if not english:
+        return None
+    ratio = len(english) / len(text)
+    if ratio < 0.5 or ratio > 2.0:
+        return None
+    return english
+
+
 def summary(text, cache=None):
     """One English sentence about the work, or None when the text says nothing."""
     text = (text or "").strip()[:MAX_CHARS]

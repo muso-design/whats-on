@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2E6A5C">
-<meta name="description" content="Exhibitions on now in Leipzig and Berlin.">
-<title>What's on</title>
+<meta name="description" content="Shows to see and open calls to enter, around Leipzig and Berlin.">
+<meta name="plinth-build" content="2026-09-11T20:34:44">
+<title>Plinth</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -61,9 +62,11 @@ a{color:var(--accent)}
   padding:0 14px calc(84px + var(--safe-b))}
 
 /* ---------- header ---------- */
-.top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   padding:14px 2px 8px}
-h1{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;margin:0}
+h1{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;margin:0;
+  display:inline-flex;align-items:center;gap:9px}
+h1 .logo{width:34px;height:34px;border-radius:9px;flex:none}
 .stamp{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin:0}
 .stale{background:var(--urgent-soft);color:var(--urgent);font-weight:600;
   border:1px solid var(--urgent);border-radius:10px;padding:10px 14px;
@@ -235,7 +238,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 <div class="wrap">
 
   <header class="top">
-    <h1>What&rsquo;s on</h1>
+    <h1><img class="logo" src="icon-192.png" alt="" width="34" height="34">Plinth</h1>
     <p class="stamp" id="stamp"></p>
   </header>
 
@@ -316,7 +319,7 @@ select.stage:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 (function () {
   "use strict";
   var rows = JSON.parse(document.getElementById("data").textContent);
-  var BUILT = "11 Sep 2026";
+  var BUILT = "11 Sep 2026, 20:34";
   var BUILT_ISO = "2026-09-11";
 
   // ---- what you have decided about each show -------------------------

@@ -10,8 +10,10 @@ Three steps, cheapest first:
    by a hash of the source text. A description is never translated twice, so
    the weekly cost is only the handful of shows that are new.
 
-Translation is optional. With no provider configured the pipeline runs exactly
-as before and descriptions stay in their original language.
+The translator is DeepL when a key is set, and otherwise the local model.
+With neither - the nightly GitHub job, or an evening when the graphics card is
+busy - the pipeline runs exactly as before, cached translations are still
+used, and new descriptions wait in their original language.
 """
 
 import argparse
@@ -133,12 +135,51 @@ def save_cache(cache, path=CACHE_PATH):
 # --------------------------------------------------------------------------
 
 def provider_name():
-    """Which translator is configured, from the environment."""
+    """Which translator to use.
+
+    DeepL when a key is set, MyMemory when asked for by name, and otherwise
+    the local model whenever it is reachable. Until the local model was added
+    the default was "none", and because no key was ever set, a hundred German
+    descriptions sat untranslated with the log saying only "provider: none".
+    Set TRANSLATE_PROVIDER=none to switch translation off.
+    """
     if os.environ.get("DEEPL_API_KEY"):
         return "deepl"
-    if os.environ.get("TRANSLATE_PROVIDER") == "mymemory":
-        return "mymemory"
-    return "none"
+    choice = os.environ.get("TRANSLATE_PROVIDER")
+    if choice in ("mymemory", "none"):
+        return choice
+    import llm
+    return "local" if llm.available() else "none"
+
+
+# The local model: a card shows about 260 characters of a description, and
+# the longest run past 11,000. Translating the opening is what the page uses;
+# the full original stays one tap away, and a cut translation says so.
+LOCAL_CHUNK = 900             # longer pieces come back shortened
+LOCAL_MAX_CHARS = 1800
+LOCAL_BUDGET = 40             # descriptions per run; the backlog clears over a few
+
+
+def _clip(text, limit=LOCAL_MAX_CHARS):
+    if len(text) <= limit:
+        return text, False
+    cut = text[:limit]
+    stop = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "))
+    return (cut[:stop + 1] if stop > limit * 0.5 else cut), True
+
+
+def _local(text):
+    import llm
+    source, clipped = _clip(text)
+    out = []
+    for piece in _chunks(source, LOCAL_CHUNK):
+        english = llm.translate(piece)
+        # A refusal, or German handed back as English, loses the whole
+        # description rather than caching half a translation.
+        if not english or detect_language(english) == "de":
+            raise RuntimeError("the model's answer was not an English translation")
+        out.append(english)
+    return " ".join(out) + (" […]" if clipped else "")
 
 
 def _deepl(text):
@@ -197,7 +238,11 @@ def translate_text(text, provider=None):
     if provider == "none" or not text:
         return None
     try:
-        return _deepl(text) if provider == "deepl" else _mymemory(text)
+        if provider == "deepl":
+            return _deepl(text)
+        if provider == "local":
+            return _local(text)
+        return _mymemory(text)
     except Exception as exc:                                   # noqa: BLE001
         print("    ! translation failed (%s): %s" % (provider, str(exc)[:90]))
         return None
@@ -253,6 +298,8 @@ def enrich(events, cache=None, provider=None, allow_network=True, verbose=True,
     """
     cache = load_cache(cache_path) if cache is None else cache
     provider = provider or provider_name()
+    if provider == "local" and not budget:
+        budget = LOCAL_BUDGET          # a few minutes of the graphics card, not an hour
     tally = {}
     done = 0
 

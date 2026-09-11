@@ -10,7 +10,13 @@ Run: python test_translate.py
 import os
 import tempfile
 
+import llm
 import translate
+
+# No model, ever, unless a check supplies it: a test that asks the local one
+# passes here and fails on the GitHub runner, which is how the hub froze for
+# ten days in September.
+llm.available = lambda: False
 
 FAILURES = []
 CALLS = []
@@ -124,7 +130,59 @@ events = [ev(raw_description=GERMAN, language="de"),
           ev(raw_description=ENGLISH, language="en")]
 cache, tally = translate.enrich(events, cache={}, cache_path=None, verbose=False)
 check("English source still passes through", tally.get("already english"), 1)
+
+print("\nwhich translator, when")
+llm.available = lambda: True
+check("with no key, the local model is used when it is reachable",
+      translate.provider_name(), "local")
+os.environ["TRANSLATE_PROVIDER"] = "none"
+check("unless translation is switched off by name", translate.provider_name(), "none")
+os.environ.pop("TRANSLATE_PROVIDER")
+os.environ["DEEPL_API_KEY"] = "test:fx"
+check("a DeepL key wins over the local model", translate.provider_name(), "deepl")
+os.environ.pop("DEEPL_API_KEY")
+llm.available = lambda: False
+check("and with no model and no key there is none", translate.provider_name(), "none")
+os.environ.clear()
 os.environ.update(saved)
+
+print("\nthe local model's translations are checked before they are kept")
+_real_llm_translate = llm.translate
+llm.translate = lambda piece: "The gallery shows new works by the artist in the city."
+check("an English answer is accepted",
+      translate._local("Die Galerie zeigt neue Arbeiten des Künstlers in der Stadt."),
+      "The gallery shows new works by the artist in the city.")
+llm.translate = lambda piece: "Die Galerie zeigt neue Arbeiten und der Künstler ist auch da."
+try:
+    translate._local("Die Galerie zeigt neue Arbeiten.")
+    handed_back = False
+except RuntimeError:
+    handed_back = True
+check("German handed back as English is refused", handed_back, True)
+llm.translate = lambda piece: None
+check("a refusal leaves the description untranslated, not half done",
+      translate.translate_text("Die Galerie zeigt neue Arbeiten.", provider="local"),
+      None)
+llm.translate = lambda piece: "The artist shows sculpture in the gallery space."
+long_german = "Die Künstlerin zeigt Skulpturen im Raum der Galerie. " * 60
+out = translate._local(long_german)
+check("a long description is translated from its opening, and says it was cut",
+      out.endswith("[…]"), True)
+check("in pieces the model handles well",
+      out.count("The artist shows") >= 2, True)
+llm.translate = _real_llm_translate
+
+print("\nthe local model refuses to call a summary a translation")
+_real_ask = llm.ask
+llm.ask = lambda prompt, schema, model=None, num_predict=300: {"english": "Art."}
+check("an answer a fraction of the source's length is not kept",
+      llm.translate("Die Galerie zeigt ab Freitag neue Arbeiten des Künstlers."), None)
+llm.ask = lambda prompt, schema, model=None, num_predict=300: {
+    "english": "The gallery shows new works by the artist from Friday."}
+check("a translation of about the source's length is",
+      llm.translate("Die Galerie zeigt ab Freitag neue Arbeiten des Künstlers."),
+      "The gallery shows new works by the artist from Friday.")
+llm.ask = _real_ask
 
 print("\nchunking for length-limited providers")
 long_text = "Ein Satz über Skulptur. " * 60

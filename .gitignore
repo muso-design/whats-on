@@ -6,3 +6,4 @@ server.log
 pull.log
 pull2.log
 refresh.log
+refresh.lock

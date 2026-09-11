@@ -10,11 +10,11 @@ rem itself daily, so most of the time you want the Desktop icon instead.
 rem This is for looking at it offline, or seeing new listings straight away.
 setlocal EnableExtensions
 cd /d "%~dp0"
-title What's on
+title Plinth
 
 echo.
 echo   ============================================
-echo      What's on - exhibitions near you
+echo      Plinth - shows to see, calls to enter
 echo   ============================================
 echo.
 
