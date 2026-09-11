@@ -7,6 +7,7 @@ view, and a call wrongly marked shut is a call you never hear about again.
 Run: python test_calls.py
 """
 
+import json
 from datetime import date
 
 import board
@@ -57,6 +58,27 @@ check("nonsense is not a deadline", calls._iso_stamp("soon"), None)
 check("an impossible date is not a deadline",
       calls._iso_stamp("2026-02-31"), None)
 check("nothing is not a deadline", calls._iso_stamp(None), None)
+
+
+print("\nArtConnect, in both of its page layouts")
+# It moved from one __NEXT_DATA__ block to the streamed app-router format
+# after 1 September and the parser read nothing until it was noticed by hand.
+_record = {"title": "Residency", "deadline": "2026-10-01T00:00:00Z",
+           "postLifetime": "2026-10-01T00:00:00Z"}
+_listing = {"data": [_record], "entries": 1, "pages": 1, "total": 1}
+_old = ('<script id="__NEXT_DATA__" type="application/json">%s</script>'
+        % json.dumps({"props": {"pageProps": {"opportunities": _listing}}}))
+_stream = '5:["$","div",null,{"opportunities":' + json.dumps(_listing) + "}]"
+_half = len(_stream) // 2
+_new = "".join("<script>self.__next_f.push([1,%s])</script>" % json.dumps(part)
+               for part in (_stream[:_half], _stream[_half:]))
+check("the old single block is read",
+      (calls._artconnect_payload(_old) or {}).get("total"), 1)
+check("the streamed layout is read, even split across chunks",
+      ((calls._artconnect_payload(_new) or {}).get("data") or [{}])[0].get("title"),
+      "Residency")
+check("a page with neither is nothing, not a crash",
+      calls._artconnect_payload("<html><body>moved</body></html>"), None)
 
 
 print("\nrunway, because a week is not enough to build anything")

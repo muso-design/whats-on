@@ -243,15 +243,42 @@ _NEXT_DATA = re.compile(
     r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', re.S)
 
 
+# Next.js app-router pages stream their data as JavaScript string literals
+# inside self.__next_f.push([1, "..."]) calls rather than one JSON block.
+_RSC_CHUNK = re.compile(r'self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)', re.S)
+_RSC_LISTING = re.compile(r'\{"data":\[')
+
+
 def _artconnect_payload(html):
+    """The listing object: {data, entries, pages, total}.
+
+    ArtConnect moved from one __NEXT_DATA__ block to the streamed app-router
+    format some time after 1 September, and the parser read nothing until it
+    was noticed by hand. The records inside are unchanged, so both layouts
+    are read and whichever is present wins.
+    """
     match = _NEXT_DATA.search(html or "")
-    if not match:
-        return None
+    if match:
+        try:
+            data = json.loads(match.group(1))
+            return data["props"]["pageProps"]["opportunities"]
+        except (ValueError, KeyError):
+            pass
     try:
-        data = json.loads(match.group(1))
-        return data["props"]["pageProps"]["opportunities"]
-    except (ValueError, KeyError):
+        text = "".join(json.loads(chunk) for chunk in _RSC_CHUNK.findall(html or ""))
+    except ValueError:
         return None
+    decoder = json.JSONDecoder()
+    for start in _RSC_LISTING.finditer(text):
+        try:
+            obj, _ = decoder.raw_decode(text, start.start())
+        except ValueError:
+            continue
+        records = obj.get("data")
+        if (isinstance(records, list) and records and isinstance(records[0], dict)
+                and "postLifetime" in records[0]):
+            return obj
+    return None
 
 
 def _plain(blocks):
