@@ -119,6 +119,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|0acff4651fc9c27a": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|0b8f35700142edd3": [
   false,
   []
@@ -156,6 +160,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|0e0c47e2ce4eb056": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|0e51d409fcd52901": [
   false,
   []
  ],
@@ -441,6 +449,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|36fbdf8ad7817157": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|37e5d3b60d7a651f": [
   false,
   []
@@ -565,6 +577,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|4ad9b85136a8f13d": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|4b35160f28515cc2": [
   false,
   []
@@ -595,6 +611,10 @@
   ]
  ],
  "qwen2.5-coder:7b|eligibility.2|4f710b810361669a": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|4fd5685e7a699741": [
   false,
   []
  ],
@@ -684,6 +704,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|5b845881ed28c60d": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|5c9334b4f41c0102": [
   false,
   []
  ],
@@ -882,6 +906,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|7456db415ec3c241": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|74691b9d3a729b87": [
   false,
   []
  ],
@@ -1182,7 +1210,15 @@
    "Wales"
   ]
  ],
+ "qwen2.5-coder:7b|eligibility.2|99b72b1e202f423b": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|9a79f7308a8b1e72": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|9bd015c84e44773a": [
   false,
   []
  ],
@@ -1237,6 +1273,10 @@
   [
    "United States"
   ]
+ ],
+ "qwen2.5-coder:7b|eligibility.2|a83b3a7f23064f57": [
+  false,
+  []
  ],
  "qwen2.5-coder:7b|eligibility.2|a891c3f888652e17": [
   false,
@@ -1693,6 +1733,10 @@
   false,
   []
  ],
+ "qwen2.5-coder:7b|eligibility.2|e0f857f1d3c1af60": [
+  false,
+  []
+ ],
  "qwen2.5-coder:7b|eligibility.2|e1039f79a4fbfca9": [
   false,
   []
@@ -1706,6 +1750,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|e27fb9394213005f": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|e2e4e5b68040e5b9": [
   false,
   []
  ],
@@ -1748,6 +1796,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|e65ef76164b095f1": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|e7ce5f52be7ab85e": [
   false,
   []
  ],
@@ -1862,6 +1914,10 @@
   []
  ],
  "qwen2.5-coder:7b|eligibility.2|f760fec5cbdc5be0": [
+  false,
+  []
+ ],
+ "qwen2.5-coder:7b|eligibility.2|f8cebba64419c961": [
   false,
   []
  ],
@@ -2495,6 +2551,58 @@
   }
  ],
  "qwen2.5-coder:7b|exhibitions|b47d199fea2349bc": [],
+ "qwen2.5-coder:7b|exhibitions|c528bc4aa6a390f3": [
+  {
+   "artist": "Carsten Goering",
+   "city": "Leipzig",
+   "end": "2026-10-17",
+   "opening": null,
+   "start": "2026-09-05",
+   "title": "Andoya"
+  },
+  {
+   "artist": "Wanda Stolle",
+   "city": "Berlin",
+   "end": "2026-11-07",
+   "opening": null,
+   "start": "2026-09-10",
+   "title": "loose ends"
+  },
+  {
+   "artist": "Helen Hu",
+   "city": "Berlin",
+   "end": "2026-09-26",
+   "opening": null,
+   "start": "2026-09-10",
+   "title": "Ji Wu"
+  }
+ ],
+ "qwen2.5-coder:7b|exhibitions|c841795b286b9eb3": [
+  {
+   "artist": "Paula Strunden & Pascal Marcel Dreier-Wang",
+   "city": null,
+   "end": "2027-01-23",
+   "opening": null,
+   "start": "2026-10-24",
+   "title": "A Wing that was a Hand"
+  },
+  {
+   "artist": "Leyla Yenirce",
+   "city": null,
+   "end": "2026-09-12",
+   "opening": null,
+   "start": "2026-06-27",
+   "title": "Serê Çîya"
+  },
+  {
+   "artist": "Jac Leirner & Rafa Silvares",
+   "city": null,
+   "end": "2026-05-23",
+   "opening": null,
+   "start": "2026-03-21",
+   "title": "Double Two"
+  }
+ ],
  "qwen2.5-coder:7b|exhibitions|cf0a86730200193f": [
   {
    "artist": "Ginan Seidl",

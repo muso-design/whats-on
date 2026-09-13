@@ -35,6 +35,10 @@
   "kind": "photography",
   "seen": "street lamp, sky, red light, dark background, square frame, reflection"
  },
+ "gemma3:4b|https://www.indexberlin.com/images/ABugsLife_still_00_KeyVisual.png?w=300": {
+  "kind": "painting",
+  "seen": "open book, images, artwork, walls, light, sphere, person"
+ },
  "gemma3:4b|https://www.indexberlin.com/images/AZ.8734_Uwe_Pfeifer_Strasse_I_2_.jpg?w=300": {
   "kind": "drawing",
   "seen": "A grayscale drawing of people walking in a city street with a large ear on the right."
@@ -154,6 +158,10 @@
  "gemma3:4b|https://www.indexberlin.com/images/MN_RT_Low_Quer.jpg?w=300": {
   "kind": "installation",
   "seen": "shoes, gloves, legs, artwork, black, white, grey, straps, cables, objects, layered, chaotic"
+ },
+ "gemma3:4b|https://www.indexberlin.com/images/Molitor_Kutateladze_Untitled_1_.jpg?w=300": {
+  "kind": "painting",
+  "seen": "Portrait of a man with multiple faces, blue and gray background, black lines"
  },
  "gemma3:4b|https://www.indexberlin.com/images/MvdRH_OH_Grabka_2.jpg?w=300": {
   "kind": "unclear",
