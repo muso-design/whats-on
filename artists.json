@@ -47,6 +47,7 @@
   ],
   "qid": "Q5544930"
  },
+ "Ala Roushan": null,
  "Alan Charlton": {
   "medium": "painting",
   "occupations": [
@@ -961,6 +962,16 @@
   "qid": "Q9188389"
  },
  "Chang Li-Ren": null,
+ "Charles Stankievech": {
+  "medium": "sculpture",
+  "occupations": [
+   "artist",
+   "photographer",
+   "sculptor",
+   "video artist"
+  ],
+  "qid": "Q5082629"
+ },
  "Charlie Roberts": {
   "medium": "sculpture",
   "occupations": [
